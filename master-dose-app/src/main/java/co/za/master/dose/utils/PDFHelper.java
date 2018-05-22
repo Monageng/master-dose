@@ -2,6 +2,7 @@ package co.za.master.dose.utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Date;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
@@ -35,7 +36,7 @@ public class PDFHelper {
 			
 			FileUtils.instance.removeDirectory("exports");
 			File dir = FileUtils.instance.createDirectory("exports");
-			String fileName = dir.getAbsolutePath() + "/" + FILE_NAME;
+			String fileName = dir.getAbsolutePath() + "/" + FILE_NAME + (new Date()).getTime();
 			System.out.println("File name : " + fileName);
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
 			document.open();
