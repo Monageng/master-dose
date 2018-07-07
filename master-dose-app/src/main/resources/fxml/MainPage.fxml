@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Copyright (c) 2011, 2013 Oracle and/or its affiliates.
+ * All rights reserved. Use is subject to license terms.
+ *
+ * This file is available and licensed under the following license:
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  - Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  - Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the distribution.
+ *  - Neither the name of Oracle Corporation nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<?import java.net.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.text.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.za.kbm.master.dose.app.control.MainAppController" alignment="center" hgap="10" vgap="10" prefHeight="900.0" prefWidth="900.0" styleClass="root"  >
+   <stylesheets>
+       <URL value="@/fxml/styles/Login.css"/>
+   </stylesheets>
+   
+   <padding>
+      <Insets right="25" bottom="10" left="25" />
+   </padding>
+   <Text id="welcome-text"  text="Patiance Details" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" />
+   <Label text="Title :"  minHeight="16" minWidth="69"  prefWidth="60.0" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="root"  />
+   <Label text="Initials :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+   <Label text="First Name :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+   <Label text="Surname :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+   <Label text="Patient's Number:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+   <ComboBox fx:id="titleComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <items>
+         <FXCollections fx:factory="observableArrayList">
+            <String fx:value="Mr" />
+            <String fx:value="Mrs" />
+            <String fx:value="Ms" />
+            <String fx:value="Miss" />
+            <String fx:value="Dr" />
+            <String fx:value="Professor" />
+         </FXCollections>
+      </items>
+   </ComboBox>
+   <TextField fx:id="initialsTxt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+   <TextField fx:id="firstNameTxt" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   <TextField fx:id="surnameTxt" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   <TextField fx:id="patientTxt" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+  
+   <Text fx:id="actiontarget" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+   <VBox GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.columnSpan="2">
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="8" style="-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;">
+         <children>
+            <fx:include source="FirstImagePage.fxml" />
+         </children>
+      </VBox>
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="8" style="-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;">
+         <children>
+            <fx:include source="SecondImagePage.fxml" />
+         </children>
+      </VBox>
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="8" style="-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;">
+         <children>
+            <fx:include source="ThirdImagePage.fxml" />
+         </children>
+      </VBox>
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="8" style="-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;">
+         <children>
+            <fx:include source="GraphPage.fxml" />
+         </children>
+      </VBox>
+   </VBox>
+</GridPane>
