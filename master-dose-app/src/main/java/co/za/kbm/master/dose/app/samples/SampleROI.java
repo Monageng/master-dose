@@ -1,4 +1,4 @@
-package co.za.master.dose.samples;
+package co.za.kbm.master.dose.app.samples;
 
 import java.awt.Menu;
 import java.awt.MenuBar;

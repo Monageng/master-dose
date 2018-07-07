@@ -1,5 +1,6 @@
 package co.za.kbm.master.dose.app.utils;
 
+import co.za.kbm.master.dose.app.constants.StyleSheetConstants;
 import co.za.kbm.master.dose.app.image.listeners.DuplicateActionListener;
 import co.za.kbm.master.dose.app.image.listeners.OvalSelectionTypeActionListener;
 import co.za.kbm.master.dose.app.image.listeners.ZoomInActionListener;
@@ -39,19 +40,24 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.DefaultXYDataset;
-//import javafx.stage.Stage;
-//
-//import org.jfree.chart.ChartFactory;
-//import org.jfree.chart.JFreeChart;
-//import org.jfree.chart.labels.StandardXYItemLabelGenerator;
-//import org.jfree.chart.labels.XYItemLabelGenerator;
-//import org.jfree.chart.plot.PlotOrientation;
-//import org.jfree.chart.plot.XYPlot;
-//import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-//import org.jfree.data.xy.DefaultXYDataset;
-//
-//import com.sun.javafx.charts.Legend;
-//
+import javafx.stage.Stage;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.StandardXYItemLabelGenerator;
+import org.jfree.chart.labels.XYItemLabelGenerator;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.DefaultXYDataset;
+
+import com.sun.javafx.charts.Legend;
+import ij.WindowManager;
+import ij.gui.ImageWindow;
+import ij.io.Opener;
+import ij.process.ImageProcessor;
+import javafx.stage.FileChooser;
+
 //import co.za.master.dose.constants.StyleSheetConstants;
 //import co.za.master.dose.image.listeners.DuplicateActionListener;
 //import co.za.master.dose.image.listeners.OvalSelectionTypeActionListener;
@@ -68,44 +74,44 @@ import org.jfree.data.xy.DefaultXYDataset;
 //import co.za.master.dose.model.MeasurementBean;
 //import co.za.master.dose.model.MeasurementVO;
 //import co.za.master.dose.model.ROITypeEnum;
-
 public class ImageHelper {
 
     public static ImageHelper instance = new ImageHelper();
 
     public void showImage(MeasurementVO measurementVO,
             ImageTypeEnum imageTypeEnum, ImageNumberEnum imageNumberEnum) {
-//		FileChooser chooser = new FileChooser();
-//		chooser.setTitle("Open File");
-//		File file = chooser.showOpenDialog(new Stage());
-//		if (WindowManager.getCurrentImage()  != null) {
-//			WindowManager.getCurrentImage().close();
-//		}
-//		
-//		if (file != null) {
-//			String imagepath = file.getPath();
-//			// Image image = new Image(imagepath);
-//			Opener opener = new Opener();
-//			ImagePlus imagePlus = opener.openImage(imagepath);
-//			ImageProcessor ip = imagePlus.getProcessor();
-////			 imageView.setImage(image);
-//			ip = ip.resize(StyleSheetConstants.IMAGE_POPUP_WIDTH,
-//					StyleSheetConstants.IMAGE_POPUP_HEIGHT);
-//			imagePlus.setProcessor(ip);
-//			imagePlus.show();
-//			// imagePlus.getCanvas().setEnabled(true);
-//			ImageWindow imageWindow = WindowManager.getCurrentWindow();
-//
-//			imageWindow.setMenuBar(ImageHelper.instance.createImageMenuBar(
-//					measurementVO, imageTypeEnum, imageNumberEnum));
-//
-//		} else {
-//			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//			alert.setTitle("Information Dialog");
-//			alert.setHeaderText("Please Select a File");
-//			/* alert.setContentText("You didn't select a file!"); */
-////			alert.showAndWait();
-//		}
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Open File");
+        File file = chooser.showOpenDialog(new Stage());
+//        if (WindowManager.getCurrentImage() != null) {
+//            WindowManager.getCurrentImage().close();
+//        }
+
+        if (file != null) {
+            String imagepath = file.getPath();
+            // Image image = new Image(imagepath);
+            Opener opener = new Opener();
+            ImagePlus imagePlus = opener.openImage(imagepath);
+            ImageProcessor ip = imagePlus.getProcessor();
+//			 imageView.setImage(image);
+            ip = ip.resize(StyleSheetConstants.IMAGE_POPUP_WIDTH,
+                    StyleSheetConstants.IMAGE_POPUP_HEIGHT);
+            imagePlus.setProcessor(ip);
+            imagePlus.show();
+            // imagePlus.getCanvas().setEnabled(true);
+            ImageWindow imageWindow = WindowManager.getCurrentWindow();
+
+            imageWindow.setMenuBar(ImageHelper.instance.createImageMenuBar(
+                    measurementVO, imageTypeEnum, imageNumberEnum));
+
+        } else {
+            System.out.println("Please select the file");
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Information Dialog");
+//            alert.setHeaderText("Please Select a File");
+            /* alert.setContentText("You didn't select a file!"); */
+//			alert.showAndWait();
+        }
     }
 
     public double covertToBecquerel(double meanValue) {
@@ -273,7 +279,7 @@ public class ImageHelper {
 
         Menu imgMenu = new Menu("Image");
         MenuItem duplicateMenu = new MenuItem("Duplicate");
-		// DuplicateActionListener duplicateActionListener = new
+        // DuplicateActionListener duplicateActionListener = new
         // DuplicateActionListener(
         // measurementPanel);
         // duplicateMenu.addActionListener(duplicateActionListener);
@@ -281,7 +287,7 @@ public class ImageHelper {
         MenuItem cropMenu = new MenuItem("Crop");
 
         MenuItem zoomInMenu = new MenuItem("Zoom In");
-		// ZoomInActionListener zoomInActionListener = new
+        // ZoomInActionListener zoomInActionListener = new
         // ZoomInActionListener();
         // zoomInMenu.addActionListener(zoomInActionListener);
 
@@ -290,7 +296,7 @@ public class ImageHelper {
         // ZoomOutActionListener();
         // zoomOutMenu.addActionListener(zoomOutActionListener);
 
-		// imgMenu = new
+        // imgMenu = new
         // imgMenu.add(duplicateMenu);
         // imgMenu.add(cropMenu);
         // imgMenu.add(zoomInMenu);
@@ -404,22 +410,22 @@ public class ImageHelper {
 //		System.out.println(linechart.getStyleClass().add("default-color0.chart-line-symbol"));
 //		
         String OS = System.getProperty("os.name").toLowerCase();
-        System.out.println("OS" + OS);
+        System.out.println("OS  " + OS);
 //        linechart.getStylesheets().clear();
-//        if (OS == "linux") {
-//            File f = new File("src/main/java/co/za/kbm/master/dose/app/frame/Login.css");
-//            linechart.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-//        } else if (OS == "windows") {
-//            File f = new File("src/main/java/co/za/kbm/master/dose/app/frame/Login.css");
-//            linechart.getStylesheets().add(f.getAbsolutePath());
-//        }
+        if ("linux".equals(OS)) {
+            File f = new File("src/main/java/co/za/kbm/master/dose/app/frame/Login.css");
+            linechart.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+        } else if ("windows".equals(OS)) {
+            File f = new File("src/main/java/co/za/kbm/master/dose/app/frame/Login.css");
+            linechart.getStylesheets().add(f.getAbsolutePath());
+        }
 
 //		String css = DynamicCSS.class.getResource("/jarcss.css").toExternalForm();
 //		scene.getStylesheets().clear();
 //		scene.getStylesheets().add(css)
 //	    System.out.println("line: " + line.getStyleClass().add("default-color0.chart-line-symbol"));
 //	    line.setStyle(".default-color0.chart-series-line { -fx-background-color: #3095CE, white; -fx-stroke: #3095CE; }, .default-color0.chart-line-symbol { -fx-background-color: #3095CE;-fx-text-fill: #3095CE; }");
-	    //	    for(int i=0; i<3; i++){
+        //	    for(int i=0; i<3; i++){
 //	        for(Node n : linechart.lookupAll(".series"+i)){
 //	            System.out.println(n.getStyleClass());
 //	        }
@@ -538,13 +544,13 @@ public class ImageHelper {
 
         calculateDosage(measurementBean);
 
-		// JFreeChart chart = ChartFactory.createXYLineChart("Chart", "Time(h)",
+        // JFreeChart chart = ChartFactory.createXYLineChart("Chart", "Time(h)",
         // "Y",ds);
         JFreeChart chart = ChartFactory.createXYLineChart("Chart", "Time(h)",
                 "Y", ds, PlotOrientation.VERTICAL, true, true, false);
         //
         final XYPlot plot1 = chart.getXYPlot();
-		// plot1.setBackgroundPaint(Color.lightGray);
+        // plot1.setBackgroundPaint(Color.lightGray);
         // plot1.setDomainGridlinePaint(Color.white);
         // plot1.setRangeGridlinePaint(Color.white);
         plot1.setDomainGridlinesVisible(true);

@@ -39,38 +39,40 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:controller="co.za.kbm.master.dose.app.control.ThirdImageController" 
-    xmlns:fx="http://javafx.com/fxml"  hgap="10" vgap="10"  prefHeight="900.0" prefWidth="900.0"
+<GridPane fx:controller="co.za.kbm.master.dose.app.control.GraphController" 
+    xmlns:fx="http://javafx.com/fxml"  hgap="10" vgap="10"  prefHeight="1300.0" prefWidth="900.0"
     styleClass="root">
-    <stylesheets>
-      <URL value="@styles/Login.css" />
+   <stylesheets>
+      <URL value="@/fxml/styles/Login.css"/>
    </stylesheets>
  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1"  >
-      	<Text id="image-text" text="Third Image" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="4" />
- 		
- 		 <HBox GridPane.columnIndex="3" GridPane.rowIndex="0" >
-         <children GridPane.columnSpan="4">
-         	<Text  text="Interval : " GridPane.columnIndex="0" GridPane.rowIndex="0"   />
-            <TextField fx:id="thirdInterval" GridPane.columnIndex="1" GridPane.rowIndex="0"  prefWidth="50.0"/>
-         </children>
-      	</HBox>
+ <HBox>
+  		<children>
+ 			<Button text="Draw Graph" onAction="#handleCalculateDosageAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
+			<Button text="Generate Report" onAction="#handleGenerateReportAction" GridPane.columnIndex="2"  GridPane.rowIndex="2"  />
+		</children>
+ </HBox>
       	
-      	<Label text="Images" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-		<Label text="Right" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-		<Label text="Left" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-		<Label text="Tumour" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-		
-		<Button text="Anteria" onAction="#handleLoadThirdImageAnteriaAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
-		<TextField fx:id="third_anteria_right" GridPane.columnIndex="1" GridPane.rowIndex="2" disable="true" />
-    	<TextField fx:id="third_anteria_left" GridPane.columnIndex="2" GridPane.rowIndex="2" disable="true" />
-    	<TextField fx:id="third_anteria_tumour" GridPane.columnIndex="3" GridPane.rowIndex="2" disable="true" />
-    	
-    	<Button text="Posteria" onAction="#handleLoadThirdImagePosteriaAction" GridPane.columnIndex="0" GridPane.rowIndex="3"  />
-		<TextField fx:id="third_posteria_right" GridPane.columnIndex="1" GridPane.rowIndex="3" disable="true" />
-    	<TextField fx:id="third_posteria_left" GridPane.columnIndex="2" GridPane.rowIndex="3" disable="true" />
-    	<TextField fx:id="third_posteria_tumour" GridPane.columnIndex="3" GridPane.rowIndex="3" disable="true" />
-		
-    </GridPane>	
+<VBox fillWidth="true" prefHeight="711.0" prefWidth="945.0" xmlns:fx="http://javafx.com/fxml" GridPane.columnIndex="0" GridPane.rowIndex="3" >
+  <children>
+    <HBox prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+      
+       <LineChart fx:id="linechart" layoutX="29.0" layoutY="194.0" prefHeight="416.0" prefWidth="1222.0">
+          <xAxis>
+            <CategoryAxis label="Time (s)" fx:id="xLineAxis"  />
+          </xAxis>
+          <yAxis>
+            <NumberAxis fx:id="ylineAxis" label="Measurement" side="LEFT" upperBound="160.0" />
+          </yAxis>
+        </LineChart>
+    </HBox>
+  </children>
+  <padding>
+    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+  </padding>
+</VBox>
+</GridPane>	
 </GridPane>

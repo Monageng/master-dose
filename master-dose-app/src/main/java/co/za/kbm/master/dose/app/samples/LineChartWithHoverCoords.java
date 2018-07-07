@@ -1,4 +1,4 @@
-package co.za.master.dose.samples;
+package co.za.kbm.master.dose.app.samples;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;

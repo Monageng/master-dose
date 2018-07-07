@@ -73,9 +73,9 @@ public class FirstImageController implements Initializable {
 
 	@FXML
 	protected void handleLoadFirstImagePosteriaAction(ActionEvent event) {
-		System.out.println("Starting handleLoadFirstImagePosteriaAction");
+		System.out.println("Starting handleLoadFirstImagePosteriaAction***********");
 
-		System.out.println("first_anteria_left " + first_anteria_left);
+		System.out.println("first_anteria_left " + first_anteria_right);
 		MeasurementVO measurementVO = MasterDoseCache.instance
 				.getMeasurementVO();
 		measurementVO.getFirstMeasurementVO().setPosteriaLeftField(
@@ -84,6 +84,8 @@ public class FirstImageController implements Initializable {
 				first_posteria_right);
 		measurementVO.getFirstMeasurementVO().setPosteriaTumourField(
 				first_posteria_tumour);
+                System.out.println("MeasurementVO " +measurementVO);
+
 		ImageHelper.instance.showImage(measurementVO, ImageTypeEnum.Posteria,
 				ImageNumberEnum.FirstImage);
 	}
@@ -103,6 +105,7 @@ public class FirstImageController implements Initializable {
 				ImageNumberEnum.FirstImage);
 	}
 
+        @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		System.out.println("Initialize first image");
 
@@ -111,6 +114,7 @@ public class FirstImageController implements Initializable {
 		
 		firstInterval.setText("6");
 		firstInterval.textProperty().addListener(new ChangeListener<String>() {
+                        @Override
 			public void changed(ObservableValue<? extends String> arg0,
 					String oldValue, String newValue) {
 				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,1})?")) {
