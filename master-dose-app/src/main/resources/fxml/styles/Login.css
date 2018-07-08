@@ -41,7 +41,7 @@ root {
   -fx-create-symbols: false;
 }
 
-.chart-plot-background {
+/*.chart-plot-background {
     -fx-background-color: #e2ecfe;
 }
 .chart-vertical-grid-lines {
@@ -54,17 +54,17 @@ root {
     -fx-fill: #d1e0e0;
     -fx-stroke: transparent;
     -fx-stroke-width: 0;
-}
+}*/
 
-.default-color0.chart-series-line { -fx-background-color: -line-0, white; -fx-stroke: -line-0; }
+/*.default-color0.chart-series-line { -fx-background-color: -line-0, white; -fx-stroke: -line-0; }
 .default-color1.chart-series-line { -fx-background-color: -line-1, white; -fx-stroke: -line-1; }
-.default-color2.chart-series-line { -fx-background-color: -line-2, white; -fx-stroke: -line-2; }
+.default-color2.chart-series-line { -fx-background-color: -line-2, white; -fx-stroke: -line-2; }*/
 
-.default-color0.chart-line-symbol { 
+/*.default-color0.chart-line-symbol { 
     -fx-background-color: #3095CE;
     -fx-text-fill: -line-0;
-}
-.default-color1.chart-line-symbol { 
+}*/
+/*.default-color1.chart-line-symbol { 
     -fx-background-color: -line-1;
     -fx-text-fill: -line-1;
 }
@@ -73,38 +73,35 @@ root {
     -fx-text-fill: -line-2;
 }
 
-.root {
+*/.root {
      -fx-background-image: url("background.jpg");
 }
+/*
 
-.label {
+*/.label {
     -fx-font-size: 12px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
-
 label {
     -fx-font-size: 12px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
-
 #welcome-text {
-   -fx-font-size: 32px;
-   -fx-font-family: "Arial Black";
-   -fx-fill: #818181;
-   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
-}
-
-#image-text {
    -fx-font-size: 20px;
    -fx-font-family: "Arial Black";
    -fx-fill: #818181;
    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
 }
-
+#image-text {
+   -fx-font-size: 16px;
+   -fx-font-family: "Arial Black";
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
 .text-field{
     -fx-min-width: 30;
     -fx-min-height: 30;
@@ -114,7 +111,6 @@ label {
   -fx-font-weight: bold;
   -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );  
 }
-
 .button {
     -fx-text-fill: white;
     -fx-font-family: "Arial Narrow";
@@ -123,7 +119,6 @@ label {
     -fx-background-color: linear-gradient(#61a2b1, #2A5058);
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
-
 .button:hover {
     -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }

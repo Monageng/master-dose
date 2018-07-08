@@ -14,7 +14,6 @@ import javafx.scene.image.WritableImage;
 
 import javax.imageio.ImageIO;
 
-
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
@@ -37,7 +36,7 @@ public class PDFHelper {
 
             FileUtils.instance.removeDirectory("exports");
             File dir = FileUtils.instance.createDirectory("exports");
-            String fileName = dir.getAbsolutePath() + "/" + FILE_NAME + (new Date()).getTime();
+            String fileName = dir.getAbsolutePath() + "/" + new Date().getTime() + FILE_NAME;
             System.out.println("File name : " + fileName);
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
@@ -108,8 +107,12 @@ public class PDFHelper {
 //			System.out.println(" r2 : " + r2);
 //			
 //			@SuppressWarnings("unchecked")
-            CategoryAxis xAxis = new CategoryAxis();
+            NumberAxis xAxis = new NumberAxis();
             NumberAxis yAxis = new NumberAxis();
+            yAxis.setUpperBound(40);
+            xAxis.setUpperBound(25);
+            yAxis.setLowerBound(-10);
+            
             LineChart<Number, Number> lChat = new LineChart(xAxis, yAxis);
             ImageHelper.instance.drawGraphNew(measurementVO, lChat);
 //			report.add((Element) cp);

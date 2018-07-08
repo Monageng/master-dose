@@ -41,20 +41,47 @@
 <?import javafx.scene.text.*?>
 
 <GridPane fx:controller="co.za.kbm.master.dose.app.control.FirstImageController" 
-          xmlns:fx="http://javafx.com/fxml"  hgap="10" vgap="10"  prefHeight="900.0" prefWidth="900.0"
+          xmlns:fx="http://javafx.com/fxml"  hgap="10" vgap="10" 
           styleClass="root">
     <stylesheets>
         <URL value="@/fxml/styles/Login.css"/>
     </stylesheets>
+<!--    <VBox>
+        <HBox>
+            <Text id="image-text" text="First Image" wrappingWidth="300"   />
+            <HBox GridPane.columnIndex="3" GridPane.rowIndex="0" >
+                <Text  text="Interval : "  />
+                <TextField fx:id="firstInterval"   prefWidth="50.0" onAction="#onEnter"/>
+            </HBox>
+        </HBox>
+         <HBox>
+            <Label text="Images"  minHeight="10" minWidth="80"  />
+            <Label text="Right" minHeight="10" minWidth="100"   />
+            <Label text="Left" minHeight="10" minWidth="100"   />
+            <Label text="Tumour" minHeight="10" minWidth="100"  />
+        </HBox>
+        <HBox>
+            <Button text="Anteria" minWidth="80" onAction="#handleLoadFirstImageAnteriaAction" />
+            <TextField fx:id="first_anteria_right"  minWidth="100"  disable="true" />
+            <TextField fx:id="first_anteria_left"  minWidth="100" disable="true" />
+            <TextField fx:id="first_anteria_tumour"  minWidth="100" disable="true" />
+        </HBox>
+        <HBox>
+            <Button text="Posteria" onAction="#handleLoadFirstImagePosteriaAction" minWidth="80"   />
+            <TextField fx:id="first_posteria_right" minWidth="100"  disable="true" />
+            <TextField fx:id="first_posteria_left" minWidth="100"  disable="true" />
+            <TextField fx:id="first_posteria_tumour" minWidth="100"  disable="true" />
+        </HBox>
+    </VBox>    -->
+        
     <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1"  >
       	
  		
         <Text id="image-text" text="First Image" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="4"  />
         <HBox GridPane.columnIndex="3" GridPane.rowIndex="0" >
-            <!--<children GridPane.columnSpan="4">-->
                 <Text  text="Interval : " GridPane.columnIndex="0" GridPane.rowIndex="0"   />
                 <TextField fx:id="firstInterval" GridPane.columnIndex="1" GridPane.rowIndex="0"  prefWidth="50.0" onAction="#onEnter"/>
-            <!--</children>-->
+            
         </HBox>
         <Label text="Images" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <Label text="Right" GridPane.columnIndex="1" GridPane.rowIndex="1" />

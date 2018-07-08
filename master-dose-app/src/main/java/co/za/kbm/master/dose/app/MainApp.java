@@ -20,9 +20,9 @@ public class MainApp extends Application {
         loader.setLocation(getClass().getResource("/MainPage.fxml"));
         Parent root = (Parent) loader.load();
 
-//		Scene scene = new Scene(root);
-        Scene scene = new Scene(root, 600, 1000);
-//                scene.getStylesheets().add("/fxml/styles/Login.css");
+        Scene scene = new Scene(root);
+//        Scene scene = new Scene(root, 600, 600);
+        scene.getStylesheets().add("/fxml/styles/Login.css");
 
         primaryStage.setTitle("Master dose");
         primaryStage.setScene(scene);
@@ -30,17 +30,7 @@ public class MainApp extends Application {
         primaryStage.show();
 
         MasterDoseCache.instance.getMeasurementVO().setHostServices(getHostServices());
-        System.out.println("MasterDoseCache.instance.getMeasurementVO() " +MasterDoseCache.instance.getMeasurementVO().toString());
-
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("FXMLDocument.fxml"));
-//        Parent root = (Parent) loader.load();
-////        Parent root = FXMLLoader.load(getClass().getResource("/FXMLDocument.fxml"));
-//
-//        Scene scene = new Scene(root);
-//
-//        primaryStage.setScene(scene);
-//        primaryStage.show();
+        System.out.println("MasterDoseCache.instance.getMeasurementVO() " + MasterDoseCache.instance.getMeasurementVO().toString());
     }
 
 }

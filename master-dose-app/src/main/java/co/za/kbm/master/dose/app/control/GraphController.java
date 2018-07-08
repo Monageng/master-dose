@@ -29,10 +29,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package co.za.kbm.master.dose.app.control;
 
 import co.za.kbm.master.dose.app.model.MeasurementVO;
+import co.za.kbm.master.dose.app.utils.ImageDataHelper;
 import co.za.kbm.master.dose.app.utils.ImageHelper;
 import co.za.kbm.master.dose.app.utils.MasterDoseCache;
 import co.za.kbm.master.dose.app.utils.PDFHelper;
@@ -42,37 +42,51 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 
 public class GraphController implements Initializable {
-	@FXML
-	private LineChart<Number, Number> linechart;
 
-	@FXML
-	protected void handleGenerateReportAction (ActionEvent event) {
-		System.out.println("Starting to generate report : ");
-		ImageHelper imageHelper = new ImageHelper();
-//		MeasurementVO vo = ImageDataHelper.createVO();
-		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
-//		vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
-		
-		System.out.println("VO " + vo);
-		imageHelper.drawGraphNew(vo, linechart);
-		PDFHelper.createPDFDynamic(vo, linechart);
-	}
-	
-	@FXML
-	protected void handleCalculateDosageAction(ActionEvent event) {
-		ImageHelper imageHelper = new ImageHelper();
-//		MeasurementVO vo = ImageDataHelper.createVO();
-		 MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
-		vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
-		
-		System.out.println("VO " + vo);
-		imageHelper.drawGraphNew(vo, linechart);
-	}
+    @FXML
+    private LineChart<Number, Number> linechart;
 
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println("Initializing Graph Controller");
-	}
+    @FXML
+    private NumberAxis xLineAxis;
+
+    @FXML
+    private NumberAxis ylineAxis;
+
+    @FXML
+    protected void handleGenerateReportAction(ActionEvent event) {
+        System.out.println("Starting to generate report : ");
+        ImageHelper imageHelper = new ImageHelper();
+//        MeasurementVO vo = ImageDataHelper.createVO();
+        MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
+        vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
+
+        System.out.println("VO " + vo);
+
+        imageHelper.drawGraphNew(vo, linechart);
+        PDFHelper.createPDFDynamic(vo, linechart);
+    }
+
+    @FXML
+    protected void handleCalculateDosageAction(ActionEvent event) {
+        ImageHelper imageHelper = new ImageHelper();
+//        MeasurementVO vo = ImageDataHelper.createVO();
+        MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
+        vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
+
+        System.out.println("VO " + vo);
+        imageHelper.drawGraphNew(vo, linechart);
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        System.out.println("Initializing Graph Controller");
+        ylineAxis.setLowerBound(-10);
+        ylineAxis.setUpperBound(40);
+        xLineAxis.setUpperBound(25);
+    }
 }

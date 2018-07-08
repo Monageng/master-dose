@@ -62,10 +62,10 @@
       
        <LineChart fx:id="linechart" layoutX="29.0" layoutY="194.0" prefHeight="416.0" prefWidth="1222.0">
           <xAxis>
-            <CategoryAxis label="Time (s)" fx:id="xLineAxis"  />
+            <NumberAxis label="Time (s)" fx:id="xLineAxis"  />
           </xAxis>
           <yAxis>
-            <NumberAxis fx:id="ylineAxis" label="Measurement" side="LEFT" upperBound="160.0" />
+            <NumberAxis fx:id="ylineAxis" label="Measurement" side="LEFT" />
           </yAxis>
         </LineChart>
     </HBox>

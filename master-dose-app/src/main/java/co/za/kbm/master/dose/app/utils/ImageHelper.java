@@ -56,6 +56,9 @@ import ij.WindowManager;
 import ij.gui.ImageWindow;
 import ij.io.Opener;
 import ij.process.ImageProcessor;
+import javafx.scene.chart.Axis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ValueAxis;
 import javafx.stage.FileChooser;
 
 //import co.za.master.dose.constants.StyleSheetConstants;
@@ -377,9 +380,8 @@ public class ImageHelper {
     public void drawGraphNew(MeasurementVO measurementBean,
             LineChart<Number, Number> linechart) {
         linechart.setAnimated(false);
-        linechart.getXAxis().setAutoRanging(true);
-        linechart.getYAxis().setAutoRanging(true);
-
+        linechart.getXAxis().setAutoRanging(false);
+        linechart.getYAxis().setAutoRanging(false);
         linechart.getData().clear();
 
         System.out.println("measurementBean : " + measurementBean);
@@ -391,7 +393,7 @@ public class ImageHelper {
                 leftImageDataSet,
                 tumourImageDataSet);
         linechart.setLegendVisible(true);
-        linechart.setCreateSymbols(true);
+//        linechart.setCreateSymbols(true);
 
         calculateDosage(measurementBean);
         System.out.println("Dosage " + measurementBean.getDosage());
@@ -399,25 +401,36 @@ public class ImageHelper {
 
         linechart.setLegendSide(Side.RIGHT);
 
-//		Legend.LegendItem li1=new Legend.LegendItem("Right Image");
-//		
-//	    Legend.LegendItem li2=new Legend.LegendItem("Left Image");
-//	    Legend.LegendItem li3=new Legend.LegendItem("Tumour Image");
-//	    legend.getItems().setAll(li1,li2,li3);
-//	    legend.getItems().get(0).getSymbol().getStyleClass().add("series-right-image");
-//		Node line = rightImageDataSet.getNode();
-//		System.out.println(linechart.getStyleClass().add("default-color0.chart-line-symbol"));
-//		System.out.println(linechart.getStyleClass().add("default-color0.chart-line-symbol"));
+//        NumberAxis y = (NumberAxis) linechart.getYAxis();
+//        y.setLowerBound(0);
+//        y.setUpperBound(30);
+//        linechart.getData().clear();
+
+//	Legend.LegendItem li1 = new Legend.LegendItem("Right Image");
+//        Legend.LegendItem li2 = new Legend.LegendItem("Left Image");
+//        Legend.LegendItem li3 = new Legend.LegendItem("Tumour Image");
+//        egend.getItems().setAll(li1, li2, li3);
+//        legend.getItems().get(0).getSymbol().getStyleClass().add("series-right-image");
+//        Node line = rightImageDataSet.getNode();
+//        System.out.println(linechart.getStyleClass().add("default-color0.chart-line-symbol"));
+//        System.out.println(linechart.getStyleClass().add("default-color0.chart-line-symbol"));
 //		
         String OS = System.getProperty("os.name").toLowerCase();
         System.out.println("OS  " + OS);
-//        linechart.getStylesheets().clear();
+        linechart.getStylesheets().clear();
+
         if ("linux".equals(OS)) {
-            File f = new File("src/main/java/co/za/kbm/master/dose/app/frame/Login.css");
-            linechart.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+//            File f = new File("src/main/resources/fxml/styles/main.css");
+//////            /home/monageng/github/master-dose/master-dose-app/src/main/resources/fxml/styles/Login.css
+//            linechart.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+//            linechart.getStylesheets().add("/fxml/styles/main.css");
+//            linechart.getStylesheets().add("/home/monageng/github/master-dose/master-dose-app/src/main/resources/fxml/styles/main.css");
+//////                    scene.getStylesheets().add("/fxml/styles/Login.css");
+//
+            System.out.println(" linechart.getStylesheets() " + linechart.getStylesheets());
         } else if ("windows".equals(OS)) {
-            File f = new File("src/main/java/co/za/kbm/master/dose/app/frame/Login.css");
-            linechart.getStylesheets().add(f.getAbsolutePath());
+//            File f = new File("src/main/java/co/za/kbm/master/dose/app/frame/Login.css");
+//            linechart.getStylesheets().add(f.getAbsolutePath());
         }
 
 //		String css = DynamicCSS.class.getResource("/jarcss.css").toExternalForm();
@@ -441,22 +454,18 @@ public class ImageHelper {
         XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
 
         series.getData().add(
-                new XYChart.Data(vo.getFirstMeasurementVO().getInterval() + "", vo.getFirstMeasurementVO()
+                new XYChart.Data(vo.getFirstMeasurementVO().getInterval() , vo.getFirstMeasurementVO()
                         .getRightImage()));
 
         series.getData().add(
-                new XYChart.Data(vo.getSecondMeasurementVO().getInterval() + "", vo.getSecondMeasurementVO()
+                new XYChart.Data(vo.getSecondMeasurementVO().getInterval() , vo.getSecondMeasurementVO()
                         .getRightImage()));
 
         series.getData().add(
-                new XYChart.Data(vo.getThirdMeasurementVO().getInterval() + "", vo.getThirdMeasurementVO()
+                new XYChart.Data(vo.getThirdMeasurementVO().getInterval() , vo.getThirdMeasurementVO()
                         .getRightImage()));
 
         series.setName("Right Image");
-
-        System.out.println("Firs Interval : " + vo.getFirstMeasurementVO().getInterval() + " : " + vo.getFirstMeasurementVO().getRightImage());
-        System.out.println("second Interval : " + vo.getSecondMeasurementVO().getInterval() + " : " + vo.getSecondMeasurementVO().getRightImage());
-        System.out.println("Third Interval : " + vo.getThirdMeasurementVO().getInterval() + " : " + vo.getThirdMeasurementVO().getRightImage());
 
 //		System.out.println("Series : " + series.getNode());
 //		series.getNode().getStyleClass().add("series-right-image");
@@ -468,13 +477,13 @@ public class ImageHelper {
     private XYChart.Series getLeftImageDataSet(MeasurementVO vo) {
         XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
         series.getData().add(
-                new XYChart.Data(vo.getFirstMeasurementVO().getInterval() + "", vo.getFirstMeasurementVO()
+                new XYChart.Data(vo.getFirstMeasurementVO().getInterval() , vo.getFirstMeasurementVO()
                         .getLeftImage()));
         series.getData().add(
-                new XYChart.Data(vo.getSecondMeasurementVO().getInterval() + "", vo.getSecondMeasurementVO()
+                new XYChart.Data(vo.getSecondMeasurementVO().getInterval() , vo.getSecondMeasurementVO()
                         .getLeftImage()));
         series.getData().add(
-                new XYChart.Data(vo.getThirdMeasurementVO().getInterval() + "", vo.getThirdMeasurementVO()
+                new XYChart.Data(vo.getThirdMeasurementVO().getInterval() , vo.getThirdMeasurementVO()
                         .getLeftImage()));
         series.setName("Left Image");
         System.out.println("Left series : " + series.getData());
@@ -485,13 +494,13 @@ public class ImageHelper {
     private XYChart.Series getTumourImageDataSet(MeasurementVO vo) {
         XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
         series.getData().add(
-                new XYChart.Data(vo.getFirstMeasurementVO().getInterval() + "", vo.getFirstMeasurementVO()
+                new XYChart.Data(vo.getFirstMeasurementVO().getInterval() , vo.getFirstMeasurementVO()
                         .getTumourImage()));
         series.getData().add(
-                new XYChart.Data(vo.getSecondMeasurementVO().getInterval() + "", vo.getSecondMeasurementVO()
+                new XYChart.Data(vo.getSecondMeasurementVO().getInterval() , vo.getSecondMeasurementVO()
                         .getTumourImage()));
         series.getData().add(
-                new XYChart.Data(vo.getThirdMeasurementVO().getInterval() + "", vo.getThirdMeasurementVO()
+                new XYChart.Data(vo.getThirdMeasurementVO().getInterval() , vo.getThirdMeasurementVO()
                         .getTumourImage()));
         series.setName("Tumour Image");
         return series;
