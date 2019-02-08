@@ -35,14 +35,10 @@ package co.za.master.dose.frame;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import co.za.master.dose.model.MeasurementVO;
-import co.za.master.dose.utils.MasterDoseCache;
 
 public class MainAppController implements Initializable {
 
@@ -56,13 +52,13 @@ public class MainAppController implements Initializable {
 	private TextField surnameTxt;
 
 	@FXML
-	private TextField patientTxt;
+	private TextField patientTxt;		
 
 	@FXML
 	private ComboBox<String> titleComboBox;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println("Initialize MAIN image");
+		System.out.println("Initialize master dose application");
 
 //		initialsTxt.textProperty().addListener(new ChangeListener<String>() {
 //			public void changed(ObservableValue<? extends String> arg0,

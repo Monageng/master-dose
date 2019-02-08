@@ -9,7 +9,7 @@ public class FileUtils {
 	public void openFile(String fileName) {
 
 		try {
-			System.out.println("openFile");
+//			System.out.println("openFile");
 			Desktop desktop = Desktop.getDesktop();
 			// check if java.awt.Desktop is available on the current platform
 			System.out.println(java.awt.Desktop.isDesktopSupported());

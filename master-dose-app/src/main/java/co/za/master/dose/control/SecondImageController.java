@@ -77,7 +77,7 @@ public class SecondImageController implements Initializable{
 	
 	@FXML
 	protected void handleLoadSecondImagePosteriaAction(ActionEvent event) {
-		System.out.println("Starting handleLoadSecondImagePosteriaAction");
+//		System.out.println("Starting handleLoadSecondImagePosteriaAction");
 		MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
 		measurementVO.getSecondMeasurementVO().setPosteriaLeftField(
 				second_posteria_left);
@@ -91,7 +91,7 @@ public class SecondImageController implements Initializable{
 
 	@FXML
 	protected void handleLoadSecondImageAnteriaAction(ActionEvent event) {
-		System.out.println("Starting handleLoadSecondImageAnteriaAction");
+//		System.out.println("Starting handleLoadSecondImageAnteriaAction");
 		MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
 		
 		measurementVO.getSecondMeasurementVO().setAnteriaLeftField(
@@ -105,7 +105,7 @@ public class SecondImageController implements Initializable{
 	}
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println("Initializing Second Image controller***" );
+//		System.out.println("Initializing Second Image controller***" );
 		secondInterval.setText("12");
 		MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
 		measurementVO.getSecondMeasurementVO().setInterval(12);

@@ -72,7 +72,7 @@ public class ThirdImageController implements Initializable{
 	
 	@FXML
 	protected void handleLoadThirdImagePosteriaAction(ActionEvent event) {
-		System.out.println("Starting handleLoadThirdImagePosteriaAction");
+//		System.out.println("Starting handleLoadThirdImagePosteriaAction");
 		MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
 		measurementVO.getThirdMeasurementVO().setPosteriaLeftField(
 				third_posteria_left);
@@ -86,7 +86,7 @@ public class ThirdImageController implements Initializable{
 
 	@FXML
 	protected void handleLoadThirdImageAnteriaAction(ActionEvent event) {
-		System.out.println("Starting handleLoadThirdImageAnteriaAction");
+//		System.out.println("Starting handleLoadThirdImageAnteriaAction");
 		MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
 		measurementVO.getThirdMeasurementVO().setAnteriaLeftField(
 				third_anteria_left);
@@ -98,7 +98,7 @@ public class ThirdImageController implements Initializable{
 				ImageNumberEnum.ThirdImage);
 	}
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println("Initializing Third Image Controller***" + arg1);
+//		System.out.println("Initializing Third Image Controller***" + arg1);
 		thirdInterval.setText("24");
 		MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
 	 	measurementVO.getThirdMeasurementVO().setInterval(24);

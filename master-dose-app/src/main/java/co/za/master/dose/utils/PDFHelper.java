@@ -31,13 +31,13 @@ public class PDFHelper {
 	public static String IMAGE_NAME = "Image.png";
 	public static void createPDFDynamic(MeasurementVO measurementVO, LineChart<Number, Number> linechart) {
 		try {
-			System.out.println("createPDFDynamic");
+//			System.out.println("createPDFDynamic");
 			com.itextpdf.text.Document document = new com.itextpdf.text.Document(PageSize.A4, 20, 20, 50, 50);
 			
 			FileUtils.instance.removeDirectory("exports");
 			File dir = FileUtils.instance.createDirectory("exports");
 			String fileName = dir.getAbsolutePath() + "/" + FILE_NAME + (new Date()).getTime();
-			System.out.println("File name : " + fileName);
+//			System.out.println("File name : " + fileName);
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
 			document.open();
 
@@ -129,7 +129,7 @@ public class PDFHelper {
             document.add(image);
 //           
             
-            System.out.println("About to open " + fileName);
+//            System.out.println("About to open " + fileName);
             MasterDoseCache.instance.getMeasurementVO().getHostServices().showDocument(fileName);
             document.close();
             

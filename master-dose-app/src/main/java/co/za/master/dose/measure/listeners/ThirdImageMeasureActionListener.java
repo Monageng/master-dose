@@ -31,14 +31,14 @@ public class ThirdImageMeasureActionListener implements MeasureActionListenerInt
 	
 	public void actionPerformed(ActionEvent e) {
 		ImagePlus imagePlus = WindowManager.getCurrentImage();
-		System.out.println("imageTypeEnum : " + imageTypeEnum);
-		System.out.println("imageSideEnum : " + imageSideEnum);
+//		System.out.println("imageTypeEnum : " + imageTypeEnum);
+//		System.out.println("imageSideEnum : " + imageSideEnum);
 		
 		if (imagePlus == null) {
 			System.out.println("Image is not loaded");
 		} else {
 			double mean = ImageHelper.instance.getMeanCount(imagePlus);
-			System.out.println("FirstImageMeasureActionListener Mean : " + mean);
+//			System.out.println("FirstImageMeasureActionListener Mean : " + mean);
 
 //			 Check image side
 			if (imageSideEnum == ImageSideEnum.Background) {

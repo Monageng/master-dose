@@ -56,7 +56,7 @@ public class GraphController implements Initializable {
 		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
 //		vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
 		
-		System.out.println("VO " + vo);
+//		System.out.println("VO " + vo);
 		imageHelper.drawGraphNew(vo, linechart);
 		PDFHelper.createPDFDynamic(vo, linechart);
 	}
@@ -68,11 +68,11 @@ public class GraphController implements Initializable {
 		 MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
 		vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
 		
-		System.out.println("VO " + vo);
+//		System.out.println("VO " + vo);
 		imageHelper.drawGraphNew(vo, linechart);
 	}
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println("Initializing Graph Controller");
+//		System.out.println("Initializing Graph Controller");
 	}
 }

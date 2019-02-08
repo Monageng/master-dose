@@ -73,9 +73,7 @@ public class FirstImageController implements Initializable {
 
 	@FXML
 	protected void handleLoadFirstImagePosteriaAction(ActionEvent event) {
-		System.out.println("Starting handleLoadFirstImagePosteriaAction");
 
-		System.out.println("first_anteria_left " + first_anteria_left);
 		MeasurementVO measurementVO = MasterDoseCache.instance
 				.getMeasurementVO();
 		measurementVO.getFirstMeasurementVO().setPosteriaLeftField(
@@ -90,7 +88,7 @@ public class FirstImageController implements Initializable {
 
 	@FXML
 	protected void handleLoadFirstImageAnteriaAction(ActionEvent event) {
-		System.out.println("Starting handleLoadFirstImageAnteriaAction");
+//		System.out.println("Starting handleLoadFirstImageAnteriaAction");
 		MeasurementVO measurementVO = MasterDoseCache.instance
 				.getMeasurementVO();
 		measurementVO.getFirstMeasurementVO().setAnteriaLeftField(
@@ -104,7 +102,7 @@ public class FirstImageController implements Initializable {
 	}
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println("Initialize first image");
+//		System.out.println("Initialize first image");
 
 		MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
 		measurementVO.getFirstMeasurementVO().setInterval(6);
@@ -122,8 +120,8 @@ public class FirstImageController implements Initializable {
 						measurementVO.getFirstMeasurementVO().setInterval(
 								Double.parseDouble(newValue));
 						firstInterval.setText(newValue);
-						System.out.println(newValue);
-						System.out.println(firstInterval.getText());
+//						System.out.println(newValue);
+//						System.out.println(firstInterval.getText());
 					}
 				}
 			}

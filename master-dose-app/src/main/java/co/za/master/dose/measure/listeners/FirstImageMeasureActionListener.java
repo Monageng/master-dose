@@ -30,15 +30,15 @@ public class FirstImageMeasureActionListener implements MeasureActionListenerInt
 	
 	public void actionPerformed(ActionEvent e) {
 		ImagePlus imagePlus = WindowManager.getCurrentImage();
-		System.out.println("imageTypeEnum : " + imageTypeEnum);
-		System.out.println("imageSideEnum : " + imageSideEnum);
+//		System.out.println("imageTypeEnum : " + imageTypeEnum);
+//		System.out.println("imageSideEnum : " + imageSideEnum);
 		
 		MeasurementVO bean = MasterDoseCache.instance.getMeasurementVO();
 		if (imagePlus == null) {
-			System.out.println("Image is not loaded");
+//			System.out.println("Image is not loaded");
 		} else {
 			double mean = ImageHelper.instance.getMeanCount(imagePlus);
-			System.out.println("FirstImageMeasureActionListener Mean : " + mean);
+//			System.out.println("FirstImageMeasureActionListener Mean : " + mean);
 
 //			 Check image side
 			if (imageSideEnum == ImageSideEnum.Background) {
@@ -86,7 +86,7 @@ public class FirstImageMeasureActionListener implements MeasureActionListenerInt
 				}
 			}
 //			MasterDoseCache.instance.getMeasurementVO().setFirstMeasurementVO(bean.getFirstMeasurementVO());
-			System.out.println("Printing first VO : " + MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO());
+//			System.out.println("Printing first VO : " + MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO());
 		}
 	}
 

@@ -1,13 +1,5 @@
 package co.za.master.dose.utils;
 
-import ij.ImagePlus;
-import ij.WindowManager;
-import ij.gui.ImageWindow;
-import ij.io.Opener;
-import ij.measure.ResultsTable;
-import ij.plugin.filter.Analyzer;
-import ij.process.ImageProcessor;
-
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
@@ -17,15 +9,6 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 
-import javafx.geometry.Side;
-import javafx.scene.Node;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.Alert;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.labels.StandardXYItemLabelGenerator;
@@ -34,8 +17,6 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.DefaultXYDataset;
-
-import com.sun.javafx.charts.Legend;
 
 import co.za.master.dose.constants.StyleSheetConstants;
 import co.za.master.dose.image.listeners.DuplicateActionListener;
@@ -53,6 +34,19 @@ import co.za.master.dose.model.ImageTypeEnum;
 import co.za.master.dose.model.MeasurementBean;
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.model.ROITypeEnum;
+import ij.ImagePlus;
+import ij.WindowManager;
+import ij.gui.ImageWindow;
+import ij.io.Opener;
+import ij.measure.ResultsTable;
+import ij.plugin.filter.Analyzer;
+import ij.process.ImageProcessor;
+import javafx.geometry.Side;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class ImageHelper {
 
@@ -168,10 +162,10 @@ public class ImageHelper {
 		MathContext mc = new MathContext(4, RoundingMode.HALF_UP);
 		BigDecimal decimal = new BigDecimal(results, mc);
 
-		System.out.println(" mean 		::: " + mean);
-		System.out.println(" dBGCount 	::: " + dBGCount);
-		System.out.println(" Results 	::::  " + results);
-		System.out.println(" decimal mean 	::::  " + decimal.doubleValue());
+//		System.out.println(" mean 		::: " + mean);
+//		System.out.println(" dBGCount 	::: " + dBGCount);
+//		System.out.println(" Results 	::::  " + results);
+//		System.out.println(" decimal mean 	::::  " + decimal.doubleValue());
 
 		return decimal.doubleValue();
 	}
@@ -362,7 +356,7 @@ public class ImageHelper {
 
 		linechart.getData().clear();
 		
-		System.out.println("measurementBean : " + measurementBean);
+//		System.out.println("measurementBean : " + measurementBean);
 
 		XYChart.Series rightImageDataSet = getRightImageDataSet(measurementBean);
 		XYChart.Series leftImageDataSet = getLeftImageDataSet(measurementBean);
@@ -374,7 +368,7 @@ public class ImageHelper {
 		linechart.setCreateSymbols(true);
 		
 		calculateDosage(measurementBean);
-		System.out.println("Dosage " + measurementBean.getDosage());
+//		System.out.println("Dosage " + measurementBean.getDosage());
 		linechart.setTitle("Dosage is " + measurementBean.getDosage());
 
 		linechart.setLegendSide(Side.RIGHT);
@@ -391,7 +385,7 @@ public class ImageHelper {
 //		
 		
 		String OS = System.getProperty("os.name").toLowerCase();
-		System.out.println("OS" + OS);
+//		System.out.println("OS" + OS);
 		linechart.getStylesheets().clear();
 		if (OS == "linux") {
 			File f = new File("src/main/java/co/za/master/dose/frame/Login.css");
@@ -442,9 +436,9 @@ public class ImageHelper {
 		
 		series.setName("Right Image");
 		
-		System.out.println("Firs Interval : " + vo.getFirstMeasurementVO().getInterval() + " : " + vo.getFirstMeasurementVO().getRightImage());
-		System.out.println("second Interval : " + vo.getSecondMeasurementVO().getInterval()+ " : " + vo.getSecondMeasurementVO().getRightImage());
-		System.out.println("Third Interval : " + vo.getThirdMeasurementVO().getInterval()+ " : " + vo.getThirdMeasurementVO().getRightImage());
+//		System.out.println("Firs Interval : " + vo.getFirstMeasurementVO().getInterval() + " : " + vo.getFirstMeasurementVO().getRightImage());
+//		System.out.println("second Interval : " + vo.getSecondMeasurementVO().getInterval()+ " : " + vo.getSecondMeasurementVO().getRightImage());
+//		System.out.println("Third Interval : " + vo.getThirdMeasurementVO().getInterval()+ " : " + vo.getThirdMeasurementVO().getRightImage());
 		
 //		System.out.println("Series : " + series.getNode());
 //		series.getNode().getStyleClass().add("series-right-image");
@@ -465,7 +459,7 @@ public class ImageHelper {
 				new XYChart.Data(vo.getThirdMeasurementVO().getInterval() + "", vo.getThirdMeasurementVO()
 						.getLeftImage()));
 		series.setName("Left Image");
-		System.out.println("Left series : " + series.getData() );
+//		System.out.println("Left series : " + series.getData() );
 		return series;
 	}
 
@@ -640,59 +634,59 @@ public class ImageHelper {
 				.getFirstMeasurementVO().getLeftImage()) / 2)
 				* (ImageMeasureTime.SECOND_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.FIRST_MEASUREMENT_TIME
 						.getMeasureTime());
-		System.out.println("gradient1 : " + gradientL1);
+//		System.out.println("gradient1 : " + gradientL1);
 
 		// ((L3+L2)/2)*(t3-t1)
 		double gradientL2 = ((vo.getThirdMeasurementVO().getLeftImage() + vo
 				.getSecondMeasurementVO().getLeftImage()) / 2)
 				* (ImageMeasureTime.THIRD_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.SECOND_MEASUREMENT_TIME
 						.getMeasureTime());
-		System.out.println("gradientL2 : " + gradientL2);
+//		System.out.println("gradientL2 : " + gradientL2);
 
 		// ((R2+R1)/2)*(t2-t1)
 		double gradientR1 = ((vo.getSecondMeasurementVO().getRightImage() + vo
 				.getFirstMeasurementVO().getRightImage()) / 2)
 				* (ImageMeasureTime.SECOND_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.FIRST_MEASUREMENT_TIME
 						.getMeasureTime());
-		System.out.println("gradientR1 : " + gradientR1);
+//		System.out.println("gradientR1 : " + gradientR1);
 
 		// ((R3+R2)/2)*(t3-t1)
 		double gradientR2 = ((vo.getThirdMeasurementVO().getRightImage() + vo
 				.getSecondMeasurementVO().getRightImage()) / 2)
 				* (ImageMeasureTime.THIRD_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.SECOND_MEASUREMENT_TIME
 						.getMeasureTime());
-		System.out.println("gradientR2 : " + gradientR2);
+//		System.out.println("gradientR2 : " + gradientR2);
 
 		// ((R2+R1)/2)*(t2-t1)
 		double gradientT1 = ((vo.getSecondMeasurementVO().getTumourImage() + vo
 				.getFirstMeasurementVO().getTumourImage()) / 2)
 				* (ImageMeasureTime.SECOND_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.FIRST_MEASUREMENT_TIME
 						.getMeasureTime());
-		System.out.println("gradientT1 : " + gradientT1);
+//		System.out.println("gradientT1 : " + gradientT1);
 
 		// ((R3+R2)/2)*(t3-t1)
 		double gradientT2 = ((vo.getThirdMeasurementVO().getTumourImage() + vo
 				.getSecondMeasurementVO().getTumourImage()) / 2)
 				* (ImageMeasureTime.THIRD_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.SECOND_MEASUREMENT_TIME
 						.getMeasureTime());
-		System.out.println("gradientT2 : " + gradientT2);
+//		System.out.println("gradientT2 : " + gradientT2);
 
 		double sumLGradient = ((gradientL1 + gradientL2) / 1000) * S_VALUE;
 
-		System.out.println("sumLGradient : " + sumLGradient);
+//		System.out.println("sumLGradient : " + sumLGradient);
 
 		double sumRGradient = ((gradientR1 + gradientR2) / 1000) * S_VALUE;
-		System.out.println("sumRGradient :" + sumRGradient);
+//		System.out.println("sumRGradient :" + sumRGradient);
 		
 		double sumTGradient = ((gradientT1 + gradientT2) / 1000) * S_VALUE;
-		System.out.println("sumTGradient :" + sumTGradient);
+//		System.out.println("sumTGradient :" + sumTGradient);
 
 
 		double totalD = sumLGradient + sumRGradient + sumTGradient;
 		MathContext mc = new MathContext(4, RoundingMode.HALF_UP);
 		BigDecimal dosage = new BigDecimal(totalD, mc);
 
-		System.out.println("dosage : " + dosage);
+//		System.out.println("dosage : " + dosage);
 		vo.setDosage(dosage.doubleValue());
 	}
 
