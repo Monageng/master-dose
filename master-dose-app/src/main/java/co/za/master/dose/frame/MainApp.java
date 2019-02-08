@@ -20,7 +20,7 @@ public class MainApp extends Application {
 		loader.setLocation(getClass().getResource("/MainPage.fxml"));
 		Parent root = loader.load(); 
 
-		Scene scene = new Scene(root, 600, 1000);
+		Scene scene = new Scene(root, 450, 700);
 
 		primaryStage.setTitle("Master dose");
 		primaryStage.setScene(scene);

@@ -64,51 +64,51 @@ public class MainAppController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		System.out.println("Initialize MAIN image");
 
-		initialsTxt.textProperty().addListener(new ChangeListener<String>() {
-			public void changed(ObservableValue<? extends String> arg0,
-					String oldValue, String newValue) {
-				MeasurementVO measurementVO = MasterDoseCache.instance
-						.getMeasurementVO();
-				measurementVO.getPatientDetails().setInitials(newValue);
-			}
-		});
-
-		firstNameTxt.textProperty().addListener(new ChangeListener<String>() {
-			public void changed(ObservableValue<? extends String> arg0,
-					String oldValue, String newValue) {
-				MeasurementVO measurementVO = MasterDoseCache.instance
-						.getMeasurementVO();
-				measurementVO.getPatientDetails().setFirstName(newValue);
-			}
-		});
-
-		surnameTxt.textProperty().addListener(new ChangeListener<String>() {
-			public void changed(ObservableValue<? extends String> arg0,
-					String oldValue, String newValue) {
-				MeasurementVO measurementVO = MasterDoseCache.instance
-						.getMeasurementVO();
-				measurementVO.getPatientDetails().setSurname(newValue);
-			}
-		});
-
-		patientTxt.textProperty().addListener(new ChangeListener<String>() {
-			public void changed(ObservableValue<? extends String> arg0,
-					String oldValue, String newValue) {
-				MeasurementVO measurementVO = MasterDoseCache.instance
-						.getMeasurementVO();
-				measurementVO.getPatientDetails().setPatientId(newValue);
-			}
-		});
-		
-		titleComboBox.valueProperty().addListener(new ChangeListener<String>() {
-
-			public void changed(ObservableValue<? extends String> arg0,
-					String oldValue, String newValue) {
-				MeasurementVO measurementVO = MasterDoseCache.instance
-						.getMeasurementVO();
-				measurementVO.getPatientDetails().setTitle(newValue);
-			}
-		});
+//		initialsTxt.textProperty().addListener(new ChangeListener<String>() {
+//			public void changed(ObservableValue<? extends String> arg0,
+//					String oldValue, String newValue) {
+//				MeasurementVO measurementVO = MasterDoseCache.instance
+//						.getMeasurementVO();
+//				measurementVO.getPatientDetails().setInitials(newValue);
+//			}
+//		});
+//
+//		firstNameTxt.textProperty().addListener(new ChangeListener<String>() {
+//			public void changed(ObservableValue<? extends String> arg0,
+//					String oldValue, String newValue) {
+//				MeasurementVO measurementVO = MasterDoseCache.instance
+//						.getMeasurementVO();
+//				measurementVO.getPatientDetails().setFirstName(newValue);
+//			}
+//		});
+//
+//		surnameTxt.textProperty().addListener(new ChangeListener<String>() {
+//			public void changed(ObservableValue<? extends String> arg0,
+//					String oldValue, String newValue) {
+//				MeasurementVO measurementVO = MasterDoseCache.instance
+//						.getMeasurementVO();
+//				measurementVO.getPatientDetails().setSurname(newValue);
+//			}
+//		});
+//
+//		patientTxt.textProperty().addListener(new ChangeListener<String>() {
+//			public void changed(ObservableValue<? extends String> arg0,
+//					String oldValue, String newValue) {
+//				MeasurementVO measurementVO = MasterDoseCache.instance
+//						.getMeasurementVO();
+//				measurementVO.getPatientDetails().setPatientId(newValue);
+//			}
+//		});
+//		
+//		titleComboBox.valueProperty().addListener(new ChangeListener<String>() {
+//
+//			public void changed(ObservableValue<? extends String> arg0,
+//					String oldValue, String newValue) {
+//				MeasurementVO measurementVO = MasterDoseCache.instance
+//						.getMeasurementVO();
+//				measurementVO.getPatientDetails().setTitle(newValue);
+//			}
+//		});
 			
 		
 	}

@@ -42,7 +42,7 @@
 <?import javafx.scene.text.*?>
 
 <GridPane fx:controller="co.za.master.dose.control.ThirdImageController" 
-    xmlns:fx="http://javafx.com/fxml"  hgap="10" vgap="10"  prefHeight="900.0" prefWidth="900.0"
+    xmlns:fx="http://javafx.com/fxml"  hgap="5" vgap="10"  prefHeight="900.0" prefWidth="900.0"
     styleClass="root">
     <stylesheets>
     	<URL value="@Login.css" />

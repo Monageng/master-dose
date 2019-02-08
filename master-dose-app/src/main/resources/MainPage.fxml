@@ -39,57 +39,73 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 <?import javafx.scene.text.*?>
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.za.master.dose.frame.MainAppController" alignment="center" hgap="10" vgap="10" prefHeight="900.0" prefWidth="900.0" styleClass="root">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.za.master.dose.frame.MainAppController" alignment="center" hgap="10" vgap="10" styleClass="root">
    <stylesheets>
       <URL value="@Login.css" />
    </stylesheets>
    <padding>
-      <Insets right="25" bottom="10" left="25" />
+      <Insets right="10" bottom="10" left="10" top="15"/>
    </padding>
-   <Text id="welcome-text" text="Patiance Details" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" />
-   <Label text="Title :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-   <Label text="Initials :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-   <Label text="First Name :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-   <Label text="Surname :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-   <Label text="Patient's Number:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-   <ComboBox fx:id="titleComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1">
-      <items>
-         <FXCollections fx:factory="observableArrayList">
-            <String fx:value="Mr" />
-            <String fx:value="Mrs" />
-            <String fx:value="Ms" />
-            <String fx:value="Miss" />
-            <String fx:value="Dr" />
-            <String fx:value="Professor" />
-         </FXCollections>
-      </items>
-   </ComboBox>
-   <TextField fx:id="initialsTxt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-   <TextField fx:id="firstNameTxt" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-   <TextField fx:id="surnameTxt" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-   <TextField fx:id="patientTxt" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-  
-   <Text fx:id="actiontarget" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-   <VBox GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.columnSpan="2">
-      <VBox GridPane.columnIndex="0" GridPane.rowIndex="8" style="-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;">
+   <Label text="Patient Details "  GridPane.columnIndex="0" GridPane.rowIndex="0"  styleClass="header-text"/>
+   <VBox GridPane.columnIndex="0" GridPane.rowIndex="1"  style="-fx-border-color:grey; -fx-border-width: 1; -fx-border-style: solid;">
+   		<children>
+		   <HBox  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
+		    <padding>
+		      <Insets right="1" bottom="2" left="1" top="1"/>
+		   </padding>
+		    <children>
+		    
+		   		<Label text="Title :"  />
+		   		<ComboBox fx:id="titleComboBox" >
+					<items>
+				         <FXCollections fx:factory="observableArrayList">
+				            <String fx:value="Mr" />
+				            <String fx:value="Mrs" />
+				            <String  fx:value="Ms" />
+				            <String fx:value="Miss" />
+				            <String fx:value="Dr" />
+				            <String fx:value="Prof" />
+				         </FXCollections>
+				    </items>
+				</ComboBox>
+		   		<Label text=" Initials :" />
+		   		<TextField fx:id="initialsTxt" maxWidth="50.0" />
+		   		<Label text="  First Name :"  />
+		        <TextField fx:id="firstNameTxt"  maxWidth="300.0"/>
+		    </children>
+		   </HBox>
+		   <HBox   GridPane.columnIndex="0" GridPane.rowIndex="2" >
+		    <children>	
+		        <Label text="Surname :"  />
+		        <TextField fx:id="surnameTxt" maxWidth="250.0" />
+		        <Label text=" Patient No :"  />
+		        <TextField fx:id="patientTxt" maxWidth="200.0" />
+		      </children>
+		   </HBox>
+		 </children>
+	  </VBox>
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="2">
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="3"  style="-fx-border-color:grey; -fx-border-width: 1; -fx-border-style: solid;">
          <children>
             <fx:include source="FirstImagePage.fxml" />
          </children>
       </VBox>
-      <VBox GridPane.columnIndex="0" GridPane.rowIndex="8" style="-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;">
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-border-color:grey; -fx-border-width: 1; -fx-border-style: solid;">
          <children>
             <fx:include source="SecondImagePage.fxml" />
          </children>
       </VBox>
-      <VBox GridPane.columnIndex="0" GridPane.rowIndex="8" style="-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;">
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="5" style="-fx-border-color:grey; -fx-border-width: 1; -fx-border-style: solid;">
          <children>
             <fx:include source="ThirdImagePage.fxml" />
          </children>
       </VBox>
-      <VBox GridPane.columnIndex="0" GridPane.rowIndex="8" style="-fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;">
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="6" style="-fx-border-color:grey; -fx-border-width: 1; -fx-border-style: solid;">
          <children>
             <fx:include source="GraphPage.fxml" />
          </children>
       </VBox>
    </VBox>
+   
+   
 </GridPane>

@@ -81,9 +81,15 @@ root {
     -fx-font-size: 12px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
+    -fx-pre-height:10px;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
-
+.header-text {
+   -fx-font-size: 14px;
+   -fx-font-family: "Arial Black";
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
 #welcome-text {
    -fx-font-size: 32px;
    -fx-font-family: "Arial Black";
@@ -92,7 +98,7 @@ root {
 }
 
 #image-text {
-   -fx-font-size: 20px;
+   -fx-font-size: 14px;
    -fx-font-family: "Arial Black";
    -fx-fill: #818181;
    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
@@ -100,7 +106,17 @@ root {
 
 .text-field{
     -fx-min-width: 30;
-    -fx-min-height: 30;
+    -fx-min-height: 20;
+}
+.hbox {
+	-fx-padding : 2;
+	-fx-spacing : 10;
+	-fx-pre-width: 30;
+}
+
+.combo-box{
+    -fx-pre-width: 30;
+    -fx-pre-height: 20;
 }
 #actiontarget {
   -fx-fill: FIREBRICK;
@@ -112,7 +128,7 @@ root {
     -fx-text-fill: white;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
-    -fx-min-width: 100;
+    -fx-min-width: 70;
     -fx-background-color: linear-gradient(#61a2b1, #2A5058);
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
