@@ -50,7 +50,6 @@ public class GraphController implements Initializable {
 
 	@FXML
 	protected void handleGenerateReportAction (ActionEvent event) {
-		System.out.println("Starting to generate report : ");
 		ImageHelper imageHelper = new ImageHelper();
 //		MeasurementVO vo = ImageDataHelper.createVO();
 		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
