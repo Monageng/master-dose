@@ -24,19 +24,19 @@ public class OvalSelectionTypeActionListener implements ActionListener {
 		
 		if (roiTypeEnum == ROITypeEnum.RECTANGULAR_ROI) {
 			IJ.makeRectangle(108, 64, 36, 41);;
-			IJ.setTool("rectangle");	
+//			IJ.setTool("rectangle");	
 		} else if (roiTypeEnum == ROITypeEnum.OVAL_ROI) {
 			IJ.makeOval(108, 64, 36, 41);
-			IJ.setTool("oval");		
+//			IJ.setTool("oval");		
 		} else if (roiTypeEnum == ROITypeEnum.POLYGON_ROI) {
-			IJ.makeOval(108, 64, 36, 41);
-			IJ.setTool("polygon");	
+			IJ.makePoint(108, 41);
+//			IJ.setTool("polygon");	
 		} else if (roiTypeEnum == ROITypeEnum.FREE_HAND_ROI) {
-			IJ.makeOval(108, 64, 36, 41);
-			IJ.setTool("freehand");	
+			IJ.makeLine(108, 64, 36, 41);
+//			IJ.setTool("freehand");	
 		} else if (roiTypeEnum == ROITypeEnum.STREIGHT_ROI) {
 			IJ.makeLine(108, 64, 36, 41);
-			IJ.setTool(1);;	
+//			IJ.setTool(1);;	
 		} 
 	}
 

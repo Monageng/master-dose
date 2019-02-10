@@ -19,6 +19,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.DefaultXYDataset;
 
 import co.za.master.dose.constants.StyleSheetConstants;
+import co.za.master.dose.image.listeners.CropActionListener;
 import co.za.master.dose.image.listeners.DuplicateActionListener;
 import co.za.master.dose.image.listeners.OvalSelectionTypeActionListener;
 import co.za.master.dose.image.listeners.ZoomInActionListener;
@@ -231,6 +232,8 @@ public class ImageHelper {
 		duplicateMenu.addActionListener(duplicateActionListener);
 
 		MenuItem cropMenu = new MenuItem("Crop");
+		CropActionListener cropActionListener = new CropActionListener();
+		cropMenu.addActionListener(cropActionListener);
 
 		MenuItem zoomInMenu = new MenuItem("Zoom In");
 		ZoomInActionListener zoomInActionListener = new ZoomInActionListener();
