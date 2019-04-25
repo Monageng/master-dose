@@ -37,6 +37,7 @@ import co.za.master.dose.model.ROITypeEnum;
 import ij.ImagePlus;
 import ij.WindowManager;
 import ij.gui.ImageWindow;
+import ij.gui.Toolbar;
 import ij.io.Opener;
 import ij.measure.ResultsTable;
 import ij.plugin.filter.Analyzer;
@@ -77,6 +78,12 @@ public class ImageHelper {
 
 			imageWindow.setMenuBar(ImageHelper.instance.createImageMenuBar(
 					measurementVO, imageTypeEnum, imageNumberEnum));
+			
+						
+			Toolbar toolbar = new Toolbar();
+			toolbar.setVisible(false);
+			imageWindow.add(toolbar);
+			imageWindow.updateImage(imagePlus);
 
 		} else {
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
