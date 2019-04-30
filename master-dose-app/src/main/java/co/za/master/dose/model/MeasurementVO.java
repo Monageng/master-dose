@@ -3,7 +3,13 @@ package co.za.master.dose.model;
 import javafx.application.HostServices;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.TextField;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Data
 public class MeasurementVO {
 	private TextField textField;
 	private double dosage;
@@ -13,6 +19,7 @@ public class MeasurementVO {
 	private SecondMeasurementVO secondMeasurementVO = new SecondMeasurementVO();
 	private ThirdMeasurementVO thirdMeasurementVO = new ThirdMeasurementVO();
 	private PatientDetails patientDetails = new PatientDetails();
+	private ConfigData configData = new ConfigData();
 	private HostServices hostServices;
 	private LineChart<Number, Number> linechart;
 	
@@ -67,6 +74,12 @@ public class MeasurementVO {
 	}
 	public void setLinechart(LineChart<Number, Number> linechart) {
 		this.linechart = linechart;
+	}
+	public ConfigData getConfigData() {
+		return configData;
+	}
+	public void setConfigData(ConfigData configData) {
+		this.configData = configData;
 	}
 
 	
