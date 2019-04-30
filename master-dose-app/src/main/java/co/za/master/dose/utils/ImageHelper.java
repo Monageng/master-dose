@@ -78,10 +78,17 @@ public class ImageHelper {
 
 			imageWindow.setMenuBar(ImageHelper.instance.createImageMenuBar(
 					measurementVO, imageTypeEnum, imageNumberEnum));
-			
-						
+//			co.za.master.dose.model.Toolbar toolbar = new co.za.master.dose.model.Toolbar();	
 			Toolbar toolbar = new Toolbar();
 			toolbar.setVisible(false);
+			
+//			toolbar.setBackground(Color.BLUE);
+//			toolbar.setColor(Color.GREEN);
+//			toolbar.setForegroundColor(Color.ORANGE);
+			
+			toolbar.setSize(StyleSheetConstants.IMAGE_POPUP_WIDTH,
+					StyleSheetConstants.IMAGE_POPUP_HEIGHT);
+
 			imageWindow.add(toolbar);
 			imageWindow.updateImage(imagePlus);
 
