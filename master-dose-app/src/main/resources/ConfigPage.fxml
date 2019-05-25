@@ -53,7 +53,7 @@
 		   <HBox  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
 		    <children>
 		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
-		    		<Label fx:id="pixelsLbl" text="Pixels in the ROI  :" prefWidth="170.0" />
+		    		<Label fx:id="pixelsLbl" text="Background :" prefWidth="170.0" />
 		    	</VBox>
 		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
 		    		<TextField fx:id="pixelsTxt"  maxWidth="50.0"/>
@@ -63,7 +63,7 @@
 		  <HBox  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
 		    <children>
 		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
-		    		<Label fx:id="sensitivityLbl" text="Gamma camera sensitivity :  " prefWidth="170.0" />
+		    		<Label fx:id="sensitivityLbl" text="Sensitivity :  " prefWidth="170.0" />
 		    	</VBox>
 		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
 		    		<TextField fx:id="sensitivityTxt"  maxWidth="50.0"/>
@@ -73,17 +73,7 @@
 		   <HBox  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
 		    <children>
 		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
-		    		<Label fx:id="acrylicDepthLbl" text="Acrylic depth : " prefWidth="170.0" />
-		    	</VBox>
-		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
-		    		<TextField fx:id="acrylicDepthTxt"  maxWidth="50.0"/>
-		    	</VBox>
-		   	</children>
-		   </HBox>
-		   <HBox  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
-		    <children>
-		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
-		    		<Label fx:id="transmissionCountsLbl" text="Transmission Counts : " prefWidth="170.0" />
+		    		<Label fx:id="transmissionCountsLbl" text="Transmission : " prefWidth="170.0" />
 		    	</VBox>
 		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
 		    		<TextField fx:id="transmissionCountsTxt"  maxWidth="50.0"/>

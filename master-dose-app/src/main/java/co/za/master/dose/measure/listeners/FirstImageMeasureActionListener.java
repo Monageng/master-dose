@@ -38,7 +38,7 @@ public class FirstImageMeasureActionListener implements MeasureActionListenerInt
 //			System.out.println("Image is not loaded");
 		} else {
 			double mean = ImageHelper.instance.getMeanCount(imagePlus);
-//			System.out.println("FirstImageMeasureActionListener Mean : " + mean);
+			System.out.println("FirstImageMeasureActionListener Mean : " + mean);
 
 //			 Check image side
 			if (imageSideEnum == ImageSideEnum.Background) {
@@ -55,6 +55,7 @@ public class FirstImageMeasureActionListener implements MeasureActionListenerInt
 						JOptionPane.showConfirmDialog(null, "Background measurement not taken, please take background measurements first", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 					}else {
 						double dMean = ImageHelper.instance.getMean(imagePlus,bean.getFirstMeasurementVO().getAnteriaBackground() + "");
+						System.out.println("FirstImageMeasureActionListener Mean : " + dMean);
 						if (imageSideEnum == ImageSideEnum.Left) {
 							MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO().setAnteriaLeft(dMean);
 							MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO().getAnteriaLeftField().setText("" + dMean);

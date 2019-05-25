@@ -108,20 +108,26 @@ public class ImageHelper {
 		BigDecimal decquerelDecimal = new BigDecimal(decquerel, mc);
 		BigDecimal meanDecimal = new BigDecimal(meanValue, mc);
 		BigDecimal resultsDecimal = decquerelDecimal.multiply(meanDecimal);
+		
+		System.out.println("covertToBecquerel : meanValue = " + meanValue + " resultsDecimal :  " + resultsDecimal.doubleValue());
 		return resultsDecimal.doubleValue();
 	}
 
 	public double getSquareRootOfImages(double anteria, double posteria) {
+		System.out.println("Anteria : " + anteria + " Posteria : " + posteria);
 		double result = anteria * posteria;
 		double sqRoot = 0;
 		if (result > 0) {
 			sqRoot = Math.sqrt(result);
+			System.out.println("result is a positive number *** ");
 		} else {
 			result = result * -1;
 			sqRoot = Math.sqrt(result);
 			sqRoot = sqRoot * -1;
+			System.out.println("result is a negative number  calculated on + square root *** ");
 		}
 
+		System.out.println("Result  : " + result + " square root : " + sqRoot );
 		return sqRoot;
 	}
 
@@ -168,7 +174,7 @@ public class ImageHelper {
 	}
 
 	public double getMean(ImagePlus imagePlus, String backgroundCount) {
-
+		System.out.println(" ***************START*********************");
 		double mean = getMeanCount(imagePlus);
 		double dBGCount = Double.parseDouble(backgroundCount);
 		double results = mean - dBGCount;
@@ -176,12 +182,15 @@ public class ImageHelper {
 		MathContext mc = new MathContext(4, RoundingMode.HALF_UP);
 		BigDecimal decimal = new BigDecimal(results, mc);
 
-//		System.out.println(" mean 		::: " + mean);
-//		System.out.println(" dBGCount 	::: " + dBGCount);
-//		System.out.println(" Results 	::::  " + results);
-//		System.out.println(" decimal mean 	::::  " + decimal.doubleValue());
+		System.out.println(" mean 		::: " + mean);
+		System.out.println(" dBGCount 	::: " + dBGCount);
+		System.out.println(" Results 	::::  " + results);
+		System.out.println(" decimal mean 	::::  " + decimal.doubleValue());
 
+		System.out.println(" ***************END*********************");
+		
 		return decimal.doubleValue();
+		
 	}
 
 	public MenuBar createImageMenuBar(MeasurementVO bean,
@@ -648,59 +657,59 @@ public class ImageHelper {
 				.getFirstMeasurementVO().getLeftImage()) / 2)
 				* (ImageMeasureTime.SECOND_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.FIRST_MEASUREMENT_TIME
 						.getMeasureTime());
-//		System.out.println("gradient1 : " + gradientL1);
+		System.out.println("gradient1 : " + gradientL1);
 
 		// ((L3+L2)/2)*(t3-t1)
 		double gradientL2 = ((vo.getThirdMeasurementVO().getLeftImage() + vo
 				.getSecondMeasurementVO().getLeftImage()) / 2)
 				* (ImageMeasureTime.THIRD_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.SECOND_MEASUREMENT_TIME
 						.getMeasureTime());
-//		System.out.println("gradientL2 : " + gradientL2);
+		System.out.println("gradientL2 : " + gradientL2);
 
 		// ((R2+R1)/2)*(t2-t1)
 		double gradientR1 = ((vo.getSecondMeasurementVO().getRightImage() + vo
 				.getFirstMeasurementVO().getRightImage()) / 2)
 				* (ImageMeasureTime.SECOND_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.FIRST_MEASUREMENT_TIME
 						.getMeasureTime());
-//		System.out.println("gradientR1 : " + gradientR1);
+		System.out.println("gradientR1 : " + gradientR1);
 
 		// ((R3+R2)/2)*(t3-t1)
 		double gradientR2 = ((vo.getThirdMeasurementVO().getRightImage() + vo
 				.getSecondMeasurementVO().getRightImage()) / 2)
 				* (ImageMeasureTime.THIRD_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.SECOND_MEASUREMENT_TIME
 						.getMeasureTime());
-//		System.out.println("gradientR2 : " + gradientR2);
+		System.out.println("gradientR2 : " + gradientR2);
 
 		// ((R2+R1)/2)*(t2-t1)
 		double gradientT1 = ((vo.getSecondMeasurementVO().getTumourImage() + vo
 				.getFirstMeasurementVO().getTumourImage()) / 2)
 				* (ImageMeasureTime.SECOND_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.FIRST_MEASUREMENT_TIME
 						.getMeasureTime());
-//		System.out.println("gradientT1 : " + gradientT1);
+		System.out.println("gradientT1 : " + gradientT1);
 
 		// ((R3+R2)/2)*(t3-t1)
 		double gradientT2 = ((vo.getThirdMeasurementVO().getTumourImage() + vo
 				.getSecondMeasurementVO().getTumourImage()) / 2)
 				* (ImageMeasureTime.THIRD_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.SECOND_MEASUREMENT_TIME
 						.getMeasureTime());
-//		System.out.println("gradientT2 : " + gradientT2);
+		System.out.println("gradientT2 : " + gradientT2);
 
 		double sumLGradient = ((gradientL1 + gradientL2) / 1000) * S_VALUE;
 
-//		System.out.println("sumLGradient : " + sumLGradient);
+		System.out.println("sumLGradient : " + sumLGradient);
 
 		double sumRGradient = ((gradientR1 + gradientR2) / 1000) * S_VALUE;
-//		System.out.println("sumRGradient :" + sumRGradient);
+		System.out.println("sumRGradient :" + sumRGradient);
 		
 		double sumTGradient = ((gradientT1 + gradientT2) / 1000) * S_VALUE;
-//		System.out.println("sumTGradient :" + sumTGradient);
+		System.out.println("sumTGradient :" + sumTGradient);
 
 
 		double totalD = sumLGradient + sumRGradient + sumTGradient;
 		MathContext mc = new MathContext(4, RoundingMode.HALF_UP);
 		BigDecimal dosage = new BigDecimal(totalD, mc);
 
-//		System.out.println("dosage : " + dosage);
+		System.out.println("dosage : " + dosage);
 		vo.setDosage(dosage.doubleValue());
 	}
 
