@@ -202,6 +202,7 @@ public class ImageHelper {
 		return mb;
 	}
 
+	
 	public MenuItem createMenuItem(String menuLabel,
 			MeasureActionListenerInterface actionListener) {
 		MenuItem menuItem = new MenuItem(menuLabel);
@@ -304,7 +305,21 @@ public class ImageHelper {
 	public Menu buildImageMeasureMenu(MeasurementVO bean,
 			ImageTypeEnum imageTypeEnum, ImageNumberEnum imageNumberEnum) {
 		Menu measureMenu = new Menu("Analyse");
+		
 
+		Menu submenuAnt=new Menu("Anteria");  
+		Menu submenuPost=new Menu("Posteria");
+				
+		createSubmenuItem(bean, submenuAnt, ImageTypeEnum.Anteria, imageNumberEnum);
+		createSubmenuItem(bean, submenuPost, ImageTypeEnum.Posteria, imageNumberEnum);
+				
+		measureMenu.add(submenuAnt);
+		measureMenu.add(submenuPost);
+		
+		return measureMenu;
+	}
+	
+	private void createSubmenuItem(MeasurementVO bean,Menu measureMenu, ImageTypeEnum imageTypeEnum, ImageNumberEnum imageNumberEnum) {
 		if (imageNumberEnum == ImageNumberEnum.FirstImage) {
 			measureMenu.add(createMenuItem("Background",
 					new FirstImageMeasureActionListener(bean,
@@ -349,8 +364,6 @@ public class ImageHelper {
 							ImageSideEnum.Tumour, imageTypeEnum)));
 
 		}
-
-		return measureMenu;
 	}
 
 	public double getMeanCount(ImagePlus imagePlus) {

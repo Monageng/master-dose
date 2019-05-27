@@ -37,7 +37,7 @@ public class SecondImageMeasureActionListener implements MeasureActionListenerIn
 				System.out.println("Image is not loaded");
 			} else {
 				double mean = ImageHelper.instance.getMeanCount(imagePlus);
-				System.out.println("SecondImageMeasureActionListener Mean : " + mean);
+				System.out.println("SecondImageMeasureActionListener Mean : " + mean + " imageTypeEnum " + imageTypeEnum);
 
 //				 Check image side
 				if (imageSideEnum == ImageSideEnum.Background) {

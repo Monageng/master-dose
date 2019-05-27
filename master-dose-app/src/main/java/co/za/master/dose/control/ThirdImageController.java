@@ -71,6 +71,29 @@ public class ThirdImageController implements Initializable{
 	}
 	
 	@FXML
+	protected void handleLoadImageAction(ActionEvent event) {
+//		System.out.println("Starting handleLoadFirstImageAnteriaAction");
+		MeasurementVO measurementVO = MasterDoseCache.instance
+				.getMeasurementVO();
+		measurementVO.getThirdMeasurementVO().setPosteriaLeftField(
+				third_posteria_left);
+		measurementVO.getThirdMeasurementVO().setPosteriaRightField(
+				third_posteria_right);
+		measurementVO.getThirdMeasurementVO().setPosteriaTumourField(
+				third_posteria_tumour);
+		
+		measurementVO.getThirdMeasurementVO().setAnteriaLeftField(
+				third_anteria_left);
+		measurementVO.getThirdMeasurementVO().setAnteriaRightField(
+				third_anteria_right);
+		measurementVO.getThirdMeasurementVO().setAnteriaTumourField(
+				third_anteria_tumour);
+		
+		ImageHelper.instance.showImage(measurementVO, ImageTypeEnum.Anteria,
+				ImageNumberEnum.SecondImage);
+	}
+	
+	@FXML
 	protected void handleLoadThirdImagePosteriaAction(ActionEvent event) {
 //		System.out.println("Starting handleLoadThirdImagePosteriaAction");
 		MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();

@@ -60,13 +60,12 @@
 		<Label text="Left" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 		<Label text="Tumour" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 		
-		<Button text="Anteria" onAction="#handleLoadFirstImageAnteriaAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
+		<Button text="Loan.." onAction="#handleLoadImageAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
 		<TextField fx:id="first_anteria_right" GridPane.columnIndex="1" GridPane.rowIndex="2" disable="true" />
     	<TextField fx:id="first_anteria_left" GridPane.columnIndex="2" GridPane.rowIndex="2" disable="true" />
     	<TextField fx:id="first_anteria_tumour" GridPane.columnIndex="3" GridPane.rowIndex="2" disable="true" />
     	
-    	<Button text="Posteria" onAction="#handleLoadFirstImagePosteriaAction" GridPane.columnIndex="0" GridPane.rowIndex="3"  />
-		<TextField fx:id="first_posteria_right" GridPane.columnIndex="1" GridPane.rowIndex="3" disable="true" />
+    	<TextField fx:id="first_posteria_right" GridPane.columnIndex="1" GridPane.rowIndex="3" disable="true" />
     	<TextField fx:id="first_posteria_left" GridPane.columnIndex="2" GridPane.rowIndex="3" disable="true" />
     	<TextField fx:id="first_posteria_tumour" GridPane.columnIndex="3" GridPane.rowIndex="3" disable="true" />
 		

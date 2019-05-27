@@ -100,6 +100,29 @@ public class FirstImageController implements Initializable {
 		ImageHelper.instance.showImage(measurementVO, ImageTypeEnum.Anteria,
 				ImageNumberEnum.FirstImage);
 	}
+	
+	@FXML
+	protected void handleLoadImageAction(ActionEvent event) {
+//		System.out.println("Starting handleLoadFirstImageAnteriaAction");
+		MeasurementVO measurementVO = MasterDoseCache.instance
+				.getMeasurementVO();
+		measurementVO.getFirstMeasurementVO().setAnteriaLeftField(
+				first_anteria_left);
+		measurementVO.getFirstMeasurementVO().setAnteriaRightField(
+				first_anteria_right);
+		measurementVO.getFirstMeasurementVO().setAnteriaTumourField(
+				first_anteria_tumour);
+
+		measurementVO.getFirstMeasurementVO().setPosteriaLeftField(
+				first_posteria_left);
+		measurementVO.getFirstMeasurementVO().setPosteriaRightField(
+				first_posteria_right);
+		measurementVO.getFirstMeasurementVO().setPosteriaTumourField(
+				first_posteria_tumour);
+		
+		ImageHelper.instance.showImage(measurementVO, ImageTypeEnum.Anteria,
+				ImageNumberEnum.FirstImage);
+	}
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 //		System.out.println("Initialize first image");

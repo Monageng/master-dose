@@ -75,6 +75,29 @@ public class SecondImageController implements Initializable{
 		System.out.println(event.getSource());
 	}
 	
+
+	@FXML
+	protected void handleLoadImageAction(ActionEvent event) {
+//		System.out.println("Starting handleLoadFirstImageAnteriaAction");
+		MeasurementVO measurementVO = MasterDoseCache.instance
+				.getMeasurementVO();
+		measurementVO.getSecondMeasurementVO().setPosteriaLeftField(
+				second_posteria_left);
+		measurementVO.getSecondMeasurementVO().setPosteriaRightField(
+				second_posteria_right);
+		measurementVO.getSecondMeasurementVO().setPosteriaTumourField(
+				second_posteria_tumour);
+		measurementVO.getSecondMeasurementVO().setAnteriaLeftField(
+				second_anteria_left);
+		measurementVO.getSecondMeasurementVO().setAnteriaRightField(
+				second_anteria_right);
+		measurementVO.getSecondMeasurementVO().setAnteriaTumourField(
+				second_anteria_tumour);
+		
+		ImageHelper.instance.showImage(measurementVO, ImageTypeEnum.Anteria,
+				ImageNumberEnum.SecondImage);
+	}
+	
 	@FXML
 	protected void handleLoadSecondImagePosteriaAction(ActionEvent event) {
 //		System.out.println("Starting handleLoadSecondImagePosteriaAction");
