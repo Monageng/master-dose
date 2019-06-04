@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="lib" path="jfxrt.jar" sourcepath="jfxrt.jar"/>
 	<classpathentry kind="lib" path="ij.jar"/>
@@ -23,5 +24,6 @@
 	<classpathentry kind="lib" path="itextpdf-5.4.5.jar"/>
 	<classpathentry kind="lib" path="PDFRenderer-0.9.0.jar"/>
 	<classpathentry kind="lib" path="lombok-1.16.10.jar"/>
+	<classpathentry kind="lib" path="junit-4.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
