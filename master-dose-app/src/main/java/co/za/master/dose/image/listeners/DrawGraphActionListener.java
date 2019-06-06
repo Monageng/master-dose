@@ -24,7 +24,7 @@ public class DrawGraphActionListener implements ActionListener {
 		try {
 			bean = ImageHelper.instance.populateMeasurementBean(bean);
 			bean = ImageHelper.instance.calculateMeanSquareRoot(bean);
-//			ImageHelper.instance.drawGraphNew(measurementBean, linechart);Graph(bean);
+			ImageHelper.instance.drawGraphNew(bean, bean.getLinechart());
 		} catch (Exception ex){
 			JOptionPane.showConfirmDialog(null, "Please take measurements for all images", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 		}

@@ -34,6 +34,7 @@ import co.za.master.dose.model.ImageTypeEnum;
 import co.za.master.dose.model.MeasurementBean;
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.model.ROITypeEnum;
+import ij.IJ;
 import ij.ImagePlus;
 import ij.WindowManager;
 import ij.gui.ImageWindow;
@@ -113,12 +114,15 @@ public class ImageHelper {
 		return resultsDecimal.doubleValue();
 	}
 
-	public double getSquareRootOfImages(double anteria, double posteria) {
+	public double getSquareRootOfImages(double anteria, double posteria, double sensitivity, double transmition) {
 		System.out.println("Anteria : " + anteria + " Posteria : " + posteria);
 		double result = anteria * posteria;
 		double sqRoot = 0;
+		double absoluteCount = 0;
 		if (result > 0) {
 			sqRoot = Math.sqrt(result);
+			absoluteCount = (sqRoot / sensitivity) * transmition;
+			// TODO  (GEOMEAN / Sensitivity)*Transmission
 			System.out.println("result is a positive number *** ");
 		} else {
 			result = result * -1;
@@ -128,48 +132,48 @@ public class ImageHelper {
 		}
 
 		System.out.println("Result  : " + result + " square root : " + sqRoot );
-		return sqRoot;
+		return absoluteCount;
 	}
 
 	public MeasurementVO calculateMeanSquareRoot(MeasurementVO bean) {
 		bean.getFirstMeasurementVO().setLeftImage(
 				getSquareRootOfImages(bean.getFirstMeasurementVO()
 						.getAnteriaLeft(), bean.getFirstMeasurementVO()
-						.getPosteriaLeft()));
+						.getPosteriaLeft(), bean.getConfigData().getSensitivity(), bean.getConfigData().getTransmissionCounts()));
 		bean.getFirstMeasurementVO().setRightImage(
 				getSquareRootOfImages(bean.getFirstMeasurementVO()
 						.getAnteriaRight(), bean.getFirstMeasurementVO()
-						.getPosteriaRight()));
+						.getPosteriaRight(), bean.getConfigData().getSensitivity(), bean.getConfigData().getTransmissionCounts()));
 		bean.getFirstMeasurementVO().setTumourImage(
 				getSquareRootOfImages(bean.getFirstMeasurementVO()
 						.getAnteriaTumour(), bean.getFirstMeasurementVO()
-						.getPosteriaTumour()));
+						.getPosteriaTumour(), bean.getConfigData().getSensitivity(), bean.getConfigData().getTransmissionCounts()));
 
 		bean.getSecondMeasurementVO().setLeftImage(
 				getSquareRootOfImages(bean.getSecondMeasurementVO()
 						.getAnteriaLeft(), bean.getSecondMeasurementVO()
-						.getPosteriaLeft()));
+						.getPosteriaLeft(), bean.getConfigData().getSensitivity(), bean.getConfigData().getTransmissionCounts()));
 		bean.getSecondMeasurementVO().setRightImage(
 				getSquareRootOfImages(bean.getSecondMeasurementVO()
 						.getAnteriaRight(), bean.getSecondMeasurementVO()
-						.getPosteriaRight()));
+						.getPosteriaRight(), bean.getConfigData().getSensitivity(), bean.getConfigData().getTransmissionCounts()));
 		bean.getSecondMeasurementVO().setTumourImage(
 				getSquareRootOfImages(bean.getSecondMeasurementVO()
 						.getAnteriaTumour(), bean.getSecondMeasurementVO()
-						.getPosteriaTumour()));
+						.getPosteriaTumour(), bean.getConfigData().getSensitivity(), bean.getConfigData().getTransmissionCounts()));
 
 		bean.getThirdMeasurementVO().setLeftImage(
 				getSquareRootOfImages(bean.getThirdMeasurementVO()
 						.getAnteriaLeft(), bean.getThirdMeasurementVO()
-						.getPosteriaLeft()));
+						.getPosteriaLeft(), bean.getConfigData().getSensitivity(), bean.getConfigData().getTransmissionCounts()));
 		bean.getThirdMeasurementVO().setRightImage(
 				getSquareRootOfImages(bean.getThirdMeasurementVO()
 						.getAnteriaRight(), bean.getThirdMeasurementVO()
-						.getPosteriaRight()));
+						.getPosteriaRight(), bean.getConfigData().getSensitivity(), bean.getConfigData().getTransmissionCounts()));
 		bean.getThirdMeasurementVO().setTumourImage(
 				getSquareRootOfImages(bean.getThirdMeasurementVO()
 						.getAnteriaTumour(), bean.getThirdMeasurementVO()
-						.getPosteriaTumour()));
+						.getPosteriaTumour(), bean.getConfigData().getSensitivity(), bean.getConfigData().getTransmissionCounts()));
 		return bean;
 	}
 
@@ -367,6 +371,7 @@ public class ImageHelper {
 	}
 
 	public double getMeanCount(ImagePlus imagePlus) {
+		IJ.run("Set Measurements...", "area mean standard min redirect=None decimal=3");
 		Analyzer analyzer = new Analyzer(imagePlus);
 
 		analyzer.measure();
@@ -375,8 +380,11 @@ public class ImageHelper {
 		int count = rt.getCounter() - 5;
 		if (count < 0)
 			count = 0;
-		double mean = rt.getValueAsDouble(ResultsTable.MEAN, count);
-		return mean;
+		double stdDev = rt.getValueAsDouble(ResultsTable.STD_DEV, count);
+		double mean =  rt.getValueAsDouble(ResultsTable.MEAN, count);
+		System.out.println("Standard deviation : " + stdDev );
+		System.out.println(" mean : " + mean );
+		return stdDev;
 	}
 
 //	public void drawGraph(MeasurementVO measurementBean) {
