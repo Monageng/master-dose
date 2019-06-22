@@ -1,5 +1,15 @@
 package co.za.master.dose.utils;
 
+import ij.IJ;
+import ij.ImagePlus;
+import ij.WindowManager;
+import ij.gui.ImageWindow;
+import ij.gui.Toolbar;
+import ij.io.Opener;
+import ij.measure.ResultsTable;
+import ij.plugin.filter.Analyzer;
+import ij.process.ImageProcessor;
+
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
@@ -8,6 +18,16 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+
+import javafx.geometry.Side;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import javax.swing.JOptionPane;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -19,7 +39,6 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.DefaultXYDataset;
 
 import co.za.master.dose.constants.StyleSheetConstants;
-import co.za.master.dose.image.listeners.DuplicateActionListener;
 import co.za.master.dose.image.listeners.OvalSelectionTypeActionListener;
 import co.za.master.dose.image.listeners.ZoomInActionListener;
 import co.za.master.dose.image.listeners.ZoomOutActionListener;
@@ -27,6 +46,7 @@ import co.za.master.dose.measure.listeners.FirstImageMeasureActionListener;
 import co.za.master.dose.measure.listeners.MeasureActionListenerInterface;
 import co.za.master.dose.measure.listeners.SecondImageMeasureActionListener;
 import co.za.master.dose.measure.listeners.ThirdImageMeasureActionListener;
+import co.za.master.dose.model.ConfigData;
 import co.za.master.dose.model.ImageMeasureTime;
 import co.za.master.dose.model.ImageNumberEnum;
 import co.za.master.dose.model.ImageSideEnum;
@@ -34,21 +54,6 @@ import co.za.master.dose.model.ImageTypeEnum;
 import co.za.master.dose.model.MeasurementBean;
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.model.ROITypeEnum;
-import ij.IJ;
-import ij.ImagePlus;
-import ij.WindowManager;
-import ij.gui.ImageWindow;
-import ij.gui.Toolbar;
-import ij.io.Opener;
-import ij.measure.ResultsTable;
-import ij.plugin.filter.Analyzer;
-import ij.process.ImageProcessor;
-import javafx.geometry.Side;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class ImageHelper {
 
@@ -102,6 +107,60 @@ public class ImageHelper {
 		}
 	}
 
+	private boolean validateForConfigData(ConfigData bean) {
+		boolean isValid = true;
+		// Validate 
+		if (bean.getSensitivity() < 1) {
+			return false;
+		}
+		
+		if (bean.getTransmissionCounts() < 1){
+			return false;
+		}
+		
+		return isValid;
+	}
+	public boolean validateForDosageCalculation(MeasurementVO bean) {
+		boolean isValid = true;
+		// Validate 
+		if(!validateForConfigData(bean.getConfigData())) {
+			JOptionPane.showConfirmDialog(null, "Please capture sensitivity and transmission values", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+			return false;
+		}	
+		
+		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getAnteriaLeftField())) return false;
+		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getAnteriaRightField())) return false;
+		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getAnteriaTumourField())) return false;
+		
+		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getPosteriaLeftField())) return false;
+		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getPosteriaRightField())) return false;
+		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getPosteriaTumourField())) return false;
+		
+		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getAnteriaLeftField())) return false;
+		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getAnteriaRightField())) return false;
+		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getAnteriaTumourField())) return false;
+		
+		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getPosteriaLeftField())) return false;
+		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getPosteriaRightField())) return false;
+		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getPosteriaTumourField())) return false;
+		
+		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getAnteriaLeftField())) return false;
+		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getAnteriaRightField())) return false;
+		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getAnteriaTumourField())) return false;
+		
+		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getPosteriaLeftField())) return false;
+		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getPosteriaRightField())) return false;
+		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getPosteriaTumourField())) return false;
+		return isValid;
+	}
+	
+	private boolean isTextFieldEmpty(TextField txtField) {
+		if ( txtField == null || txtField.getText().isEmpty()) {
+			JOptionPane.showConfirmDialog(null, "Please take measurements for all images", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+			return true;
+		}
+		return false;
+	}
 	public double covertToBecquerel(double meanValue) {
 		double decquerel = Math.pow(3.7, 10d);
 
@@ -127,11 +186,11 @@ public class ImageHelper {
 		} else {
 			result = result * -1;
 			sqRoot = Math.sqrt(result);
-			sqRoot = sqRoot * -1;
+			absoluteCount = (sqRoot / sensitivity) * transmition;
 			System.out.println("result is a negative number  calculated on + square root *** ");
 		}
 
-		System.out.println("Result  : " + result + " square root : " + sqRoot );
+		System.out.println("Result  : " + absoluteCount + " square root : " + sqRoot + "" );
 		return absoluteCount;
 	}
 
@@ -178,7 +237,7 @@ public class ImageHelper {
 	}
 
 	public double getMean(ImagePlus imagePlus, String backgroundCount) {
-		System.out.println(" ***************START*********************");
+		System.out.println(" ***************START getMean *********************");
 		double mean = getMeanCount(imagePlus);
 		double dBGCount = Double.parseDouble(backgroundCount);
 		double results = mean - dBGCount;
@@ -186,12 +245,12 @@ public class ImageHelper {
 		MathContext mc = new MathContext(4, RoundingMode.HALF_UP);
 		BigDecimal decimal = new BigDecimal(results, mc);
 
-		System.out.println(" mean 		::: " + mean);
-		System.out.println(" dBGCount 	::: " + dBGCount);
-		System.out.println(" Results 	::::  " + results);
-		System.out.println(" decimal mean 	::::  " + decimal.doubleValue());
+		System.out.println(" mean 						: " + mean);
+		System.out.println(" Background 				: " + dBGCount);
+		System.out.println(" Results(mean - Background) :  " + results);
+		System.out.println(" decimal (Round 4 Digits	:" + decimal.doubleValue());
 
-		System.out.println(" ***************END*********************");
+		System.out.println(" ***************END getMean*********************");
 		
 		return decimal.doubleValue();
 		
@@ -381,8 +440,7 @@ public class ImageHelper {
 			count = 0;
 		double stdDev = rt.getValueAsDouble(ResultsTable.STD_DEV, count);
 		double mean =  rt.getValueAsDouble(ResultsTable.MEAN, count);
-		System.out.println("Standard deviation : " + stdDev );
-		System.out.println(" mean : " + mean );
+		System.out.println("Standard deviation : " + stdDev + " > mean : " + mean );
 		return stdDev;
 	}
 
@@ -428,7 +486,7 @@ public class ImageHelper {
 //		
 		
 		String OS = System.getProperty("os.name").toLowerCase();
-//		System.out.println("OS" + OS);
+		System.out.println("OS" + OS);
 		linechart.getStylesheets().clear();
 		if (OS == "linux") {
 			File f = new File("src/main/java/co/za/master/dose/frame/Login.css");
@@ -670,6 +728,8 @@ public class ImageHelper {
 //	}
 
 	private void calculateDosage(MeasurementVO vo) {
+		
+		System.out.println("Calculate Dosage : " + vo.toString());
 		double S_VALUE = 0.29;
 
 		// ((L2+L1)/2)*(t2-t1)

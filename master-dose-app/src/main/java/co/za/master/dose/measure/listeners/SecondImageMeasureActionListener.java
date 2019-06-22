@@ -36,11 +36,12 @@ public class SecondImageMeasureActionListener implements MeasureActionListenerIn
 			if (imagePlus == null) {
 				System.out.println("Image is not loaded");
 			} else {
-				double mean = ImageHelper.instance.getMeanCount(imagePlus);
-				System.out.println("SecondImageMeasureActionListener Mean : " + mean + " imageTypeEnum " + imageTypeEnum);
-
+				
 //				 Check image side
 				if (imageSideEnum == ImageSideEnum.Background) {
+					double mean = ImageHelper.instance.getMeanCount(imagePlus);
+					System.out.println("Background Mean : " + mean + " imageTypeEnum " + imageTypeEnum);
+
 					if (imageTypeEnum == ImageTypeEnum.Anteria) {
 						MasterDoseCache.instance.getMeasurementVO().getSecondMeasurementVO().setAnteriaBackground(mean);
 					} else {
@@ -54,8 +55,7 @@ public class SecondImageMeasureActionListener implements MeasureActionListenerIn
 							
 						}else {
 							double dMean = ImageHelper.instance.getMean(imagePlus,MasterDoseCache.instance.getMeasurementVO().getSecondMeasurementVO().getAnteriaBackground() + "");
-							System.out.println("SecondImageMeasureActionListener Mean : " + dMean);
-							
+							System.out.println("imageTypeEnum : " + imageTypeEnum + " SecondImageMeasureActionListener Mean : " + dMean);
 							if (imageSideEnum == ImageSideEnum.Left) {
 								MasterDoseCache.instance.getMeasurementVO().getSecondMeasurementVO().setAnteriaLeft(dMean);
 								MasterDoseCache.instance.getMeasurementVO().getSecondMeasurementVO().getAnteriaLeftField().setText("" + dMean);
@@ -73,6 +73,7 @@ public class SecondImageMeasureActionListener implements MeasureActionListenerIn
 							JOptionPane.showConfirmDialog(null, "Background measurement not taken, please take background measurements first", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 						} else {
 							double dMean = ImageHelper.instance.getMean(imagePlus,MasterDoseCache.instance.getMeasurementVO().getSecondMeasurementVO().getPosteriaBackground() + "");
+							System.out.println("imageTypeEnum : " + imageTypeEnum + " SecondImageMeasureActionListener Mean : " + dMean);
 							if (imageSideEnum == ImageSideEnum.Left) {
 								MasterDoseCache.instance.getMeasurementVO().getSecondMeasurementVO().setPosteriaLeft(dMean);
 								MasterDoseCache.instance.getMeasurementVO().getSecondMeasurementVO().getPosteriaLeftField().setText("" + dMean);
@@ -86,6 +87,9 @@ public class SecondImageMeasureActionListener implements MeasureActionListenerIn
 						}
 					}
 				}
+				
 			}
+			System.out.println("Printing Second VO : " + MasterDoseCache.instance.getMeasurementVO().getSecondMeasurementVO());
 		}
+		
 }

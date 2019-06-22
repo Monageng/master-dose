@@ -35,44 +35,41 @@ package co.za.master.dose.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import co.za.master.dose.model.MeasurementVO;
-import co.za.master.dose.utils.ImageHelper;
-import co.za.master.dose.utils.MasterDoseCache;
-import co.za.master.dose.utils.PDFHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
+import co.za.master.dose.model.MeasurementVO;
+import co.za.master.dose.utils.ImageHelper;
+import co.za.master.dose.utils.MasterDoseCache;
+import co.za.master.dose.utils.PDFHelper;
 
 public class GraphController implements Initializable {
 	@FXML
 	private LineChart<Number, Number> linechart;
 
 	@FXML
-	protected void handleGenerateReportAction (ActionEvent event) {
-		System.out.println("Starting to generate report : ");
+	protected void handleGenerateReportAction(ActionEvent event) {
 		ImageHelper imageHelper = new ImageHelper();
-//		MeasurementVO vo = ImageDataHelper.createVO();
 		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
-//		vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
-		
-//		System.out.println("VO " + vo);
-		imageHelper.drawGraphNew(vo, linechart);
-		PDFHelper.createPDFDynamic(vo, linechart);
+		if (imageHelper.validateForDosageCalculation(vo)) {
+			vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
+			imageHelper.drawGraphNew(vo, linechart);
+			PDFHelper.createPDFDynamic(vo, linechart);
+		}
 	}
-	
+
 	@FXML
 	protected void handleCalculateDosageAction(ActionEvent event) {
 		ImageHelper imageHelper = new ImageHelper();
-//		MeasurementVO vo = ImageDataHelper.createVO();
-		 MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
-		vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
-		
-//		System.out.println("VO " + vo);
-		imageHelper.drawGraphNew(vo, linechart);
+		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
+		if (imageHelper.validateForDosageCalculation(vo)) {
+			vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
+			imageHelper.drawGraphNew(vo, linechart);
+		}
 	}
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-//		System.out.println("Initializing Graph Controller");
+		
 	}
 }

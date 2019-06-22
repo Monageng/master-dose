@@ -1,7 +1,8 @@
 package co.za.master.dose.model;
 
 import javafx.scene.control.TextField;
-
+import lombok.Data;
+@Data
 public class ThirdMeasurementVO {
 	private TextField anteriaLeftField;
 	private TextField anteriaRightField;
@@ -172,7 +173,9 @@ public class ThirdMeasurementVO {
 	}
 
 	public String toString() {
-		return "leftImage : " + leftImage + " rightImage : " + rightImage + " tumourImage : " + tumourImage + " interval : " + interval;
+		return "leftImage : " + leftImage + " rightImage : " + rightImage + " tumourImage : " + tumourImage + " interval : " + interval + " posteriaTumour : " + posteriaTumour +
+				" posteriaRight : " + posteriaRight + " posteriaLeft : " + posteriaLeft + " posteriaBackground : " + posteriaBackground + " anteriaTumour : " + anteriaTumour +
+				" anteriaRight : " + anteriaRight + " anteriaLeft : " + anteriaLeft + " anteriaBackground : " + anteriaBackground ;
 	}
 
 }

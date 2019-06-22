@@ -37,11 +37,12 @@ public class FirstImageMeasureActionListener implements MeasureActionListenerInt
 		if (imagePlus == null) {
 //			System.out.println("Image is not loaded");
 		} else {
-			double mean = ImageHelper.instance.getMeanCount(imagePlus);
-			System.out.println("FirstImageMeasureActionListener Mean : " + mean + " imageTypeEnum " + imageTypeEnum);
-
+			
 //			 Check image side
 			if (imageSideEnum == ImageSideEnum.Background) {
+				double mean = ImageHelper.instance.getMeanCount(imagePlus);
+				System.out.println("Background Mean : " + mean + " imageTypeEnum " + imageTypeEnum);
+
 				if (imageTypeEnum == ImageTypeEnum.Anteria) {
 					MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO().setAnteriaBackground(mean);
 				} else {
@@ -55,7 +56,7 @@ public class FirstImageMeasureActionListener implements MeasureActionListenerInt
 						JOptionPane.showConfirmDialog(null, "Background measurement not taken, please take background measurements first", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 					}else {
 						double dMean = ImageHelper.instance.getMean(imagePlus,bean.getFirstMeasurementVO().getAnteriaBackground() + "");
-						System.out.println("FirstImageMeasureActionListener Mean : " + dMean);
+						System.out.println("imageTypeEnum : " + imageTypeEnum + " FirstImageMeasureActionListener Mean : " + dMean);
 						if (imageSideEnum == ImageSideEnum.Left) {
 							MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO().setAnteriaLeft(dMean);
 							MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO().getAnteriaLeftField().setText("" + dMean);
@@ -69,10 +70,11 @@ public class FirstImageMeasureActionListener implements MeasureActionListenerInt
 					}
 					
 				} else {
-					if (bean.getFirstMeasurementVO().getPosteriaBackground() < 1) {
+					if (MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO().getPosteriaBackground() < 1) {
 						JOptionPane.showConfirmDialog(null, "Background measurement not taken, please take background measurements first", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 					} else {
 						double dMean = ImageHelper.instance.getMean(imagePlus,bean.getFirstMeasurementVO().getPosteriaBackground() + "");
+						System.out.println("imageTypeEnum : " + imageTypeEnum + " FirstImageMeasureActionListener Mean : " + dMean);
 						if (imageSideEnum == ImageSideEnum.Left) {
 							MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO().setPosteriaLeft(dMean);
 							MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO().getPosteriaLeftField().setText("" + dMean);
@@ -87,7 +89,7 @@ public class FirstImageMeasureActionListener implements MeasureActionListenerInt
 				}
 			}
 //			MasterDoseCache.instance.getMeasurementVO().setFirstMeasurementVO(bean.getFirstMeasurementVO());
-//			System.out.println("Printing first VO : " + MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO());
+			System.out.println("Printing first VO : " + MasterDoseCache.instance.getMeasurementVO().getFirstMeasurementVO());
 		}
 	}
 

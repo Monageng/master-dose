@@ -50,16 +50,6 @@
       <Text id="image-text" text="Settings" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="4" />
  			 <VBox GridPane.columnIndex="0" GridPane.rowIndex="1"  style="-fx-border-color:grey; -fx-border-width: 1; -fx-border-style: solid;">
    		<children>
-		   <HBox  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
-		    <children>
-		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
-		    		<Label fx:id="pixelsLbl" text="Background :" prefWidth="170.0" />
-		    	</VBox>
-		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
-		    		<TextField fx:id="pixelsTxt"  maxWidth="50.0"/>
-		    	</VBox>
-		   	</children>
-		   </HBox>
 		  <HBox  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
 		    <children>
 		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">

@@ -1,7 +1,9 @@
 package co.za.master.dose.model;
 
 import javafx.scene.control.TextField;
+import lombok.Data;
 
+@Data
 public class FirstMeasurementVO {
 	
 	private TextField anteriaLeftField;
@@ -178,5 +180,4 @@ public class FirstMeasurementVO {
 				" posteriaRight : " + posteriaRight + " posteriaLeft : " + posteriaLeft + " posteriaBackground : " + posteriaBackground + " anteriaTumour : " + anteriaTumour +
 				" anteriaRight : " + anteriaRight + " anteriaLeft : " + anteriaLeft + " anteriaBackground : " + anteriaBackground ;
 	}
-
 }

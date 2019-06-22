@@ -1,5 +1,8 @@
 package co.za.master.dose.model;
 
+import lombok.Data;
+
+@Data
 public class PatientDetails {
 	private String firstName;
 	private String surname;

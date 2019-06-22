@@ -4,11 +4,7 @@ import javafx.application.HostServices;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.TextField;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 @Data
 public class MeasurementVO {
 	private TextField textField;

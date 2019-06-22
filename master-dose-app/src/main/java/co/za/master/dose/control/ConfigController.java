@@ -46,11 +46,7 @@ import javafx.scene.control.TextField;
 
 public class ConfigController implements Initializable {
 	@FXML
-	private TextField pixelsTxt	 = new TextField();
-	@FXML
 	private TextField sensitivityTxt = new TextField();
-	@FXML
-	private TextField acrylicDepthTxt = new TextField();
 
 	@FXML
 	private TextField transmissionCountsTxt = new TextField();
@@ -62,22 +58,6 @@ public class ConfigController implements Initializable {
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
-		pixelsTxt.textProperty().addListener(new ChangeListener<String>() {
-
-			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
-				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,1})?")) {
-					pixelsTxt.setText(oldValue);
-				} else {
-					if (!newValue.isEmpty()) {
-						MeasurementVO measurementVO = MasterDoseCache.instance
-								.getMeasurementVO();
-						measurementVO.getConfigData().setPixels(Double.valueOf(newValue));
-						pixelsTxt.setText(newValue);
-					}
-				}
-			}
-		});
-		
 		sensitivityTxt.textProperty().addListener(new ChangeListener<String>() {
 
 			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
@@ -89,22 +69,6 @@ public class ConfigController implements Initializable {
 								.getMeasurementVO();
 						measurementVO.getConfigData().setSensitivity(Double.valueOf(newValue));
 						sensitivityTxt.setText(newValue);
-					}
-				}
-			}
-		});
-		
-		acrylicDepthTxt.textProperty().addListener(new ChangeListener<String>() {
-
-			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
-				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,1})?")) {
-					acrylicDepthTxt.setText(oldValue);
-				} else {
-					if (!newValue.isEmpty()) {
-						MeasurementVO measurementVO = MasterDoseCache.instance
-								.getMeasurementVO();
-						measurementVO.getConfigData().setAcrylicDepth(Double.valueOf(newValue));
-						acrylicDepthTxt.setText(newValue);
 					}
 				}
 			}
@@ -125,23 +89,5 @@ public class ConfigController implements Initializable {
 				}
 			}
 		});
-//		firstInterval.textProperty().addListener(new ChangeListener<String>() {
-//			public void changed(ObservableValue<? extends String> arg0,
-//					String oldValue, String newValue) {
-//				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,1})?")) {
-//					firstInterval.setText(oldValue);
-//				} else {
-//					if (!newValue.isEmpty()) {
-//						MeasurementVO measurementVO = MasterDoseCache.instance
-//								.getMeasurementVO();
-//						measurementVO.getFirstMeasurementVO().setInterval(
-//								Double.parseDouble(newValue));
-//						firstInterval.setText(newValue);
-////						System.out.println(newValue);
-////						System.out.println(firstInterval.getText());
-//					}
-//				}
-//			}
-//		});
 	};
 }
