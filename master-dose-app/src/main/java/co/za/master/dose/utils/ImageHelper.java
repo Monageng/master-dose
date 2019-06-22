@@ -201,8 +201,8 @@ public class ImageHelper {
 			ImageTypeEnum imageTypeEnum, ImageNumberEnum imageNumberEnum) {
 		MenuBar mb = new MenuBar();
 		mb.add(buildImageMenu(bean));
-		mb.add(buildImageMeasureMenu(bean, imageTypeEnum, imageNumberEnum));
 		mb.add(buildROITypeMenu());
+		mb.add(buildImageMeasureMenu(bean, imageTypeEnum, imageNumberEnum));
 		return mb;
 	}
 
@@ -253,12 +253,12 @@ public class ImageHelper {
 
 	public Menu buildImageMenu(MeasurementVO bean) {
 
-		Menu imgMenu = new Menu("Image");
-		MenuItem duplicateMenu = new MenuItem("Duplicate");
-		DuplicateActionListener duplicateActionListener = new DuplicateActionListener();
-		duplicateMenu.addActionListener(duplicateActionListener);
+		Menu imgMenu = new Menu("View");
+//		MenuItem duplicateMenu = new MenuItem("Duplicate");
+//		DuplicateActionListener duplicateActionListener = new DuplicateActionListener();
+//		duplicateMenu.addActionListener(duplicateActionListener);
 
-		MenuItem cropMenu = new MenuItem("Crop");
+//		MenuItem cropMenu = new MenuItem("Crop");
 
 		MenuItem zoomInMenu = new MenuItem("Zoom In");
 		ZoomInActionListener zoomInActionListener = new ZoomInActionListener();
@@ -268,8 +268,8 @@ public class ImageHelper {
 		ZoomOutActionListener zoomOutActionListener = new ZoomOutActionListener();
 		zoomOutMenu.addActionListener(zoomOutActionListener);
 
-		imgMenu.add(duplicateMenu);
-		imgMenu.add(cropMenu);
+//		imgMenu.add(duplicateMenu);
+//		imgMenu.add(cropMenu);
 		imgMenu.add(zoomInMenu);
 		imgMenu.add(zoomOutMenu);
 
@@ -310,9 +310,8 @@ public class ImageHelper {
 			ImageTypeEnum imageTypeEnum, ImageNumberEnum imageNumberEnum) {
 		Menu measureMenu = new Menu("Analyse");
 		
-
-		Menu submenuAnt=new Menu("Anteria");  
-		Menu submenuPost=new Menu("Posteria");
+		Menu submenuAnt=new Menu("Anterior");  
+		Menu submenuPost=new Menu("Posterior");
 				
 		createSubmenuItem(bean, submenuAnt, ImageTypeEnum.Anteria, imageNumberEnum);
 		createSubmenuItem(bean, submenuPost, ImageTypeEnum.Posteria, imageNumberEnum);

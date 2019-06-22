@@ -60,7 +60,7 @@
 		<Label text="Left" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 		<Label text="Tumour" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 		
-		<Button text="Load.." onAction="#handleLoadImageAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
+		<Button text="Load" onAction="#handleLoadImageAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
 		<TextField fx:id="second_anteria_right" GridPane.columnIndex="1" GridPane.rowIndex="2" disable="true" />
     	<TextField fx:id="second_anteria_left" GridPane.columnIndex="2" GridPane.rowIndex="2" disable="true" />
     	<TextField fx:id="second_anteria_tumour" GridPane.columnIndex="3" GridPane.rowIndex="2" disable="true" />

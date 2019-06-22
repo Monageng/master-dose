@@ -54,7 +54,7 @@ public class ThirdImageMeasureActionListener implements MeasureActionListenerInt
 						JOptionPane.showConfirmDialog(null, "Background measurement not taken, please take background measurements first", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 					}else {
 						double dMean = ImageHelper.instance.getMean(imagePlus,MasterDoseCache.instance.getMeasurementVO().getThirdMeasurementVO().getAnteriaBackground() + "");
-						System.out.println("SecondImageMeasureActionListener Mean : " + dMean);
+						System.out.println("ThirdImageMeasureActionListener Mean : " + dMean);
 						
 						if (imageSideEnum == ImageSideEnum.Left) {
 							MasterDoseCache.instance.getMeasurementVO().getThirdMeasurementVO().setAnteriaLeft(dMean);

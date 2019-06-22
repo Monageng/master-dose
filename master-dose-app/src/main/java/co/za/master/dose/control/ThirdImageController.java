@@ -90,7 +90,7 @@ public class ThirdImageController implements Initializable{
 				third_anteria_tumour);
 		
 		ImageHelper.instance.showImage(measurementVO, ImageTypeEnum.Anteria,
-				ImageNumberEnum.SecondImage);
+				ImageNumberEnum.ThirdImage);
 	}
 	
 	@FXML
