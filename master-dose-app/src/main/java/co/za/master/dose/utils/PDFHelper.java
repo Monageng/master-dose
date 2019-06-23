@@ -27,7 +27,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class PDFHelper {
 	
-	public static String FILE_NAME = "Report.pdf";
+	public static String FILE_NAME = "Report";
 	public static String IMAGE_NAME = "Image.png";
 	public static void createPDFDynamic(MeasurementVO measurementVO, LineChart<Number, Number> linechart) {
 		try {
@@ -36,7 +36,7 @@ public class PDFHelper {
 			
 			FileUtils.instance.removeDirectory("exports");
 			File dir = FileUtils.instance.createDirectory("exports");
-			String fileName = dir.getAbsolutePath() + "/" + FILE_NAME + (new Date()).getTime();
+			String fileName = dir.getAbsolutePath() + "/" + FILE_NAME + (new Date()).getTime() + ".pdf";
 //			System.out.println("File name : " + fileName);
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
 			document.open();
@@ -127,11 +127,11 @@ public class PDFHelper {
 //			BufferedImage bufferedImage = linechart.  createBufferedImage(300, 300);
 //            Image image = Image.getInstance(writer, bufferedImage, 1.0f);
             document.add(image);
-//           
+            document.close();
             
 //            System.out.println("About to open " + fileName);
             MasterDoseCache.instance.getMeasurementVO().getHostServices().showDocument(fileName);
-            document.close();
+           
             
 //            FileUtils.instance.openFile(fileName);
 			

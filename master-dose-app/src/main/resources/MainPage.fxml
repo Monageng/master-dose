@@ -57,9 +57,9 @@
 		   </HBox>
 		   <HBox   GridPane.columnIndex="0" GridPane.rowIndex="2" >
 		    <children>	
-		        <Label text="PatientName :" prefWidth="120.0" />
+		        <Label text="Name :" prefWidth="120.0" />
 		        <TextField fx:id="patientNameTxt" maxWidth="250.0" />
-		        <Label text=" Patient ID :" prefWidth="100.0" />
+		        <Label text=" ID No :" prefWidth="100.0" />
 		        <TextField fx:id="patientIdTxt" maxWidth="150.0" />
 		      </children>
 		   </HBox>

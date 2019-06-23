@@ -56,6 +56,7 @@ public class GraphController implements Initializable {
 			vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
 			imageHelper.drawGraphNew(vo, linechart);
 			PDFHelper.createPDFDynamic(vo, linechart);
+			imageHelper.generatedXsl(vo);
 		}
 	}
 

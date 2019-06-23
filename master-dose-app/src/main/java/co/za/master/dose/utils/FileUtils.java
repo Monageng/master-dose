@@ -15,11 +15,9 @@ public class FileUtils {
 //			System.out.println("openFile");
 			Desktop desktop = Desktop.getDesktop();
 			// check if java.awt.Desktop is available on the current platform
-			System.out.println(Desktop.isDesktopSupported());
-			System.out.println("fileName : " + fileName);
 			if (Desktop.isDesktopSupported() ) {
 				File file = new File(fileName);
-				desktop.browse(file.toURI());
+				desktop.open(file);
 			}
 			// check the current platform and security policy will let you
 			// browse to a url
