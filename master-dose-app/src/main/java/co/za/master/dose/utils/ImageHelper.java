@@ -10,6 +10,7 @@ import ij.measure.ResultsTable;
 import ij.plugin.filter.Analyzer;
 import ij.process.ImageProcessor;
 
+import java.awt.Color;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
@@ -340,6 +341,8 @@ public class ImageHelper {
 		mb.add(buildImageMenu(bean));
 		mb.add(buildROITypeMenu());
 		mb.add(buildImageMeasureMenu(bean, imageTypeEnum, imageNumberEnum));
+		mb.setHelpMenu(new Menu("Help"));
+		
 		return mb;
 	}
 
@@ -377,13 +380,18 @@ public class ImageHelper {
 		OvalSelectionTypeActionListener straightAL = new OvalSelectionTypeActionListener(
 				ROITypeEnum.STREIGHT_ROI);
 		straightROI.addActionListener(straightAL);
+		
+		MenuItem handROI = new MenuItem("Hand");
+		OvalSelectionTypeActionListener handROIAL = new OvalSelectionTypeActionListener(
+				ROITypeEnum.HAND);
+		handROI.addActionListener(handROIAL);
 
 		imgMenu.add(rectROI);
 		imgMenu.add(ovalROI);
 		imgMenu.add(polyROI);
 		imgMenu.add(freeHandROI);
 		imgMenu.add(straightROI);
-
+		imgMenu.add(handROI);
 		return imgMenu;
 	}
 

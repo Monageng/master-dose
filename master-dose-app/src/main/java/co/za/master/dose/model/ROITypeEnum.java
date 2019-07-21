@@ -5,5 +5,6 @@ public enum ROITypeEnum {
 	OVAL_ROI,
 	POLYGON_ROI,
 	FREE_HAND_ROI,
-	STREIGHT_ROI
+	STREIGHT_ROI,
+	HAND,
 }

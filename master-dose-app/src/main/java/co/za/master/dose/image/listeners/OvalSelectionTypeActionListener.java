@@ -37,6 +37,9 @@ public class OvalSelectionTypeActionListener implements ActionListener {
 		} else if (roiTypeEnum == ROITypeEnum.STREIGHT_ROI) {
 //			IJ.makeLine(108, 64, 36, 41);
 			IJ.setTool(4);;	
+		}  else if (roiTypeEnum == ROITypeEnum.HAND) {
+//			IJ.makeLine(108, 64, 36, 41);
+			IJ.setTool("hand");;	
 		} 
 	}
 
