@@ -1,5 +1,8 @@
 package co.za.master.dose.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.application.HostServices;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.TextField;
@@ -9,6 +12,10 @@ import lombok.Data;
 public class MeasurementVO {
 	private TextField textField;
 	private double dosage;
+	
+	private Map<String, ImageMeasureItem> map = new HashMap<>();
+	private String imageKey ;
+	private int imageNumber;
 	
 	
 	private FirstMeasurementVO firstMeasurementVO = new FirstMeasurementVO();
@@ -76,6 +83,24 @@ public class MeasurementVO {
 	}
 	public void setConfigData(ConfigData configData) {
 		this.configData = configData;
+	}
+	public Map<String, ImageMeasureItem> getMap() {
+		return map;
+	}
+	public void setMap(Map<String, ImageMeasureItem> map) {
+		this.map = map;
+	}
+	public String getImageKey() {
+		return imageKey;
+	}
+	public void setImageKey(String imageKey) {
+		this.imageKey = imageKey;
+	}
+	public int getImageNumber() {
+		return imageNumber;
+	}
+	public void setImageNumber(int imageNumber) {
+		this.imageNumber = imageNumber;
 	}
 
 	

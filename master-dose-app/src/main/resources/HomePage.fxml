@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Copyright (c) 2011, 2013 Oracle and/or its affiliates.
+ * All rights reserved. Use is subject to license terms.
+ *
+ * This file is available and licensed under the following license:
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  - Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  - Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the distribution.
+ *  - Neither the name of Oracle Corporation nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<?import java.net.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.text.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.za.master.dose.frame.MainAppController" alignment="center" hgap="10" vgap="10" styleClass="root">
+   <stylesheets>
+      <URL value="@Login.css" />
+   </stylesheets>
+   <padding>
+      <Insets right="10" bottom="10" left="10" top="15"/>
+   </padding>
+   <Label text="Patient Details "  GridPane.columnIndex="0" GridPane.rowIndex="0"  styleClass="header-text"/>
+   <VBox GridPane.columnIndex="0" GridPane.rowIndex="1"  style="-fx-border-color:grey; -fx-border-width: 1; -fx-border-style: solid;">
+   		<children>
+		   <HBox  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
+		    <padding>
+		      <Insets right="1" bottom="2" left="1" top="1"/>
+		   </padding>
+		   
+		   </HBox>
+		   <HBox   GridPane.columnIndex="0" GridPane.rowIndex="2" >
+		    <children>	
+		        <Label text="Name :" prefWidth="120.0" />
+		        <TextField fx:id="patientNameTxt" maxWidth="250.0" />
+		        <Label text=" ID No :" prefWidth="100.0" />
+		        <TextField fx:id="patientIdTxt" maxWidth="150.0" />
+		      </children>
+		   </HBox>
+		 </children>
+	  </VBox>
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="2">
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="3"  style="-fx-border-color:grey; -fx-border-width: 1; -fx-border-style: solid;">
+         <children>
+            <fx:include source="ImageCapturePage.fxml" />
+         </children>
+      </VBox>
+      <VBox GridPane.columnIndex="0" GridPane.rowIndex="7" style="-fx-border-color:grey; -fx-border-width: 1; -fx-border-style: solid;">
+         <children>
+            <fx:include source="GraphPage.fxml" />
+         </children>
+      </VBox>
+   </VBox>
+   
+   
+</GridPane>

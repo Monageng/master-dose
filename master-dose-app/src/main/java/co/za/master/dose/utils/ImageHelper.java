@@ -46,6 +46,7 @@ import co.za.master.dose.image.listeners.OvalSelectionTypeActionListener;
 import co.za.master.dose.image.listeners.ZoomInActionListener;
 import co.za.master.dose.image.listeners.ZoomOutActionListener;
 import co.za.master.dose.measure.listeners.FirstImageMeasureActionListener;
+import co.za.master.dose.measure.listeners.ImageMeasureActionListener;
 import co.za.master.dose.measure.listeners.MeasureActionListenerInterface;
 import co.za.master.dose.measure.listeners.SecondImageMeasureActionListener;
 import co.za.master.dose.measure.listeners.ThirdImageMeasureActionListener;
@@ -122,6 +123,57 @@ public class ImageHelper {
 		}
 	}
 
+	public void showImageNew(MeasurementVO measurementVO) {
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("Open File");
+		File file = chooser.showOpenDialog(new Stage());
+		if (WindowManager.getCurrentImage() != null) {
+			WindowManager.getCurrentImage().close();
+		}
+
+		if (file != null) {
+			String imagepath = file.getPath();
+			// Image image = new Image(imagepath);
+			Opener opener = new Opener();
+			ImagePlus imagePlus = opener.openImage(imagepath);
+			ImageProcessor ip = imagePlus.getProcessor();
+			// imageView.setImage(image);
+			ip = ip.resize(StyleSheetConstants.IMAGE_POPUP_WIDTH,
+					StyleSheetConstants.IMAGE_POPUP_HEIGHT);
+			imagePlus.setProcessor(ip);
+			imagePlus.show();
+			// imagePlus.getCanvas().setEnabled(true);
+			ImageWindow imageWindow = WindowManager.getCurrentWindow();
+
+			imageWindow.setMenuBar(ImageHelper.instance.createImageMenuBarNew(measurementVO));
+			// co.za.master.dose.model.Toolbar toolbar = new
+			// co.za.master.dose.model.Toolbar();
+			Toolbar toolbar = new Toolbar();
+			toolbar.setVisible(false);
+
+			// toolbar.setBackground(Color.BLUE);
+			// toolbar.setColor(Color.GREEN);
+			// toolbar.setForegroundColor(Color.ORANGE);
+
+			toolbar.setSize(StyleSheetConstants.IMAGE_POPUP_WIDTH,
+					StyleSheetConstants.IMAGE_POPUP_HEIGHT);
+
+			imageWindow.add(toolbar);
+			imageWindow.updateImage(imagePlus);
+
+		} else {
+			// Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			// alert.setTitle("Information Dialog");
+			// alert.setHeaderText("Please Select a File");
+			/* alert.setContentText("You didn't select a file!"); */
+			JOptionPane.showConfirmDialog(null, "Please Select a File", "",
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+
+			// alert.showAndWait();
+		}
+	}
+
+	
 	private boolean validateForConfigData(ConfigData bean) {
 		boolean isValid = true;
 		// Validate
@@ -345,6 +397,16 @@ public class ImageHelper {
 		
 		return mb;
 	}
+	
+	public MenuBar createImageMenuBarNew(MeasurementVO bean) {
+		MenuBar mb = new MenuBar();
+		mb.add(buildImageMenu(bean));
+		mb.add(buildROITypeMenu());
+		mb.add(buildImageMeasureMenuNew(bean));
+		mb.setHelpMenu(new Menu("Help"));
+		
+		return mb;
+	}
 
 	public MenuItem createMenuItem(String menuLabel,
 			MeasureActionListenerInterface actionListener) {
@@ -469,6 +531,22 @@ public class ImageHelper {
 		return measureMenu;
 	}
 
+	public Menu buildImageMeasureMenuNew(MeasurementVO bean) {
+		Menu measureMenu = new Menu("Analyse");
+
+		Menu submenuAnt = new Menu("Anterior");
+		Menu submenuPost = new Menu("Posterior");
+
+		createSubmenuItemNew(bean, submenuAnt, ImageTypeEnum.Anteria);
+		createSubmenuItemNew(bean, submenuPost, ImageTypeEnum.Posteria);
+
+		measureMenu.add(submenuAnt);
+		measureMenu.add(submenuPost);
+
+		return measureMenu;
+	}
+
+	
 	private void createSubmenuItem(MeasurementVO bean, Menu measureMenu,
 			ImageTypeEnum imageTypeEnum, ImageNumberEnum imageNumberEnum) {
 		if (imageNumberEnum == ImageNumberEnum.FirstImage) {
@@ -517,6 +595,22 @@ public class ImageHelper {
 		}
 	}
 
+	private void createSubmenuItemNew(MeasurementVO bean, Menu measureMenu,
+			ImageTypeEnum imageTypeEnum) {
+		
+		measureMenu.add(createMenuItem("Background",
+				new ImageMeasureActionListener(bean,
+						ImageSideEnum.Background, imageTypeEnum)));
+		measureMenu.add(createMenuItem("Left",
+				new ImageMeasureActionListener(bean,
+						ImageSideEnum.Left, imageTypeEnum)));
+		measureMenu.add(createMenuItem("Right",
+				new ImageMeasureActionListener(bean,
+						ImageSideEnum.Right, imageTypeEnum)));
+		measureMenu.add(createMenuItem("Tumour",
+				new ImageMeasureActionListener(bean,
+						ImageSideEnum.Tumour, imageTypeEnum)));
+	}
 	public double getMeanCount(ImagePlus imagePlus) {
 		IJ.run("Set Measurements...",
 				"area mean standard min redirect=None decimal=3");
