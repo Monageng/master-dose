@@ -98,6 +98,8 @@ public class ImageCaptureController implements Initializable {
 		MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
 		measurementVO.setImageKey(imageNumberTxt.getText()+intervalTxt.getText());
 		measurementVO.setImageNumber(users.size() + 1);
+		measurementVO.setInterval(Integer.parseInt(intervalTxt.getText()));
+		measurementVO.setTableView(tableView);
 //		measurementVO.getFirstMeasurementVO().setPosteriaLeftField(
 //				first_posteria_left);
 //		measurementVO.getFirstMeasurementVO().setPosteriaRightField(
@@ -105,6 +107,7 @@ public class ImageCaptureController implements Initializable {
 //		measurementVO.getFirstMeasurementVO().setPosteriaTumourField(
 //				first_posteria_tumour);
 		ImageHelper.instance.showImageNew(measurementVO);
+		
 		
 	}
 
@@ -123,6 +126,8 @@ public class ImageCaptureController implements Initializable {
 		imageType.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, String>("imageType"));
 		interval.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Integer>("interval"));
 		leftMeanCount.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Double>("leftMeanCount"));
+		rightMeanCount.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Double>("rightMeanCount"));
+		tumourMeanCount.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Double>("tumourMeanCount"));
 		
 		tableView.getColumns().get(0).prefWidthProperty().bind(tableView.widthProperty().multiply(0.25));    // 33% for id column size
 		tableView.getColumns().get(1).prefWidthProperty().bind(tableView.widthProperty().multiply(0.25));   // 33% for dt column size

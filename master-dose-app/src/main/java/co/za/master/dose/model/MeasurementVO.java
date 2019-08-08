@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javafx.application.HostServices;
 import javafx.scene.chart.LineChart;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import lombok.Data;
 
@@ -16,6 +17,9 @@ public class MeasurementVO {
 	private Map<String, ImageMeasureItem> map = new HashMap<>();
 	private String imageKey ;
 	private int imageNumber;
+	private int interval;
+	
+	private TableView<ImageMeasureItem> tableView;
 	
 	
 	private FirstMeasurementVO firstMeasurementVO = new FirstMeasurementVO();
@@ -101,6 +105,18 @@ public class MeasurementVO {
 	}
 	public void setImageNumber(int imageNumber) {
 		this.imageNumber = imageNumber;
+	}
+	public TableView<ImageMeasureItem> getTableView() {
+		return tableView;
+	}
+	public void setTableView(TableView<ImageMeasureItem> tableView) {
+		this.tableView = tableView;
+	}
+	public int getInterval() {
+		return interval;
+	}
+	public void setInterval(int interval) {
+		this.interval = interval;
 	}
 
 	
