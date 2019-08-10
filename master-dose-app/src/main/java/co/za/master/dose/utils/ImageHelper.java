@@ -14,14 +14,22 @@ import java.awt.Color;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
@@ -52,6 +60,7 @@ import co.za.master.dose.measure.listeners.SecondImageMeasureActionListener;
 import co.za.master.dose.measure.listeners.ThirdImageMeasureActionListener;
 import co.za.master.dose.model.ConfigData;
 import co.za.master.dose.model.FirstMeasurementVO;
+import co.za.master.dose.model.ImageMeasureItem;
 import co.za.master.dose.model.ImageMeasureTime;
 import co.za.master.dose.model.ImageNumberEnum;
 import co.za.master.dose.model.ImageSideEnum;
@@ -61,6 +70,7 @@ import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.model.ROITypeEnum;
 import co.za.master.dose.model.SecondMeasurementVO;
 import co.za.master.dose.model.ThirdMeasurementVO;
+import co.za.master.dose.model.User;
 
 public class ImageHelper {
 
@@ -71,6 +81,45 @@ public class ImageHelper {
 		instance.generatedXsl(bean);
 	}
 
+	
+	public List<User> getAllUsers() {
+		BufferedReader br = null;
+		List<User> list = new ArrayList<>();
+        try {
+        	File file = new File("C:\\git\\master-dose\\master-dose-app\\src\\main\\resources\\users.csv");
+    		if (!file.exists()) {
+    			file.createNewFile();
+    		}
+    		
+            
+            String line = "";
+            String cvsSplitBy = ",";
+
+            br = new BufferedReader(new FileReader(file));
+           
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] users = line.split(cvsSplitBy);
+                User user = new User(users[0],users[1], users[2], users[3], users[4]);
+                list.add(user);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return list;
+	}
 	public void showImage(MeasurementVO measurementVO,
 			ImageTypeEnum imageTypeEnum, ImageNumberEnum imageNumberEnum) {
 		FileChooser chooser = new FileChooser();
@@ -365,6 +414,98 @@ public class ImageHelper {
 		return bean;
 	}
 
+	public MeasurementVO calculateMeanSquareRootNew(MeasurementVO bean) {
+		ImageMeasureItem posteria = null;
+		ImageMeasureItem anteria = null;
+		int count = 0;
+		Map<String, Double> map = new HashMap<>();
+		Map<String, Integer> intervalMap = new HashMap<>();
+		
+//		Map<String, ImageMeasureItem> sortedMap = new TreeMap<Strn,ImageMeasureItem>(bean.getMap());
+		for (String key : bean.getMap().keySet()) {
+			String imageNo  = key.substring(0, key.indexOf("_"));
+			if (key.contains(ImageTypeEnum.Anteria.name())) {
+				anteria = bean.getMap().get(key);
+			} else if (key.contains(ImageTypeEnum.Posteria.name())) {
+				posteria = bean.getMap().get(key);
+			}
+			
+			if (posteria != null && anteria != null) {
+				double squareLeftResults = getSquareRootOfImages(anteria.getLeftMeanCount(), posteria.getLeftMeanCount(), bean.getConfigData()
+						.getSensitivity(), bean.getConfigData()
+						.getTransmissionCounts());
+				double squareRightResults = getSquareRootOfImages(anteria.getRightMeanCount(), posteria.getRightMeanCount(), bean.getConfigData()
+						.getSensitivity(), bean.getConfigData()
+						.getTransmissionCounts());
+				double squareTumourResults = getSquareRootOfImages(anteria.getTumourMeanCount(), posteria.getTumourMeanCount(), bean.getConfigData()
+						.getSensitivity(), bean.getConfigData()
+						.getTransmissionCounts());
+				map.put(imageNo+ "_Left", squareLeftResults);
+				map.put(imageNo + "_Right", squareRightResults);
+				map.put(imageNo + "_Tumour", squareTumourResults);
+				intervalMap.put(imageNo, anteria.getInterval());
+				posteria = null;
+				anteria = null;
+			}
+			
+			
+		}
+		
+		bean.setIntervalMap(intervalMap);
+		bean.setSquareRoot(map);
+//		bean.getFirstMeasurementVO().setRightImage(
+//				getSquareRootOfImages(bean.getFirstMeasurementVO()
+//						.getAnteriaRight(), bean.getFirstMeasurementVO()
+//						.getPosteriaRight(), bean.getConfigData()
+//						.getSensitivity(), bean.getConfigData()
+//						.getTransmissionCounts()));
+//		bean.getFirstMeasurementVO().setTumourImage(
+//				getSquareRootOfImages(bean.getFirstMeasurementVO()
+//						.getAnteriaTumour(), bean.getFirstMeasurementVO()
+//						.getPosteriaTumour(), bean.getConfigData()
+//						.getSensitivity(), bean.getConfigData()
+//						.getTransmissionCounts()));
+//
+//		bean.getSecondMeasurementVO().setLeftImage(
+//				getSquareRootOfImages(bean.getSecondMeasurementVO()
+//						.getAnteriaLeft(), bean.getSecondMeasurementVO()
+//						.getPosteriaLeft(), bean.getConfigData()
+//						.getSensitivity(), bean.getConfigData()
+//						.getTransmissionCounts()));
+//		bean.getSecondMeasurementVO().setRightImage(
+//				getSquareRootOfImages(bean.getSecondMeasurementVO()
+//						.getAnteriaRight(), bean.getSecondMeasurementVO()
+//						.getPosteriaRight(), bean.getConfigData()
+//						.getSensitivity(), bean.getConfigData()
+//						.getTransmissionCounts()));
+//		bean.getSecondMeasurementVO().setTumourImage(
+//				getSquareRootOfImages(bean.getSecondMeasurementVO()
+//						.getAnteriaTumour(), bean.getSecondMeasurementVO()
+//						.getPosteriaTumour(), bean.getConfigData()
+//						.getSensitivity(), bean.getConfigData()
+//						.getTransmissionCounts()));
+//
+//		bean.getThirdMeasurementVO().setLeftImage(
+//				getSquareRootOfImages(bean.getThirdMeasurementVO()
+//						.getAnteriaLeft(), bean.getThirdMeasurementVO()
+//						.getPosteriaLeft(), bean.getConfigData()
+//						.getSensitivity(), bean.getConfigData()
+//						.getTransmissionCounts()));
+//		bean.getThirdMeasurementVO().setRightImage(
+//				getSquareRootOfImages(bean.getThirdMeasurementVO()
+//						.getAnteriaRight(), bean.getThirdMeasurementVO()
+//						.getPosteriaRight(), bean.getConfigData()
+//						.getSensitivity(), bean.getConfigData()
+//						.getTransmissionCounts()));
+//		bean.getThirdMeasurementVO().setTumourImage(
+//				getSquareRootOfImages(bean.getThirdMeasurementVO()
+//						.getAnteriaTumour(), bean.getThirdMeasurementVO()
+//						.getPosteriaTumour(), bean.getConfigData()
+//						.getSensitivity(), bean.getConfigData()
+//						.getTransmissionCounts()));
+		return bean;
+	}
+	
 	public double getMean(ImagePlus imagePlus, String backgroundCount) {
 		System.out
 				.println(" ***************START getMean *********************");
@@ -619,7 +760,7 @@ public class ImageHelper {
 		analyzer.measure();
 		analyzer.summarize();
 		ResultsTable rt = Analyzer.getResultsTable();
-		int count = rt.getCounter() - 5;
+		int count = rt.getCounter() - 1 ;
 		if (count < 0)
 			count = 0;
 		double stdDev = rt.getValueAsDouble(ResultsTable.STD_DEV, count);
@@ -720,32 +861,20 @@ public class ImageHelper {
 
 		linechart.getData().clear();
 
-		// System.out.println("measurementBean : " + measurementBean);
 
-		XYChart.Series rightImageDataSet = getRightImageDataSet(measurementBean);
-		XYChart.Series leftImageDataSet = getLeftImageDataSet(measurementBean);
-		XYChart.Series tumourImageDataSet = getTumourImageDataSet(measurementBean);
+		XYChart.Series rightImageDataSet = getImageDataSetNew(measurementBean, "Right");
+		XYChart.Series leftImageDataSet = getImageDataSetNew(measurementBean, "Left");
+		XYChart.Series tumourImageDataSet = getImageDataSetNew(measurementBean, "Tumour");
 		linechart.getData().addAll(rightImageDataSet, leftImageDataSet,
 				tumourImageDataSet);
 		linechart.setLegendVisible(true);
 		linechart.setCreateSymbols(true);
 
-		calculateDosage(measurementBean);
-		// System.out.println("Dosage " + measurementBean.getDosage());
+		calculateDosageNew(measurementBean);
+		 System.out.println("Dosage " + measurementBean.getDosage());
 		linechart.setTitle("Dosage is " + measurementBean.getDosage());
 
 		linechart.setLegendSide(Side.RIGHT);
-
-		// Legend.LegendItem li1=new Legend.LegendItem("Right Image");
-		//
-		// Legend.LegendItem li2=new Legend.LegendItem("Left Image");
-		// Legend.LegendItem li3=new Legend.LegendItem("Tumour Image");
-		// legend.getItems().setAll(li1,li2,li3);
-		// legend.getItems().get(0).getSymbol().getStyleClass().add("series-right-image");
-		// Node line = rightImageDataSet.getNode();
-		// System.out.println(linechart.getStyleClass().add("default-color0.chart-line-symbol"));
-		// System.out.println(linechart.getStyleClass().add("default-color0.chart-line-symbol"));
-		//
 
 		String OS = System.getProperty("os.name").toLowerCase();
 		System.out.println("OS" + OS);
@@ -758,30 +887,6 @@ public class ImageHelper {
 			File f = new File("src/main/java/co/za/master/dose/frame/Login.css");
 			linechart.getStylesheets().add(f.getAbsolutePath());
 		}
-
-		// String css =
-		// DynamicCSS.class.getResource("/jarcss.css").toExternalForm();
-		// scene.getStylesheets().clear();
-		// scene.getStylesheets().add(css)
-
-		// System.out.println("line: " +
-		// line.getStyleClass().add("default-color0.chart-line-symbol"));
-		// line.setStyle(".default-color0.chart-series-line { -fx-background-color: #3095CE, white; -fx-stroke: #3095CE; }, .default-color0.chart-line-symbol { -fx-background-color: #3095CE;-fx-text-fill: #3095CE; }");
-
-		// for(int i=0; i<3; i++){
-		// for(Node n : linechart.lookupAll(".series"+i)){
-		// System.out.println(n.getStyleClass());
-		// }
-		// }
-
-		// legend.getItems().get(0).getStyleClass.add("default-color0.chart-series-line");
-		// .default-color0.chart-series-line { -fx-background-color: -line-0,
-		// white; -fx-stroke: -line-0; }
-		// .default-color1.chart-series-line { -fx-background-color: -line-1,
-		// white; -fx-stroke: -line-1; }
-		// .default-color2.chart-series-line { -fx-background-color: -line-2,
-		// white; -fx-stroke: -line-2; }
-
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -819,6 +924,39 @@ public class ImageHelper {
 		return series;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private XYChart.Series getImageDataSetNew(MeasurementVO vo, String side) {
+		XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
+
+//        Map<Integer,String> sortedMap = new TreeMap<Integer,String>(unsortedMap);
+		Map<String, Double> map = new TreeMap<String, Double>(vo.getSquareRoot());
+		
+		
+		for (String key : map.keySet()) {
+			if (key.contains(side)) {
+				String imageNo  = key.substring(0, key.indexOf("_"));
+				series.getData().add(new XYChart.Data(imageNo,map.get(key)));
+			}
+			
+		}
+		
+		series.setName(side + " Image");
+
+		// System.out.println("Firs Interval : " +
+		// vo.getFirstMeasurementVO().getInterval() + " : " +
+		// vo.getFirstMeasurementVO().getRightImage());
+		// System.out.println("second Interval : " +
+		// vo.getSecondMeasurementVO().getInterval()+ " : " +
+		// vo.getSecondMeasurementVO().getRightImage());
+		// System.out.println("Third Interval : " +
+		// vo.getThirdMeasurementVO().getInterval()+ " : " +
+		// vo.getThirdMeasurementVO().getRightImage());
+
+		// System.out.println("Series : " + series.getNode());
+		// series.getNode().getStyleClass().add("series-right-image");
+		// data.getNode().setStyle(css);
+		return series;
+	}
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private XYChart.Series getLeftImageDataSet(MeasurementVO vo) {
 		XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
@@ -1061,6 +1199,146 @@ public class ImageHelper {
 
 		System.out.println("dosage : " + dosage);
 		vo.setDosage(dosage.doubleValue());
+	}
+	
+	private double getSumGradient(List<Double> gradientList) {
+		double sumGradient = 0;
+		double S_VALUE = 0.29;
+		for (double d: gradientList) {
+			sumGradient+= d;
+		}
+		System.out.println("sumGradient : " + sumGradient);
+		sumGradient = (sumGradient / 1000) * S_VALUE;
+		return sumGradient;
+	}
+	private List<Double> getGradientList(int size, List<Integer> intervalList, List<Double> imageList) {
+		List<Double> gradientList = new ArrayList<>();
+		
+		for (int i = size; i > 1 ; i--) {
+			double g2 = imageList.get(i - 1);
+			double g1 = imageList.get(i - 2);
+			double t2 = intervalList.get(i - 1);
+			double t1 = intervalList.get(i - 2);
+			double gradientL1 =(( g2 + g1) / 2)	* (t2 - t1);
+			gradientList.add(gradientL1);
+		}
+		return gradientList;
+	}
+	private void calculateDosageNew(MeasurementVO vo) {
+
+		System.out.println("Calculate Dosage1 : " + vo.toString());
+		double S_VALUE = 0.29;
+		
+
+        Map<String,Double> sortedMap = new TreeMap<String,Double>(vo.getSquareRoot());
+
+        List<Integer > intervalList = new ArrayList<>();
+        List<Double > leftList = new ArrayList<>();
+        List<Double > rightList = new ArrayList<>();
+        List<Double > tumourList = new ArrayList<>();
+        
+		for (String key : sortedMap.keySet()) {
+			String interval = key.substring(0, key.indexOf("_"));
+			if (key.contains("Left")) {
+				intervalList.add(vo.getIntervalMap().get(interval));
+				leftList.add(sortedMap.get(key));
+			} else if (key.contains("Right")) {
+//				rightMap.put(interval, sortedMap.get(key));
+				rightList.add(sortedMap.get(key));
+			} else if (key.contains("Tumour")) {
+//				tumourMap.put(interval, sortedMap.get(key));
+				tumourList.add(sortedMap.get(key));
+			}
+		}
+		
+		int size = leftList.size();
+		List<Double> leftGradientList = getGradientList(size, intervalList, leftList);
+		List<Double> rightGradientList = getGradientList(size, intervalList,rightList );
+		List<Double> tumourGradientList = getGradientList(size, intervalList, tumourList);
+		
+		double sumLGradient = getSumGradient(leftGradientList);
+		System.out.println("sumLGradient : " + sumLGradient);
+		
+		double sumRGradient = getSumGradient(rightGradientList);
+		System.out.println("sumRGradient : " + sumRGradient);
+		
+		double sumTGradient = getSumGradient(tumourGradientList);
+		System.out.println("sumTGradient : " + sumTGradient);
+		
+		double totalD = sumLGradient + sumRGradient + sumTGradient;
+		MathContext mc = new MathContext(4, RoundingMode.HALF_UP);
+		BigDecimal dosage = new BigDecimal(totalD, mc);
+
+		System.out.println("dosage : " + dosage);
+		vo.setDosage(dosage.doubleValue());
+		
+//		for (int i = size; i > 1 ; i--) {
+//			double g2 = leftList.get(i - 1);
+//			double g1 = leftList.get(i - 2);
+//			double t2 = intervalList.get(i - 1);
+//			double t1 = intervalList.get(i - 2);
+//			double gradientL1 =(( g2 + g1) / 2)	* (t2 - t1);
+//			leftGradientList.add(gradientL1);
+//		}
+//		
+		// ((L2+L1)/2)*(t2-t1)
+//		double gradientL1 = ((vo.getSecondMeasurementVO().getLeftImage() + vo
+//				.getFirstMeasurementVO().getLeftImage()) / 2)
+//				* (ImageMeasureTime.SECOND_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.FIRST_MEASUREMENT_TIME
+//						.getMeasureTime());
+//		System.out.println("gradient1 : " + gradientL1);
+//
+//		// ((L3+L2)/2)*(t3-t1)
+//		double gradientL2 = ((vo.getThirdMeasurementVO().getLeftImage() + vo
+//				.getSecondMeasurementVO().getLeftImage()) / 2)
+//				* (ImageMeasureTime.THIRD_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.SECOND_MEASUREMENT_TIME
+//						.getMeasureTime());
+//		System.out.println("gradientL2 : " + gradientL2);
+//
+//		// ((R2+R1)/2)*(t2-t1)
+//		double gradientR1 = ((vo.getSecondMeasurementVO().getRightImage() + vo
+//				.getFirstMeasurementVO().getRightImage()) / 2)
+//				* (ImageMeasureTime.SECOND_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.FIRST_MEASUREMENT_TIME
+//						.getMeasureTime());
+//		System.out.println("gradientR1 : " + gradientR1);
+//
+//		// ((R3+R2)/2)*(t3-t1)
+//		double gradientR2 = ((vo.getThirdMeasurementVO().getRightImage() + vo
+//				.getSecondMeasurementVO().getRightImage()) / 2)
+//				* (ImageMeasureTime.THIRD_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.SECOND_MEASUREMENT_TIME
+//						.getMeasureTime());
+//		System.out.println("gradientR2 : " + gradientR2);
+//
+//		// ((R2+R1)/2)*(t2-t1)
+//		double gradientT1 = ((vo.getSecondMeasurementVO().getTumourImage() + vo
+//				.getFirstMeasurementVO().getTumourImage()) / 2)
+//				* (ImageMeasureTime.SECOND_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.FIRST_MEASUREMENT_TIME
+//						.getMeasureTime());
+//		System.out.println("gradientT1 : " + gradientT1);
+//
+//		// ((R3+R2)/2)*(t3-t1)
+//		double gradientT2 = ((vo.getThirdMeasurementVO().getTumourImage() + vo
+//				.getSecondMeasurementVO().getTumourImage()) / 2)
+//				* (ImageMeasureTime.THIRD_MEASUREMENT_TIME.getMeasureTime() - ImageMeasureTime.SECOND_MEASUREMENT_TIME
+//						.getMeasureTime());
+//		System.out.println("gradientT2 : " + gradientT2);
+
+//		double sumLGradient = ((gradientL1 + gradientL2) / 1000) * S_VALUE;
+//
+//		System.out.println("sumLGradient : " + sumLGradient);
+
+//		double sumRGradient = ((gradientR1 + gradientR2) / 1000) * S_VALUE;
+//		System.out.println("sumRGradient :" + sumRGradient);
+//
+//		double sumTGradient = ((gradientT1 + gradientT2) / 1000) * S_VALUE;
+//		System.out.println("sumTGradient :" + sumTGradient);
+//
+//		double totalD = sumLGradient + sumRGradient + sumTGradient;
+//		MathContext mc = new MathContext(4, RoundingMode.HALF_UP);
+//		BigDecimal dosage = new BigDecimal(totalD, mc);
+//
+//		System.out.println("dosage : " + dosage);
+//		vo.setDosage(dosage.doubleValue());
 	}
 
 	public MeasurementVO populateMeasurementBean(MeasurementVO bean)

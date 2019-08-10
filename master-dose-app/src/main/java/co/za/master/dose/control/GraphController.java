@@ -39,6 +39,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
+import co.za.master.dose.model.ConfigData;
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.utils.ImageHelper;
 import co.za.master.dose.utils.MasterDoseCache;
@@ -64,10 +65,15 @@ public class GraphController implements Initializable {
 	protected void handleCalculateDosageAction(ActionEvent event) {
 		ImageHelper imageHelper = new ImageHelper();
 		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
-		if (imageHelper.validateForDosageCalculation(vo)) {
-			vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
+//		if (imageHelper.validateForDosageCalculation(vo)) {
+			ConfigData configData = new ConfigData();
+			configData.setSensitivity(1.2);
+			configData.setTransmissionCounts(1.1);
+			vo.setConfigData(configData );
+			vo = ImageHelper.instance.calculateMeanSquareRootNew(vo);
+			
 			imageHelper.drawGraphNew(vo, linechart);
-		}
+//		}
 	}
 
 	public void initialize(URL arg0, ResourceBundle arg1) {

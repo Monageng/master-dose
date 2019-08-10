@@ -70,7 +70,11 @@
 		    	</VBox>
 		   	</children>
 		   </HBox>
-		   
+		    <HBox>
+	  		<children>
+	 			<Button text="Save" onAction="#handleSaveConfigAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
+			</children>
+	 </HBox>
 		 </children>
 	  </VBox>		
        

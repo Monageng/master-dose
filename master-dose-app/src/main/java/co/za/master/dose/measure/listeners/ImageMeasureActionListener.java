@@ -45,7 +45,6 @@ public class ImageMeasureActionListener implements MeasureActionListenerInterfac
 				System.out.println("Background Mean : " + mean + " imageTypeEnum " + imageTypeEnum);
 				if (imageMeasureItem == null) {
 					imageMeasureItem = new ImageMeasureItem();
-					imageMeasureItem.setImageNumber(MasterDoseCache.instance.getMeasurementVO().getImageNumber());
 				}
 				imageMeasureItem.setBackground(mean);
 			} else {
@@ -79,11 +78,13 @@ public class ImageMeasureActionListener implements MeasureActionListenerInterfac
 					}
 				}
 			}
+
+			imageMeasureItem.setImageNumber(MasterDoseCache.instance.getMeasurementVO().getImageNumber());
 			imageMeasureItem.setImageType(imageTypeEnum.name());
 			imageMeasureItem.setInterval(MasterDoseCache.instance.getMeasurementVO().getInterval());
 			MasterDoseCache.instance.getMeasurementVO().getMap().put(key, imageMeasureItem);
 //			MasterDoseCache.instance.getMeasurementVO().setFirstMeasurementVO(bean.getFirstMeasurementVO());
-			System.out.println("Printing first VO : " + MasterDoseCache.instance.getMeasurementVO());
+			System.out.println("Printing first VO : " + imageMeasureItem);
 //			tableView.getItems().setAll(this.users)
 			MasterDoseCache.instance.getMeasurementVO().getTableView().getItems().setAll(MasterDoseCache.instance.getMeasurementVO().getMap().values());
 		}

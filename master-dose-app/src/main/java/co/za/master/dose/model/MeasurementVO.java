@@ -2,6 +2,7 @@ package co.za.master.dose.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javafx.application.HostServices;
 import javafx.scene.chart.LineChart;
@@ -14,7 +15,10 @@ public class MeasurementVO {
 	private TextField textField;
 	private double dosage;
 	
-	private Map<String, ImageMeasureItem> map = new HashMap<>();
+	private Map<String, ImageMeasureItem> map = new TreeMap<>();
+	private Map<String, Double> squareRoot = new TreeMap<>();
+	private Map<String, Integer> intervalMap = new HashMap<>();
+	
 	private String imageKey ;
 	private int imageNumber;
 	private int interval;
@@ -119,6 +123,17 @@ public class MeasurementVO {
 		this.interval = interval;
 	}
 
-	
+	public Map<String, Double> getSquareRoot() {
+		return squareRoot;
+	}
+	public void setSquareRoot(Map<String, Double> squareRoot) {
+		this.squareRoot = squareRoot;
+	}
+	public Map<String, Integer> getIntervalMap() {
+		return intervalMap;
+	}
+	public void setIntervalMap(Map<String, Integer> intervalMap) {
+		this.intervalMap = intervalMap;
+	}
 
 }

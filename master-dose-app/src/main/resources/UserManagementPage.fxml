@@ -40,7 +40,7 @@
 <?import javafx.collections.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:controller="co.za.master.dose.control.ImageCaptureController" 
+<GridPane fx:controller="co.za.master.dose.control.UserManagementController" 
     xmlns:fx="http://javafx.com/fxml"  hgap="5" vgap="10"  prefHeight="900.0" prefWidth="900.0"
     styleClass="root">
     <stylesheets>
@@ -48,26 +48,15 @@
   	</stylesheets>
  <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0" >
       	<VBox>		
-        <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" >
-         <children GridPane.columnSpan="0">
-         	<Text  text="Interval : " GridPane.columnIndex="0" GridPane.rowIndex="0"   />
-            <TextField fx:id="intervalTxt" GridPane.columnIndex="1" GridPane.rowIndex="0"  prefWidth="50.0" onAction="#onEnter"/>
         
-        </children>
-      	 <children GridPane.columnSpan="0">
-         	<Text  text="Image No : " GridPane.columnIndex="0" GridPane.rowIndex="1"   />
-            <TextField fx:id="imageNumberTxt" GridPane.columnIndex="1" GridPane.rowIndex="0"  prefWidth="50.0" onAction="#onEnter"/>
-        </children>
-      	</HBox>
-		<Button text="Load" onAction="#handleLoadImageAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
-		 <TableView fx:id="tableView" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="550">
+		<Button text="Load" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
+		 <TableView fx:id="userTableView" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="550">
 		      <columns>
-		        <TableColumn  text="Image No" fx:id="imageNumber" />
-		        <TableColumn  text="interval" fx:id="interval" />
-		        <TableColumn  text="Type" fx:id="imageType" />  
-		        <TableColumn  text="Left" fx:id="leftMeanCount" />  
-		        <TableColumn  text="Right" fx:id="rightMeanCount" />  
-		        <TableColumn  text="Tumour" fx:id="tumourMeanCount" /> 
+		        <TableColumn  text="Name" fx:id="name" />
+		        <TableColumn  text="Username" fx:id="username" />
+		        <TableColumn  text="Password" fx:id="password" />  
+		        <TableColumn  text="Role" fx:id="role" />  
+		        <TableColumn  text="Status" fx:id="status" />  
 		      </columns>
 		    </TableView>
 		</VBox>			

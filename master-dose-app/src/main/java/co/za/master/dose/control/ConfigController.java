@@ -32,10 +32,18 @@
 
 package co.za.master.dose.control;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import co.za.master.dose.model.MeasurementVO;
+import co.za.master.dose.model.User;
 import co.za.master.dose.utils.MasterDoseCache;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -52,10 +60,13 @@ public class ConfigController implements Initializable {
 	private TextField transmissionCountsTxt = new TextField();
 	
 	@FXML
-	protected void onEnter(ActionEvent event) {
-		System.out.println(event.getSource());
+	protected void handleSaveConfigAction(ActionEvent event) {
+		
+		
 	}
 
+	
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		sensitivityTxt.textProperty().addListener(new ChangeListener<String>() {

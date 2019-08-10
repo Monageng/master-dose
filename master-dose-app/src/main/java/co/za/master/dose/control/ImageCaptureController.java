@@ -96,8 +96,8 @@ public class ImageCaptureController implements Initializable {
 //		System.out.println("Initialize first image " + tableView.getPrefHeight());
 		
 		MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
-		measurementVO.setImageKey(imageNumberTxt.getText()+intervalTxt.getText());
-		measurementVO.setImageNumber(users.size() + 1);
+		measurementVO.setImageKey(imageNumberTxt.getText()+ "_"+intervalTxt.getText());
+		measurementVO.setImageNumber(Integer.parseInt(imageNumberTxt.getText()));
 		measurementVO.setInterval(Integer.parseInt(intervalTxt.getText()));
 		measurementVO.setTableView(tableView);
 //		measurementVO.getFirstMeasurementVO().setPosteriaLeftField(
@@ -129,12 +129,12 @@ public class ImageCaptureController implements Initializable {
 		rightMeanCount.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Double>("rightMeanCount"));
 		tumourMeanCount.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Double>("tumourMeanCount"));
 		
-		tableView.getColumns().get(0).prefWidthProperty().bind(tableView.widthProperty().multiply(0.25));    // 33% for id column size
-		tableView.getColumns().get(1).prefWidthProperty().bind(tableView.widthProperty().multiply(0.25));   // 33% for dt column size
+		tableView.getColumns().get(0).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));    // 33% for id column size
+		tableView.getColumns().get(1).prefWidthProperty().bind(tableView.widthProperty().multiply(0.20));   // 33% for dt column size
 		tableView.getColumns().get(2).prefWidthProperty().bind(tableView.widthProperty().multiply(0.20));    // 33% for cv column size
-		tableView.getColumns().get(3).prefWidthProperty().bind(tableView.widthProperty().multiply(0.10));    // 33% for cv column size
-		tableView.getColumns().get(4).prefWidthProperty().bind(tableView.widthProperty().multiply(0.10));    // 33% for cv column size
-		tableView.getColumns().get(5).prefWidthProperty().bind(tableView.widthProperty().multiply(0.10)); 
+		tableView.getColumns().get(3).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));    // 33% for cv column size
+		tableView.getColumns().get(4).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));    // 33% for cv column size
+		tableView.getColumns().get(5).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15)); 
 		
 		tableView.setFixedCellSize(25);
 	    tableView.prefHeightProperty().bind(tableView.fixedCellSizeProperty().multiply(Bindings.size(tableView.getItems()).add(2.01)));

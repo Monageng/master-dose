@@ -17,6 +17,28 @@ public class ImageMeasureItem implements Serializable {
 	private double tumourMeanCount;
 	private double background;
 	
+	private double leftImage;
+	private double rightImage;
+	private double tumourImage;
+	
+	public double getLeftImage() {
+		return leftImage;
+	}
+	public void setLeftImage(double leftImage) {
+		this.leftImage = leftImage;
+	}
+	public double getRightImage() {
+		return rightImage;
+	}
+	public void setRightImage(double rightImage) {
+		this.rightImage = rightImage;
+	}
+	public double getTumourImage() {
+		return tumourImage;
+	}
+	public void setTumourImage(double tumourImage) {
+		this.tumourImage = tumourImage;
+	}
 	public double getBackground() {
 		return background;
 	}
@@ -60,4 +82,8 @@ public class ImageMeasureItem implements Serializable {
 		this.background = background;
 	}
 	
+	public String toString() {
+		return "ImageMeasureItem : imageType = " + imageType + " ImageNo : " + imageNumber + " background : " + background + " leftMeanCount : " + leftMeanCount + " rightMeanCount : " + rightMeanCount + " tumourCount : " + tumourMeanCount; 
+	}
 }
+
