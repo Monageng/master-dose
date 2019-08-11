@@ -47,9 +47,11 @@ import co.za.master.dose.utils.ImageHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class UserManagementController implements Initializable {
@@ -63,10 +65,24 @@ public class UserManagementController implements Initializable {
 	@FXML private TableColumn<User, String> role;
 	@FXML private TableColumn<User, String> status;
 	List<User> UserList = new ArrayList<User>();
+	
+	@FXML private TextField nameTxt;
+	@FXML private TextField usernameTxt;
+	@FXML private PasswordField pwdTxt;
+	@FXML private TextField roleTxt;
+	@FXML private TextField statusTxt;
 
 	@FXML
 	protected void onEnter(ActionEvent event) {
 		System.out.println(event.getSource());
+	}
+	
+	@FXML
+	protected void handleAddUserAction(ActionEvent event) {
+		User user = new User(nameTxt.getText(), usernameTxt.getText(), pwdTxt.getText(), roleTxt.getText(), statusTxt.getText());
+		UserList.add(user);
+		userTableView.getItems().setAll(UserList);
+		
 	}
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -78,7 +94,7 @@ public class UserManagementController implements Initializable {
 //		tableView.getColumns().get(1).prefWidthProperty().bind(tableView.widthProperty().multiply(0.33));   // 33% for dt column size
 //		tableView.getColumns().get(2).prefWidthProperty().bind(tableView.widthProperty().multiply(0.33));    // 33% for cv column size
 		userTableView.getItems().setAll(UserList);
-//		
+		userTableView.setEditable(true);
 		
 		name.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
 		username.setCellValueFactory(new PropertyValueFactory<User, String>("username"));

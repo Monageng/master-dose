@@ -48,8 +48,47 @@
   	</stylesheets>
  <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0" >
       	<VBox>		
-        
-		<Button text="Load" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
+         	<HBox>
+		    	<HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label  text="Name :  " prefWidth="170.0" />
+		    	</HBox>
+		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+		    		<TextField fx:id="nameTxt"  maxWidth="150.0" prefWidth="170.0"/>
+		    	</HBox>
+		  </HBox>
+		  <HBox>
+		  		<HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label text="Username :  " prefWidth="170.0"/>
+		    	</HBox>
+		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+		    		<TextField fx:id="usernameTxt"  maxWidth="150.0" prefWidth="170.0"/>
+		    	</HBox>
+		  </HBox>
+		  <HBox>
+		  		<HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label text="Password :  " prefWidth="170.0" />
+		    	</HBox>
+		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+		    		<PasswordField  fx:id="pwdTxt"  maxWidth="150.0" prefWidth="170.0"/>
+		    	</HBox>
+		  </HBox>
+		  <HBox>
+		  		<HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label text="Role :  " prefWidth="170.0" />
+		    	</HBox>
+		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+		    		<TextField fx:id="roleTxt"  maxWidth="50.0" prefWidth="170.0"/>
+		    	</HBox>
+		  </HBox>
+		   <HBox>
+		  		<HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label text="Status :  " prefWidth="170.0" />
+		    	</HBox>
+		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+		    		<TextField fx:id="statusTxt"  maxWidth="50.0" prefWidth="170.0"/>
+		    	</HBox>
+		  </HBox>
+		<Button text="Add User" GridPane.columnIndex="0" GridPane.rowIndex="2"  onAction="#handleAddUserAction" />
 		 <TableView fx:id="userTableView" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="550">
 		      <columns>
 		        <TableColumn  text="Name" fx:id="name" />

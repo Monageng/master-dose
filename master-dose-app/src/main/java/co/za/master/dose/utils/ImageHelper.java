@@ -86,7 +86,7 @@ public class ImageHelper {
 		BufferedReader br = null;
 		List<User> list = new ArrayList<>();
         try {
-        	File file = new File("C:\\git\\master-dose\\master-dose-app\\src\\main\\resources\\users.csv");
+        	File file = new File("C:\\github\\master-dose\\master-dose-app\\src\\main\\resources\\users.csv");
     		if (!file.exists()) {
     			file.createNewFile();
     		}
