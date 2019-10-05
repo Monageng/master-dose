@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 import co.za.master.dose.common.model.LoginManager;
 import co.za.master.dose.model.User;
 import co.za.master.dose.utils.ImageHelper;
+import co.za.master.dose.utils.MasterDoseCache;
+import co.za.master.dose.utils.PasswordUtils;
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -41,9 +43,13 @@ public class LoginController {
    */   
   private String authorize() {
 	  List<User> list = ImageHelper.instance.getAllUsers();
+	  String providedPassword = password.getText().trim();
+	  String salt = MasterDoseCache.instance.getMeasurementVO().getPasswordSalt();
+	  	  
 	  for (User userDto : list) {
-		  if (userDto.getUsername().trim().equalsIgnoreCase(user.getText().trim()) && (userDto.getPassword().trim().equalsIgnoreCase(password.getText().trim()))) {
-			 return  generateSessionID();
+		  boolean passwordMatch = PasswordUtils.verifyUserPassword(providedPassword, userDto.getPassword(), salt);
+		  if (passwordMatch) {
+			  return  generateSessionID();
 		  }
 	  }
 	  

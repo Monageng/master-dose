@@ -37,11 +37,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import co.za.master.dose.model.ImageMeasureItem;
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.utils.ImageHelper;
 import co.za.master.dose.utils.MasterDoseCache;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -86,42 +90,25 @@ public class ImageCaptureController implements Initializable {
 	
 	@FXML
 	protected void handleLoadImageAction(ActionEvent event) {
-//		ImageMeasureItem itemMeasure = new ImageMeasureItem();
-//		itemMeasure.setImageNumber(users.size()+1);
-//		itemMeasure.setImageType("Ant");
-//		users.add(itemMeasure );
-//		tableView.getItems().setAll(this.users);
-//		
-//		
-//		System.out.println("Initialize first image " + tableView.getPrefHeight());
 		
-		MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
-		measurementVO.setImageKey(imageNumberTxt.getText()+ "_"+intervalTxt.getText());
-		measurementVO.setImageNumber(Integer.parseInt(imageNumberTxt.getText()));
-		measurementVO.setInterval(Integer.parseInt(intervalTxt.getText()));
-		measurementVO.setTableView(tableView);
-//		measurementVO.getFirstMeasurementVO().setPosteriaLeftField(
-//				first_posteria_left);
-//		measurementVO.getFirstMeasurementVO().setPosteriaRightField(
-//				first_posteria_right);
-//		measurementVO.getFirstMeasurementVO().setPosteriaTumourField(
-//				first_posteria_tumour);
-		ImageHelper.instance.showImageNew(measurementVO);
-		
-		
+		if (imageNumberTxt.getText().isEmpty() || intervalTxt.getText().isEmpty() ) {
+			JOptionPane.showConfirmDialog(null, "Please capture image number or interval ", "",
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+		} else {
+			MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
+			measurementVO.setImageKey(imageNumberTxt.getText()+ "_"+intervalTxt.getText());
+			measurementVO.setImageNumber(Integer.parseInt(imageNumberTxt.getText()));
+			measurementVO.setInterval(Integer.parseInt(intervalTxt.getText()));
+			measurementVO.setTableView(tableView);
+			ImageHelper.instance.showImageNew(measurementVO);
+		}
 	}
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 //		System.out.println("Initialize first image");
-		
-		 // Set the columns width auto size
+
 		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-//		tableView.getColumns().get(0).prefWidthProperty().bind(tableView.widthProperty().multiply(0.33));    // 33% for id column size
-//		tableView.getColumns().get(1).prefWidthProperty().bind(tableView.widthProperty().multiply(0.33));   // 33% for dt column size
-//		tableView.getColumns().get(2).prefWidthProperty().bind(tableView.widthProperty().multiply(0.33));    // 33% for cv column size
-//		tableView.getItems().setAll(this.users);
-//		
-		
+			
 		imageNumber.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Integer>("imageNumber"));
 		imageType.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, String>("imageType"));
 		interval.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Integer>("interval"));
@@ -141,8 +128,31 @@ public class ImageCaptureController implements Initializable {
 	    tableView.minHeightProperty().bind(tableView.prefHeightProperty());
 	    tableView.maxHeightProperty().bind(tableView.prefHeightProperty());
 
+	    intervalTxt.textProperty().addListener(new ChangeListener<String>() {
 
-		//tableView.getItems().setAll(this.users);
+			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,1})?")) {
+					intervalTxt.setText(oldValue);
+				} else {
+					if (!newValue.isEmpty()) {
+						intervalTxt.setText(newValue);
+					}
+				}
+			}
+		});
+	    
+	    imageNumberTxt.textProperty().addListener(new ChangeListener<String>() {
+
+			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,1})?")) {
+					imageNumberTxt.setText(oldValue);
+				} else {
+					if (!newValue.isEmpty()) {
+						imageNumberTxt.setText(newValue);
+					}
+				}
+			}
+		});
         
 	}
 }

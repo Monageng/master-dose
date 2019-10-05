@@ -50,6 +50,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class ConfigController implements Initializable {
@@ -58,6 +59,9 @@ public class ConfigController implements Initializable {
 
 	@FXML
 	private TextField transmissionCountsTxt = new TextField();
+	
+	@FXML
+	private ComboBox<String> imageTypeCombo = new ComboBox<>();
 	
 	@FXML
 	protected void handleSaveConfigAction(ActionEvent event) {
@@ -100,5 +104,7 @@ public class ConfigController implements Initializable {
 				}
 			}
 		});
+		imageTypeCombo.getItems().setAll("PLANAR", "SPECT");
+		
 	};
 }

@@ -25,6 +25,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -120,6 +121,58 @@ public class ImageHelper {
         }
         return list;
 	}
+
+	public void saveUser(List<User> userList) {
+		BufferedReader br = null;
+        try {
+        	File file = new File("C:\\github\\master-dose\\master-dose-app\\src\\main\\resources\\users.csv");
+    		if (!file.exists()) {
+    			file.createNewFile();
+    		}
+    		
+            
+            String line = "";
+            String cvsSplitBy = ",";
+
+             
+            FileWriter csvWriter = new FileWriter(file);
+            
+            for (User user: userList) {
+            	 csvWriter.append(user.getName());
+                 csvWriter.append(",");
+                 csvWriter.append(user.getUsername());
+                 csvWriter.append(",");
+                 csvWriter.append(user.getPassword());
+                 csvWriter.append(",");
+                 csvWriter.append(user.getRole());
+                 csvWriter.append(",");
+                 csvWriter.append(user.getStatus());
+                 csvWriter.append("\n");
+            }
+           
+
+            csvWriter.flush();
+            csvWriter.close();
+           
+            
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        
+	}
+
+	
 	public void showImage(MeasurementVO measurementVO,
 			ImageTypeEnum imageTypeEnum, ImageNumberEnum imageNumberEnum) {
 		FileChooser chooser = new FileChooser();
@@ -754,7 +807,8 @@ public class ImageHelper {
 	}
 	public double getMeanCount(ImagePlus imagePlus) {
 		IJ.run("Set Measurements...",
-				"area mean standard min redirect=None decimal=3");
+				"area integrated redirect=None decimal=3");
+		
 		Analyzer analyzer = new Analyzer(imagePlus);
 
 		analyzer.measure();
@@ -763,11 +817,14 @@ public class ImageHelper {
 		int count = rt.getCounter() - 1 ;
 		if (count < 0)
 			count = 0;
-		double stdDev = rt.getValueAsDouble(ResultsTable.STD_DEV, count);
-		double mean = rt.getValueAsDouble(ResultsTable.MEAN, count);
-		System.out.println("Standard deviation : " + stdDev + " > mean : "
-				+ mean);
-		return stdDev;
+		double integrated = rt.getValueAsDouble(ResultsTable.INTEGRATED_DENSITY, count);
+//		double mean = rt.getValueAsDouble(ResultsTable.MEAN, count);
+//		System.out.println("Standard deviation : " + stdDev + " > mean : "
+//				+ mean);
+		
+		MathContext mc = new MathContext(4, RoundingMode.HALF_UP);
+		BigDecimal decimal = new BigDecimal(integrated, mc);
+		return decimal.doubleValue();
 	}
 
 	

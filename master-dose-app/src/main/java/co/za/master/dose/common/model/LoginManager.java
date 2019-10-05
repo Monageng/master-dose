@@ -47,11 +47,6 @@ public class LoginManager {
 	public void showLoginScreen() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
-
-//      FXMLLoader loader = new FXMLLoader();
-//		loader.setLocation(getClass().getResource("/MainPage.fxml"));
-//		Parent root = loader.load(); 
-
 			scene.setRoot((Parent) loader.load());
 			LoginController controller = loader.<LoginController>getController();
 			controller.initManager(this);

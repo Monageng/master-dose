@@ -77,7 +77,8 @@
 		    		<Label text="Role :  " prefWidth="170.0" />
 		    	</HBox>
 		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
-		    		<TextField fx:id="roleTxt"  maxWidth="50.0" prefWidth="170.0"/>
+		    		<ComboBox fx:id="roleCombo" layoutX="15.0" layoutY="33.0" prefWidth="170" promptText="choose"/>
+   
 		    	</HBox>
 		  </HBox>
 		   <HBox>
@@ -85,7 +86,9 @@
 		    		<Label text="Status :  " prefWidth="170.0" />
 		    	</HBox>
 		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
-		    		<TextField fx:id="statusTxt"  maxWidth="50.0" prefWidth="170.0"/>
+		    		
+		    		<ComboBox fx:id="statusCombo" layoutX="15.0" layoutY="33.0" prefWidth="170" promptText="choose"/>
+   
 		    	</HBox>
 		  </HBox>
 		<Button text="Add User" GridPane.columnIndex="0" GridPane.rowIndex="2"  onAction="#handleAddUserAction" />

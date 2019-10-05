@@ -1,9 +1,14 @@
 package co.za.master.dose.model;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 public class User implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String username;
 	private String password;

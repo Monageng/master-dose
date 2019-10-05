@@ -25,6 +25,8 @@ public class MeasurementVO {
 	
 	private TableView<ImageMeasureItem> tableView;
 	
+	private String passwordSalt = "aHFoLxRa4K6uxhz2BnX4DqvkMeOSpQ";
+	
 	
 	private FirstMeasurementVO firstMeasurementVO = new FirstMeasurementVO();
 	private SecondMeasurementVO secondMeasurementVO = new SecondMeasurementVO();
@@ -134,6 +136,12 @@ public class MeasurementVO {
 	}
 	public void setIntervalMap(Map<String, Integer> intervalMap) {
 		this.intervalMap = intervalMap;
+	}
+	public String getPasswordSalt() {
+		return passwordSalt;
+	}
+	public void setPasswordSalt(String passwordSalt) {
+		this.passwordSalt = passwordSalt;
 	}
 
 }

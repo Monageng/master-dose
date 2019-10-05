@@ -39,14 +39,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import co.za.master.dose.model.User;
 import co.za.master.dose.utils.ImageHelper;
+import co.za.master.dose.utils.MasterDoseCache;
+import co.za.master.dose.utils.PasswordUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
@@ -64,13 +68,15 @@ public class UserManagementController implements Initializable {
 	@FXML private TableColumn<User, String> password;
 	@FXML private TableColumn<User, String> role;
 	@FXML private TableColumn<User, String> status;
+	
+	@FXML private ComboBox<String> statusCombo;
+	@FXML private ComboBox<String> roleCombo;		
+			
 	List<User> UserList = new ArrayList<User>();
 	
 	@FXML private TextField nameTxt;
 	@FXML private TextField usernameTxt;
 	@FXML private PasswordField pwdTxt;
-	@FXML private TextField roleTxt;
-	@FXML private TextField statusTxt;
 
 	@FXML
 	protected void onEnter(ActionEvent event) {
@@ -79,10 +85,25 @@ public class UserManagementController implements Initializable {
 	
 	@FXML
 	protected void handleAddUserAction(ActionEvent event) {
-		User user = new User(nameTxt.getText(), usernameTxt.getText(), pwdTxt.getText(), roleTxt.getText(), statusTxt.getText());
-		UserList.add(user);
-		userTableView.getItems().setAll(UserList);
-		
+		User user = new User(nameTxt.getText(), usernameTxt.getText(), pwdTxt.getText(), roleCombo.getValue(), statusCombo.getValue());
+		String salt =  MasterDoseCache.instance.getMeasurementVO().getPasswordSalt();
+		if (salt ==null) {
+			MasterDoseCache.instance.getMeasurementVO().setPasswordSalt(PasswordUtils.getSalt(30));
+		}
+		String securePassword = PasswordUtils.generateSecurePassword(pwdTxt.getText(), MasterDoseCache.instance.getMeasurementVO().getPasswordSalt());
+		user.setPassword(securePassword);
+		boolean isFound = false;
+		for (User savedUser : UserList) {
+			if (user.getUsername().equalsIgnoreCase(savedUser.getUsername())) {
+				isFound = true;
+			}
+		}
+		if (!isFound) {
+			UserList.add(user);
+			ImageHelper.instance.saveUser(UserList);
+			userTableView.getItems().setAll(UserList);
+		}
+				
 	}
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -90,9 +111,6 @@ public class UserManagementController implements Initializable {
 		
 		 // Set the columns width auto size
 		userTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-//		tableView.getColumns().get(0).prefWidthProperty().bind(tableView.widthProperty().multiply(0.33));    // 33% for id column size
-//		tableView.getColumns().get(1).prefWidthProperty().bind(tableView.widthProperty().multiply(0.33));   // 33% for dt column size
-//		tableView.getColumns().get(2).prefWidthProperty().bind(tableView.widthProperty().multiply(0.33));    // 33% for cv column size
 		userTableView.getItems().setAll(UserList);
 		userTableView.setEditable(true);
 		
@@ -101,21 +119,8 @@ public class UserManagementController implements Initializable {
 		password.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
 		role.setCellValueFactory(new PropertyValueFactory<User, String>("role"));
 		status.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
-//		
-//		userTableView.getColumns().get(0).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));    // 33% for id column size
-//		userTableView.getColumns().get(1).prefWidthProperty().bind(tableView.widthProperty().multiply(0.20));   // 33% for dt column size
-//		userTableView.getColumns().get(2).prefWidthProperty().bind(tableView.widthProperty().multiply(0.20));    // 33% for cv column size
-//		userTableView.getColumns().get(3).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));    // 33% for cv column size
-//		tableView.getColumns().get(4).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));    // 33% for cv column size
-//		tableView.getColumns().get(5).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15)); 
-//		
-//		tableView.setFixedCellSize(25);
-//	    tableView.prefHeightProperty().bind(tableView.fixedCellSizeProperty().multiply(Bindings.size(tableView.getItems()).add(2.01)));
-//	    tableView.minHeightProperty().bind(tableView.prefHeightProperty());
-//	    tableView.maxHeightProperty().bind(tableView.prefHeightProperty());
 
-
-		//tableView.getItems().setAll(this.users);
-        
+		statusCombo.getItems().setAll("Active", "Inactive", "Locked");
+		roleCombo.getItems().setAll("Admin", "Users", "Support");
 	}
 }
