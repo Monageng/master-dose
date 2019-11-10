@@ -33,6 +33,7 @@ public class MeasurementVO {
 	private ThirdMeasurementVO thirdMeasurementVO = new ThirdMeasurementVO();
 	private PatientDetails patientDetails = new PatientDetails();
 	private ConfigData configData = new ConfigData();
+	private User loggedOnUser = new User();
 	private HostServices hostServices;
 	private LineChart<Number, Number> linechart;
 	
@@ -142,6 +143,12 @@ public class MeasurementVO {
 	}
 	public void setPasswordSalt(String passwordSalt) {
 		this.passwordSalt = passwordSalt;
+	}
+	public User getLoggedOnUser() {
+		return loggedOnUser;
+	}
+	public void setLoggedOnUser(User loggedOnUser) {
+		this.loggedOnUser = loggedOnUser;
 	}
 
 }

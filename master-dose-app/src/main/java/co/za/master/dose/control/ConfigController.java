@@ -42,9 +42,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import co.za.master.dose.model.ConfigData;
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.model.User;
+import co.za.master.dose.utils.ImageHelper;
 import co.za.master.dose.utils.MasterDoseCache;
+import co.za.master.dose.utils.PasswordUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -63,16 +66,34 @@ public class ConfigController implements Initializable {
 	@FXML
 	private ComboBox<String> imageTypeCombo = new ComboBox<>();
 	
+	
 	@FXML
 	protected void handleSaveConfigAction(ActionEvent event) {
-		
+		MeasurementVO measurementVO = MasterDoseCache.instance
+				.getMeasurementVO();
+		if (ImageHelper.instance.isConfigValid(measurementVO.getConfigData())) {
+			ImageHelper.instance.saveConfigData(measurementVO.getConfigData());
+		}
 		
 	}
-
 	
+	private void loadConfigs() {
+		ConfigData configData = ImageHelper.instance.getConfigData();
+		if (configData.getSensitivity() != 0) {
+			sensitivityTxt.setText(configData.getSensitivity() + "");
+		}
+		
+		if (configData.getTransmissionCounts() != 0) {
+			transmissionCountsTxt.setText(configData.getTransmissionCounts() + "");
+		}
+		
+		if (configData.getImageType() != null) {
+			imageTypeCombo.setValue(configData.getImageType());
+		}
+	}
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		loadConfigs();
 		sensitivityTxt.textProperty().addListener(new ChangeListener<String>() {
 
 			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
@@ -104,6 +125,17 @@ public class ConfigController implements Initializable {
 				}
 			}
 		});
+		
+		imageTypeCombo.valueProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+				MeasurementVO measurementVO = MasterDoseCache.instance
+						.getMeasurementVO();
+				measurementVO.getConfigData().setImageType(newValue);				
+			}
+		});
+		
 		imageTypeCombo.getItems().setAll("PLANAR", "SPECT");
 		
 	};

@@ -1,7 +1,6 @@
 package co.za.master.dose.model;
 
 import java.io.Serializable;
-import java.util.Base64;
 
 public class User implements Serializable {
 
@@ -22,6 +21,11 @@ public class User implements Serializable {
 		this.status = status;
 		this.username = username;
 	}
+	
+	public User() {
+		
+	}
+	
 	public String getName() {
 		return name;
 	}

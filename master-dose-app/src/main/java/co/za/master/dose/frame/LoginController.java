@@ -1,18 +1,14 @@
 package co.za.master.dose.frame;
 
 
-import java.util.List;
-
 import javax.swing.JOptionPane;
 
-import co.za.master.dose.common.model.LoginManager;
-import co.za.master.dose.model.User;
 import co.za.master.dose.utils.ImageHelper;
-import co.za.master.dose.utils.MasterDoseCache;
-import co.za.master.dose.utils.PasswordUtils;
-import javafx.event.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 /** Controls the login screen */
 public class LoginController {
@@ -25,7 +21,7 @@ public class LoginController {
   public void initManager(final LoginManager loginManager) {
     loginButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override public void handle(ActionEvent event) {
-        String sessionID = authorize();
+        String sessionID = ImageHelper.instance.authorize(password.getText().trim(), user.getText().trim());
         if (sessionID != null) {
           loginManager.authenticated(sessionID);
         } else {
@@ -41,25 +37,7 @@ public class LoginController {
    * If accepted, return a sessionID for the authorized session
    * otherwise, return null.
    */   
-  private String authorize() {
-	  List<User> list = ImageHelper.instance.getAllUsers();
-	  String providedPassword = password.getText().trim();
-	  String salt = MasterDoseCache.instance.getMeasurementVO().getPasswordSalt();
-	  	  
-	  for (User userDto : list) {
-		  boolean passwordMatch = PasswordUtils.verifyUserPassword(providedPassword, userDto.getPassword(), salt);
-		  if (passwordMatch) {
-			  return  generateSessionID();
-		  }
-	  }
-	  
-    return null;
-  }
-  
-  private static int sessionID = 0;
 
-  private String generateSessionID() {
-    sessionID++;
-    return "xyzzy - session " + sessionID;
-  }
+  
+
 }

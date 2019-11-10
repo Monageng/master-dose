@@ -32,17 +32,12 @@
 
 package co.za.master.dose.control;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import co.za.master.dose.constants.MasterDoseConstants;
 import co.za.master.dose.model.User;
 import co.za.master.dose.utils.ImageHelper;
 import co.za.master.dose.utils.MasterDoseCache;
@@ -72,7 +67,8 @@ public class UserManagementController implements Initializable {
 	@FXML private ComboBox<String> statusCombo;
 	@FXML private ComboBox<String> roleCombo;		
 			
-	List<User> UserList = new ArrayList<User>();
+//	List<User> UserList = new ArrayList<User>();
+	private Map<String, User> userMap = new HashMap<String, User>();
 	
 	@FXML private TextField nameTxt;
 	@FXML private TextField usernameTxt;
@@ -85,33 +81,26 @@ public class UserManagementController implements Initializable {
 	
 	@FXML
 	protected void handleAddUserAction(ActionEvent event) {
-		User user = new User(nameTxt.getText(), usernameTxt.getText(), pwdTxt.getText(), roleCombo.getValue(), statusCombo.getValue());
+		User user = new User(nameTxt.getText(), usernameTxt.getText().toLowerCase(), pwdTxt.getText(), roleCombo.getValue(), statusCombo.getValue());
 		String salt =  MasterDoseCache.instance.getMeasurementVO().getPasswordSalt();
 		if (salt ==null) {
 			MasterDoseCache.instance.getMeasurementVO().setPasswordSalt(PasswordUtils.getSalt(30));
 		}
 		String securePassword = PasswordUtils.generateSecurePassword(pwdTxt.getText(), MasterDoseCache.instance.getMeasurementVO().getPasswordSalt());
 		user.setPassword(securePassword);
-		boolean isFound = false;
-		for (User savedUser : UserList) {
-			if (user.getUsername().equalsIgnoreCase(savedUser.getUsername())) {
-				isFound = true;
-			}
-		}
-		if (!isFound) {
-			UserList.add(user);
-			ImageHelper.instance.saveUser(UserList);
-			userTableView.getItems().setAll(UserList);
-		}
+		
+		userMap.put(user.getUsername(), user);
+		ImageHelper.instance.saveUser(userMap);
+		userTableView.getItems().setAll(userMap.values());
 				
 	}
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		UserList = ImageHelper.instance.getAllUsers();
-		
+		userMap = ImageHelper.instance.getAllUsers();
+				
 		 // Set the columns width auto size
 		userTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		userTableView.getItems().setAll(UserList);
+		userTableView.getItems().setAll(userMap.values());
 		userTableView.setEditable(true);
 		
 		name.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
@@ -119,8 +108,8 @@ public class UserManagementController implements Initializable {
 		password.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
 		role.setCellValueFactory(new PropertyValueFactory<User, String>("role"));
 		status.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
-
-		statusCombo.getItems().setAll("Active", "Inactive", "Locked");
-		roleCombo.getItems().setAll("Admin", "Users", "Support");
+		
+		statusCombo.getItems().setAll(MasterDoseConstants.ACCOUNT_STATUS_ACTIVE, MasterDoseConstants.ACCOUNT_STATUS_INACTVE, MasterDoseConstants.ACCOUNT_STATUS_LOCKED);
+		roleCombo.getItems().setAll(MasterDoseConstants.ROLE_ADMIN, MasterDoseConstants.ROLE_USERS, MasterDoseConstants.ROLE_SUPPORT);
 	}
 }

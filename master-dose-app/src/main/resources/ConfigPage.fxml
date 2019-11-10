@@ -76,7 +76,7 @@
 		    		<Label fx:id="transmissionCountsLbl" text="Image type : " prefWidth="170.0" />
 		    	</VBox>
 		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
-		    		<ComboBox fx:id="imageTypeCombo" layoutX="15.0" layoutY="33.0" prefWidth="170" promptText="choose"/>
+		    		<ComboBox fx:id="imageTypeCombo" layoutX="15.0" layoutY="33.0" prefWidth="170" promptText="choose"  />
 		    	</VBox>
 		   	</children>
 		   </HBox>

@@ -1,7 +1,6 @@
 package co.za.master.dose.frame;
 
 
-import co.za.master.dose.common.model.LoginManager;
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
