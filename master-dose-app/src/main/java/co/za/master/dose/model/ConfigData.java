@@ -6,6 +6,8 @@ import lombok.Data;
 public class ConfigData {
 	private double sensitivity;
 	private double transmissionCounts;
+	private double spectValue;
+	
 	private String imageType;
 	
 	public double getSensitivity() {
@@ -29,6 +31,12 @@ public class ConfigData {
 	}
 	public void setImageType(String imageType) {
 		this.imageType = imageType;
+	}
+	public double getSpectValue() {
+		return spectValue;
+	}
+	public void setSpectValue(double spectValue) {
+		this.spectValue = spectValue;
 	}
 	
 }

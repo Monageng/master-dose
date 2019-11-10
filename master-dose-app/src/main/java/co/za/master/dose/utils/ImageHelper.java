@@ -95,6 +95,8 @@ public class ImageHelper {
 				csvWriter.append(configData.getTransmissionCounts() + "");
 				csvWriter.append(",");
 				csvWriter.append(configData.getImageType());
+				csvWriter.append(",");
+				csvWriter.append(configData.getSpectValue() + "");
 			}
 			csvWriter.flush();
 			csvWriter.close();
@@ -120,9 +122,10 @@ public class ImageHelper {
 		ConfigData configData = new ConfigData();
 		try {
 			File file = new File(MasterDoseConstants.FILE_PATH_CONFIG_DATA);
+			System.out.println("File path " + file.getAbsolutePath());
 			if (!file.exists()) {
 				file.createNewFile();
-			}
+			}	
 
 			String line = "";
 			String cvsSplitBy = ",";
@@ -136,7 +139,7 @@ public class ImageHelper {
 				configData.setSensitivity(Double.parseDouble(configs[0]));
 				configData.setTransmissionCounts(Double.parseDouble(configs[1]));
 				configData.setImageType(configs[2]);
-
+				configData.setSpectValue(Double.parseDouble(configs[3]));
 			}
 
 		} catch (FileNotFoundException e) {
@@ -231,9 +234,6 @@ public class ImageHelper {
 				file.createNewFile();
 			}
 
-			String line = "";
-			String cvsSplitBy = ",";
-
 			FileWriter csvWriter = new FileWriter(file);
 
 			for (User user : userMap.values()) {
@@ -268,7 +268,12 @@ public class ImageHelper {
 
 	}
 	public void showImage(MeasurementVO measurementVO, ImageTypeEnum imageTypeEnum, ImageNumberEnum imageNumberEnum) {
+		
 		FileChooser chooser = new FileChooser();
+		
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("dcm files (*.dcm)", "*.dcm");
+		chooser.getExtensionFilters().add(extFilter);
+		
 		chooser.setTitle("Open File");
 		File file = chooser.showOpenDialog(new Stage());
 		if (WindowManager.getCurrentImage() != null) {
@@ -369,47 +374,47 @@ public class ImageHelper {
 			return false;
 		}
 
-		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getAnteriaLeftField()))
-			return false;
-		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getAnteriaRightField()))
-			return false;
-		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getAnteriaTumourField()))
-			return false;
-
-		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getPosteriaLeftField()))
-			return false;
-		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getPosteriaRightField()))
-			return false;
-		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getPosteriaTumourField()))
-			return false;
-
-		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getAnteriaLeftField()))
-			return false;
-		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getAnteriaRightField()))
-			return false;
-		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getAnteriaTumourField()))
-			return false;
-
-		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getPosteriaLeftField()))
-			return false;
-		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getPosteriaRightField()))
-			return false;
-		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getPosteriaTumourField()))
-			return false;
-
-		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getAnteriaLeftField()))
-			return false;
-		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getAnteriaRightField()))
-			return false;
-		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getAnteriaTumourField()))
-			return false;
-
-		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getPosteriaLeftField()))
-			return false;
-		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getPosteriaRightField()))
-			return false;
-		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getPosteriaTumourField()))
-			return false;
+//		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getAnteriaLeftField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getAnteriaRightField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getAnteriaTumourField()))
+//			return false;
+//
+//		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getPosteriaLeftField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getPosteriaRightField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getFirstMeasurementVO().getPosteriaTumourField()))
+//			return false;
+//
+//		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getAnteriaLeftField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getAnteriaRightField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getAnteriaTumourField()))
+//			return false;
+//
+//		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getPosteriaLeftField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getPosteriaRightField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getSecondMeasurementVO().getPosteriaTumourField()))
+//			return false;
+//
+//		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getAnteriaLeftField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getAnteriaRightField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getAnteriaTumourField()))
+//			return false;
+//
+//		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getPosteriaLeftField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getPosteriaRightField()))
+//			return false;
+//		if (isTextFieldEmpty(bean.getThirdMeasurementVO().getPosteriaTumourField()))
+//			return false;
 		return isValid;
 	}
 
@@ -456,6 +461,30 @@ public class ImageHelper {
 		return absoluteCount;
 	}
 
+	public double getSquareRootOfImagesWithTypes(double anteria, double posteria, double sensitivity, double transmition, String imageType, double specValue) {
+		System.out.println("Anteria : " + anteria + " Posteria : " + posteria);
+		double result = anteria * posteria;
+		double sqRoot = 0;
+		double absoluteCount = 0;
+		
+		if (imageType.equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_SPECT) ) {
+			absoluteCount = result * specValue;
+		} else {
+			if (result > 0) {
+				sqRoot = Math.sqrt(result);
+				absoluteCount = (sqRoot / sensitivity) * transmition;
+				// TODO (GEOMEAN / Sensitivity)*Transmission
+				System.out.println("result is a positive number *** ");
+			} else {
+				result = result * -1;
+				sqRoot = Math.sqrt(result);
+				absoluteCount = (sqRoot / sensitivity) * transmition;
+				System.out.println("result is a negative number  calculated on + square root *** ");
+			}
+		}
+		System.out.println("Result  : " + absoluteCount + " square root : " + sqRoot + "");
+		return absoluteCount;
+	}
 	public MeasurementVO calculateMeanSquareRoot(MeasurementVO bean) {
 		bean.getFirstMeasurementVO()
 				.setLeftImage(getSquareRootOfImages(bean.getFirstMeasurementVO().getAnteriaLeft(),
@@ -515,15 +544,15 @@ public class ImageHelper {
 			}
 
 			if (posteria != null && anteria != null) {
-				double squareLeftResults = getSquareRootOfImages(anteria.getLeftMeanCount(),
+				double squareLeftResults = getSquareRootOfImagesWithTypes(anteria.getLeftMeanCount(),
 						posteria.getLeftMeanCount(), bean.getConfigData().getSensitivity(),
-						bean.getConfigData().getTransmissionCounts());
-				double squareRightResults = getSquareRootOfImages(anteria.getRightMeanCount(),
+						bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(), bean.getConfigData().getSpectValue());
+				double squareRightResults = getSquareRootOfImagesWithTypes(anteria.getRightMeanCount(),
 						posteria.getRightMeanCount(), bean.getConfigData().getSensitivity(),
-						bean.getConfigData().getTransmissionCounts());
-				double squareTumourResults = getSquareRootOfImages(anteria.getTumourMeanCount(),
+						bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(), bean.getConfigData().getSpectValue());
+				double squareTumourResults = getSquareRootOfImagesWithTypes(anteria.getTumourMeanCount(),
 						posteria.getTumourMeanCount(), bean.getConfigData().getSensitivity(),
-						bean.getConfigData().getTransmissionCounts());
+						bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(), bean.getConfigData().getSpectValue());
 				map.put(imageNo + "_Left", squareLeftResults);
 				map.put(imageNo + "_Right", squareRightResults);
 				map.put(imageNo + "_Tumour", squareTumourResults);
@@ -545,7 +574,7 @@ public class ImageHelper {
 		double dBGCount = Double.parseDouble(backgroundCount);
 		double results = mean - dBGCount;
 
-		MathContext mc = new MathContext(4, RoundingMode.HALF_UP);
+		MathContext mc = new MathContext(6, RoundingMode.HALF_UP);
 		BigDecimal decimal = new BigDecimal(results, mc);
 
 		System.out.println(" mean 						: " + mean);
@@ -749,14 +778,14 @@ public class ImageHelper {
 		Analyzer analyzer = new Analyzer(imagePlus);
 
 		analyzer.measure();
-		analyzer.summarize();
+		//analyzer.summarize();
 		ResultsTable rt = Analyzer.getResultsTable();
 		int count = rt.getCounter() - 1;
 		if (count < 0)
 			count = 0;
 		double integrated = rt.getValueAsDouble(ResultsTable.INTEGRATED_DENSITY, count);
 
-		MathContext mc = new MathContext(4, RoundingMode.HALF_UP);
+		MathContext mc = new MathContext(6, RoundingMode.HALF_UP);
 		BigDecimal decimal = new BigDecimal(integrated, mc);
 		return decimal.doubleValue();
 	}
@@ -791,12 +820,41 @@ public class ImageHelper {
 			csvWriter.append("Post Tumour");
 			csvWriter.append("\n");
 
+			Map<String, Double> sortedMap = new TreeMap<String, Double>(bean.getSquareRoot());
+
+			List<Integer> intervalList = new ArrayList<>();
+			List<Double> leftList = new ArrayList<>();
+			List<Double> rightList = new ArrayList<>();
+			List<Double> tumourList = new ArrayList<>();
+			boolean storeRecord = false;
+			int recordCount;
+			for (String key : sortedMap.keySet()) {
+				String interval = key.substring(0, key.indexOf("_"));
+				if (key.contains("Left")) {
+					intervalList.add(bean.getIntervalMap().get(interval));
+					leftList.add(sortedMap.get(key));
+				} else if (key.contains("Right")) {
+//					rightMap.put(interval, sortedMap.get(key));
+					rightList.add(sortedMap.get(key));
+				} else if (key.contains("Tumour")) {
+//					tumourMap.put(interval, sortedMap.get(key));
+					tumourList.add(sortedMap.get(key));
+					storeRecord = true;
+				}
+				
+				if (storeRecord) {
+					csvWriter.append("Images" + key + ", ");
+					csvWriter.append("" + bean.getMap().get(key).getBackground() + ",");
+					csvWriter.append("" + bean.getMap().get(key).getLeftImage() + ",");
+					csvWriter.append("" + bean.getMap().get(key).getRightImage() + ",");
+					csvWriter.append("" + bean.getMap().get(key).getTumourImage() + "\n");
+					storeRecord = false;
+				}
+				
+			}
 			FirstMeasurementVO vo = bean.getFirstMeasurementVO();
-			csvWriter.append("Images 1,");
-			csvWriter.append("" + vo.getAnteriaBackground() + ",");
-			csvWriter.append("" + vo.getAnteriaLeft() + ",");
-			csvWriter.append("" + vo.getAnteriaRight() + ",");
-			csvWriter.append("" + vo.getAnteriaTumour() + ",");
+			
+			
 
 			csvWriter.append("" + vo.getPosteriaBackground() + ",");
 			csvWriter.append("" + vo.getPosteriaLeft() + ",");
@@ -868,7 +926,7 @@ public class ImageHelper {
 		if (OS == "linux") {
 			File f = new File("src/main/java/co/za/master/dose/frame/Login.css");
 			linechart.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-		} else if (OS == "windows") {
+		} else if (OS.contains("windows")) {
 			File f = new File("src/main/java/co/za/master/dose/frame/Login.css");
 			linechart.getStylesheets().add(f.getAbsolutePath());
 		}
@@ -912,10 +970,12 @@ public class ImageHelper {
 //        Map<Integer,String> sortedMap = new TreeMap<Integer,String>(unsortedMap);
 		Map<String, Double> map = new TreeMap<String, Double>(vo.getSquareRoot());
 
+		vo.getIntervalMap();
 		for (String key : map.keySet()) {
 			if (key.contains(side)) {
 				String imageNo = key.substring(0, key.indexOf("_"));
-				series.getData().add(new XYChart.Data(imageNo, map.get(key)));
+				Integer interval = vo.getIntervalMap().get(imageNo);
+				series.getData().add(new XYChart.Data(interval +"", map.get(key)));
 			}
 
 		}
@@ -1168,12 +1228,12 @@ public class ImageHelper {
 
 	private double getSumGradient(List<Double> gradientList) {
 		double sumGradient = 0;
-		double S_VALUE = 0.29;
+		double S_VALUE = 0.0029;
 		for (double d : gradientList) {
 			sumGradient += d;
 		}
 		System.out.println("sumGradient : " + sumGradient);
-		sumGradient = (sumGradient / 1000) * S_VALUE;
+		sumGradient = (sumGradient) * S_VALUE;
 		return sumGradient;
 	}
 
@@ -1192,9 +1252,6 @@ public class ImageHelper {
 	}
 
 	private void calculateDosageNew(MeasurementVO vo) {
-
-		System.out.println("Calculate Dosage1 : " + vo.toString());
-		double S_VALUE = 0.29;
 
 		Map<String, Double> sortedMap = new TreeMap<String, Double>(vo.getSquareRoot());
 

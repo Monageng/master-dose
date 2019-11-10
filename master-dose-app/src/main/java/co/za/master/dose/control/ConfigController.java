@@ -32,22 +32,16 @@
 
 package co.za.master.dose.control;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
+import co.za.master.dose.constants.MasterDoseConstants;
 import co.za.master.dose.model.ConfigData;
 import co.za.master.dose.model.MeasurementVO;
-import co.za.master.dose.model.User;
 import co.za.master.dose.utils.ImageHelper;
 import co.za.master.dose.utils.MasterDoseCache;
-import co.za.master.dose.utils.PasswordUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -64,17 +58,26 @@ public class ConfigController implements Initializable {
 	private TextField transmissionCountsTxt = new TextField();
 	
 	@FXML
+	private TextField spectValueTxt	 = new TextField();
+	
+	
+	
+	@FXML
 	private ComboBox<String> imageTypeCombo = new ComboBox<>();
 	
 	
 	@FXML
 	protected void handleSaveConfigAction(ActionEvent event) {
-		MeasurementVO measurementVO = MasterDoseCache.instance
-				.getMeasurementVO();
-		if (ImageHelper.instance.isConfigValid(measurementVO.getConfigData())) {
-			ImageHelper.instance.saveConfigData(measurementVO.getConfigData());
-		}
 		
+	  	int i = JOptionPane.showConfirmDialog(null, "Do you want to save configurations?", "", JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION);
+	    
+	  	if (i == 0) {
+	  		MeasurementVO measurementVO = MasterDoseCache.instance
+					.getMeasurementVO();
+			if (ImageHelper.instance.isConfigValid(measurementVO.getConfigData())) {
+				ImageHelper.instance.saveConfigData(measurementVO.getConfigData());
+			}
+	  	}
 	}
 	
 	private void loadConfigs() {
@@ -89,6 +92,10 @@ public class ConfigController implements Initializable {
 		
 		if (configData.getImageType() != null) {
 			imageTypeCombo.setValue(configData.getImageType());
+		}
+		
+		if (configData.getSpectValue() != 0) {
+			spectValueTxt.setText(configData.getSpectValue() + "");
 		}
 	}
 	
@@ -126,10 +133,31 @@ public class ConfigController implements Initializable {
 			}
 		});
 		
+		spectValueTxt.textProperty().addListener(new ChangeListener<String>() {
+
+			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,1})?")) {
+					spectValueTxt.setText(oldValue);
+				} else {
+					if (!newValue.isEmpty()) {
+						MeasurementVO measurementVO = MasterDoseCache.instance
+								.getMeasurementVO();
+						measurementVO.getConfigData().setSpectValue(Double.valueOf(newValue));
+						spectValueTxt.setText(newValue);
+					}
+				}
+			}
+		});
+		
 		imageTypeCombo.valueProperty().addListener(new ChangeListener<String>() {
 
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+				if (newValue.equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_SPECT)) {
+					spectValueTxt.setVisible(true);
+				} else {
+					spectValueTxt.setVisible(false);
+				}
 				MeasurementVO measurementVO = MasterDoseCache.instance
 						.getMeasurementVO();
 				measurementVO.getConfigData().setImageType(newValue);				

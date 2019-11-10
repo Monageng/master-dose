@@ -133,7 +133,7 @@ public class PDFHelper {
             MasterDoseCache.instance.getMeasurementVO().getHostServices().showDocument(fileName);
            
             
-//            FileUtils.instance.openFile(fileName);
+            FileUtils.instance.openFile(fileName);
 			
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -6,7 +6,7 @@ public class MasterDoseConstants {
 	
 	public static final String FILE_PATH_USERS = "src/main/resources/users.csv";
 	public static final String FILE_PATH_STYLE_SHEET = "src/main/resources/Login.css";
-	public static final String FILE_PATH_CONFIG_DATA = "src/main/resources/configData.csv";
+	public static final String FILE_PATH_CONFIG_DATA = "C://master-dose//configData.csv";
 	
 	public static final String ACCOUNT_STATUS_ACTIVE = "Active";
 	public static final String ACCOUNT_STATUS_INACTVE = "Inactive";
