@@ -4,7 +4,7 @@ public class MasterDoseConstants {
 	public static final String IMAGE_TYPE_PLAINER = "PLANAR";
 	public static final String IMAGE_TYPE_SPECT = "SPECT";
 	
-	public static final String FILE_PATH_USERS = "src/main/resources/users.csv";
+	public static final String FILE_PATH_USERS = "C://master-dose//users.csv";
 	public static final String FILE_PATH_STYLE_SHEET = "src/main/resources/Login.css";
 	public static final String FILE_PATH_CONFIG_DATA = "C://master-dose//configData.csv";
 	

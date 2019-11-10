@@ -33,7 +33,6 @@ public class ThirdImageMeasureActionListener implements MeasureActionListenerInt
 			System.out.println("Image is not loaded");
 		} else {
 			
-//			 Check image side
 			if (imageSideEnum == ImageSideEnum.Background) {
 				double mean = ImageHelper.instance.getMeanCount(imagePlus);
 				System.out.println("Background Mean : " + mean + " imageTypeEnum " + imageTypeEnum);

@@ -33,6 +33,8 @@ import org.jfree.data.xy.DefaultXYDataset;
 
 import co.za.master.dose.constants.MasterDoseConstants;
 import co.za.master.dose.constants.StyleSheetConstants;
+import co.za.master.dose.image.listeners.ExitActionListener;
+import co.za.master.dose.image.listeners.InvertImageActionListener;
 import co.za.master.dose.image.listeners.OvalSelectionTypeActionListener;
 import co.za.master.dose.image.listeners.ROIManagerActionListener;
 import co.za.master.dose.image.listeners.ZoomInActionListener;
@@ -41,6 +43,7 @@ import co.za.master.dose.measure.listeners.FirstImageMeasureActionListener;
 import co.za.master.dose.measure.listeners.ImageMeasureActionListener;
 import co.za.master.dose.measure.listeners.MeasureActionListenerInterface;
 import co.za.master.dose.measure.listeners.SecondImageMeasureActionListener;
+import co.za.master.dose.measure.listeners.SpectImageMeasureActionListener;
 import co.za.master.dose.measure.listeners.ThirdImageMeasureActionListener;
 import co.za.master.dose.model.ConfigData;
 import co.za.master.dose.model.FirstMeasurementVO;
@@ -49,7 +52,6 @@ import co.za.master.dose.model.ImageMeasureTime;
 import co.za.master.dose.model.ImageNumberEnum;
 import co.za.master.dose.model.ImageSideEnum;
 import co.za.master.dose.model.ImageTypeEnum;
-import co.za.master.dose.model.MeasurementBean;
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.model.ROITypeEnum;
 import co.za.master.dose.model.SecondMeasurementVO;
@@ -113,7 +115,6 @@ public class ImageHelper {
 				}
 			}
 		}
-
 	}
 
 	public ConfigData getConfigData() {
@@ -125,7 +126,7 @@ public class ImageHelper {
 			System.out.println("File path " + file.getAbsolutePath());
 			if (!file.exists()) {
 				file.createNewFile();
-			}	
+			}
 
 			String line = "";
 			String cvsSplitBy = ",";
@@ -133,8 +134,6 @@ public class ImageHelper {
 			br = new BufferedReader(new FileReader(file));
 
 			while ((line = br.readLine()) != null) {
-
-				// use comma as separator
 				String[] configs = line.split(cvsSplitBy);
 				configData.setSensitivity(Double.parseDouble(configs[0]));
 				configData.setTransmissionCounts(Double.parseDouble(configs[1]));
@@ -164,11 +163,7 @@ public class ImageHelper {
 		Map<String, User> userMap = new HashMap<String, User>();
 
 		try {
-//			File file = new File("C:\\github\\master-dose\\master-dose-app\\src\\main\\resources\\users.csv");
 			File file = new File(MasterDoseConstants.FILE_PATH_USERS);
-//			ClassLoader classLoader = getClass().getClassLoader();
-//			File file = new File(classLoader.getResource("users.csv").getFile());
-			
 			if (!file.exists()) {
 				file.createNewFile();
 			}
@@ -179,8 +174,6 @@ public class ImageHelper {
 			br = new BufferedReader(new FileReader(file));
 
 			while ((line = br.readLine()) != null) {
-
-				// use comma as separator
 				String[] users = line.split(cvsSplitBy);
 				User user = new User(users[0], users[1].toLowerCase(), users[2], users[3], users[4]);
 				userMap.put(user.getUsername(), user);
@@ -210,7 +203,7 @@ public class ImageHelper {
 		if (userDto == null) {
 			return null;
 		}
-		
+
 		boolean passwordMatch = PasswordUtils.verifyUserPassword(providedPassword, userDto.getPassword(), salt);
 		if (passwordMatch) {
 			MasterDoseCache.instance.getMeasurementVO().setLoggedOnUser(userDto);
@@ -267,13 +260,14 @@ public class ImageHelper {
 		}
 
 	}
+
 	public void showImage(MeasurementVO measurementVO, ImageTypeEnum imageTypeEnum, ImageNumberEnum imageNumberEnum) {
-		
+
 		FileChooser chooser = new FileChooser();
-		
+
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("dcm files (*.dcm)", "*.dcm");
 		chooser.getExtensionFilters().add(extFilter);
-		
+
 		chooser.setTitle("Open File");
 		File file = chooser.showOpenDialog(new Stage());
 		if (WindowManager.getCurrentImage() != null) {
@@ -282,27 +276,18 @@ public class ImageHelper {
 
 		if (file != null) {
 			String imagepath = file.getPath();
-			// Image image = new Image(imagepath);
 			Opener opener = new Opener();
 			ImagePlus imagePlus = opener.openImage(imagepath);
 			ImageProcessor ip = imagePlus.getProcessor();
-			// imageView.setImage(image);
 			ip = ip.resize(StyleSheetConstants.IMAGE_POPUP_WIDTH, StyleSheetConstants.IMAGE_POPUP_HEIGHT);
 			imagePlus.setProcessor(ip);
 			imagePlus.show();
-			// imagePlus.getCanvas().setEnabled(true);
 			ImageWindow imageWindow = WindowManager.getCurrentWindow();
 
-			imageWindow
-					.setMenuBar(ImageHelper.instance.createImageMenuBar(measurementVO, imageTypeEnum, imageNumberEnum));
-			// co.za.master.dose.model.Toolbar toolbar = new
-			// co.za.master.dose.model.Toolbar();
+			imageWindow.setMenuBar(ImageHelper.instance.createImageMenuBar(measurementVO, imageTypeEnum, imageNumberEnum));
+
 			Toolbar toolbar = new Toolbar();
 			toolbar.setVisible(false);
-
-			// toolbar.setBackground(Color.BLUE);
-			// toolbar.setColor(Color.GREEN);
-			// toolbar.setForegroundColor(Color.ORANGE);
 
 			toolbar.setSize(StyleSheetConstants.IMAGE_POPUP_WIDTH, StyleSheetConstants.IMAGE_POPUP_HEIGHT);
 
@@ -317,6 +302,7 @@ public class ImageHelper {
 
 	public void showImageNew(MeasurementVO measurementVO) {
 		FileChooser chooser = new FileChooser();
+		IJ.run("Invert", "stack");
 		chooser.setTitle("Open File");
 		File file = chooser.showOpenDialog(new Stage());
 		if (WindowManager.getCurrentImage() != null) {
@@ -330,7 +316,7 @@ public class ImageHelper {
 			ImagePlus imagePlus = opener.openImage(imagepath);
 			ImageProcessor ip = imagePlus.getProcessor();
 			// imageView.setImage(image);
-			ip = ip.resize(StyleSheetConstants.IMAGE_POPUP_WIDTH, StyleSheetConstants.IMAGE_POPUP_HEIGHT);
+//			ip = ip.resize(StyleSheetConstants.IMAGE_POPUP_WIDTH, StyleSheetConstants.IMAGE_POPUP_HEIGHT);
 			imagePlus.setProcessor(ip);
 			imagePlus.show();
 			ImageWindow imageWindow = WindowManager.getCurrentWindow();
@@ -355,13 +341,13 @@ public class ImageHelper {
 		if (bean.getImageType().equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_PLAINER)) {
 			if (bean.getSensitivity() < 1) {
 				return false;
-			} 
+			}
 
 			if (bean.getTransmissionCounts() < 1) {
 				return false;
 			}
 		}
-		
+
 		return isValid;
 	}
 
@@ -461,13 +447,14 @@ public class ImageHelper {
 		return absoluteCount;
 	}
 
-	public double getSquareRootOfImagesWithTypes(double anteria, double posteria, double sensitivity, double transmition, String imageType, double specValue) {
+	public double getSquareRootOfImagesWithTypes(double anteria, double posteria, double sensitivity,
+			double transmition, String imageType, double specValue) {
 		System.out.println("Anteria : " + anteria + " Posteria : " + posteria);
 		double result = anteria * posteria;
 		double sqRoot = 0;
 		double absoluteCount = 0;
-		
-		if (imageType.equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_SPECT) ) {
+
+		if (imageType.equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_SPECT)) {
 			absoluteCount = result * specValue;
 		} else {
 			if (result > 0) {
@@ -485,6 +472,7 @@ public class ImageHelper {
 		System.out.println("Result  : " + absoluteCount + " square root : " + sqRoot + "");
 		return absoluteCount;
 	}
+
 	public MeasurementVO calculateMeanSquareRoot(MeasurementVO bean) {
 		bean.getFirstMeasurementVO()
 				.setLeftImage(getSquareRootOfImages(bean.getFirstMeasurementVO().getAnteriaLeft(),
@@ -533,34 +521,44 @@ public class ImageHelper {
 		int count = 0;
 		Map<String, Double> map = new HashMap<>();
 		Map<String, Integer> intervalMap = new HashMap<>();
-
+		String imageType = bean.getConfigData().getImageType();
 //		Map<String, ImageMeasureItem> sortedMap = new TreeMap<Strn,ImageMeasureItem>(bean.getMap());
 		for (String key : bean.getMap().keySet()) {
 			String imageNo = key.substring(0, key.indexOf("_"));
-			if (key.contains(ImageTypeEnum.Anteria.name())) {
-				anteria = bean.getMap().get(key);
-			} else if (key.contains(ImageTypeEnum.Posteria.name())) {
-				posteria = bean.getMap().get(key);
-			}
+			if (imageType.equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_PLAINER)) {
+				if (key.contains(ImageTypeEnum.Anteria.name())) {
+					anteria = bean.getMap().get(key);
+				} else if (key.contains(ImageTypeEnum.Posteria.name())) {
+					posteria = bean.getMap().get(key);
+				}
 
-			if (posteria != null && anteria != null) {
-				double squareLeftResults = getSquareRootOfImagesWithTypes(anteria.getLeftMeanCount(),
-						posteria.getLeftMeanCount(), bean.getConfigData().getSensitivity(),
-						bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(), bean.getConfigData().getSpectValue());
-				double squareRightResults = getSquareRootOfImagesWithTypes(anteria.getRightMeanCount(),
-						posteria.getRightMeanCount(), bean.getConfigData().getSensitivity(),
-						bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(), bean.getConfigData().getSpectValue());
-				double squareTumourResults = getSquareRootOfImagesWithTypes(anteria.getTumourMeanCount(),
-						posteria.getTumourMeanCount(), bean.getConfigData().getSensitivity(),
-						bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(), bean.getConfigData().getSpectValue());
-				map.put(imageNo + "_Left", squareLeftResults);
-				map.put(imageNo + "_Right", squareRightResults);
-				map.put(imageNo + "_Tumour", squareTumourResults);
-				intervalMap.put(imageNo, anteria.getInterval());
-				posteria = null;
-				anteria = null;
+				if (posteria != null && anteria != null) {
+					double squareLeftResults = getSquareRootOfImagesWithTypes(anteria.getLeftMeanCount(),
+							posteria.getLeftMeanCount(), bean.getConfigData().getSensitivity(),
+							bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(),
+							bean.getConfigData().getSpectValue());
+					double squareRightResults = getSquareRootOfImagesWithTypes(anteria.getRightMeanCount(),
+							posteria.getRightMeanCount(), bean.getConfigData().getSensitivity(),
+							bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(),
+							bean.getConfigData().getSpectValue());
+					double squareTumourResults = getSquareRootOfImagesWithTypes(anteria.getTumourMeanCount(),
+							posteria.getTumourMeanCount(), bean.getConfigData().getSensitivity(),
+							bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(),
+							bean.getConfigData().getSpectValue());
+					map.put(imageNo + "_Left", squareLeftResults);
+					map.put(imageNo + "_Right", squareRightResults);
+					map.put(imageNo + "_Tumour", squareTumourResults);
+					intervalMap.put(imageNo, anteria.getInterval());
+					posteria = null;
+					anteria = null;
+				}
+			} else {
+				ImageMeasureItem imageMeasureItem = bean.getMap().get(key);
+				map.put(imageNo + "_Left", imageMeasureItem.getLeftMeanCount());
+				map.put(imageNo + "_Right", imageMeasureItem.getRightMeanCount());
+				map.put(imageNo + "_Tumour", imageMeasureItem.getTumourMeanCount());
+				intervalMap.put(imageNo, imageMeasureItem.getInterval());
 			}
-
 		}
 
 		bean.setIntervalMap(intervalMap);
@@ -593,7 +591,11 @@ public class ImageHelper {
 		MenuBar mb = new MenuBar();
 		mb.add(buildImageMenu(bean));
 		mb.add(buildROITypeMenu());
-		mb.add(buildImageMeasureMenu(bean, imageTypeEnum, imageNumberEnum));
+//		if (bean.getConfigData().getImageType().equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_PLAINER)) {
+//			mb.add(buildPlanarImageMeasureMenu(bean, imageTypeEnum, imageNumberEnum));
+//		} else {
+//			mb.add(buildSpectImageMeasureMenu(bean, imageTypeEnum, imageNumberEnum));
+//		}
 		mb.setHelpMenu(new Menu("Help"));
 
 		return mb;
@@ -601,9 +603,16 @@ public class ImageHelper {
 
 	public MenuBar createImageMenuBarNew(MeasurementVO bean) {
 		MenuBar mb = new MenuBar();
+		mb.add(buildFileMenu(bean));
+		mb.add(buildEditMenu(bean));
 		mb.add(buildImageMenu(bean));
-		mb.add(buildROITypeMenu());
-		mb.add(buildImageMeasureMenuNew(bean));
+		
+		if (bean.getConfigData().getImageType().equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_PLAINER)) {
+			mb.add(buildPlannarImageMeasureMenuNew(bean));
+		} else {
+			mb.add(buildSpectImageMeasureMenuNew(bean));
+		}
+//		mb.add(buildImageMeasureMenuNew(bean));
 		mb.setHelpMenu(new Menu("Help"));
 
 		return mb;
@@ -651,20 +660,45 @@ public class ImageHelper {
 		return imgMenu;
 	}
 
-	public Menu buildImageMenu(MeasurementVO bean) {
+	public Menu buildFileMenu(MeasurementVO bean) {
 
-		Menu imgMenu = new Menu("View");
-		// MenuItem duplicateMenu = new MenuItem("Duplicate");
-		// DuplicateActionListener duplicateActionListener = new
-		// DuplicateActionListener();
-		// duplicateMenu.addActionListener(duplicateActionListener);
+		Menu fileMenu = new Menu("File");
 
-		// MenuItem cropMenu = new MenuItem("Crop");
+		MenuItem exitMenu = new MenuItem("Exit");
+		ExitActionListener exitActionListener = new ExitActionListener();
+		exitMenu.addActionListener(exitActionListener);
+		fileMenu.add(exitMenu);
+		return fileMenu;
+	}
+
+	public Menu buildEditMenu(MeasurementVO bean) {
+
+		Menu editMenu = new Menu("Edit");
 
 		MenuItem rOIManager = new MenuItem("ROI Manager");
 		ROIManagerActionListener roiManagerActionListener = new ROIManagerActionListener();
 		rOIManager.addActionListener(roiManagerActionListener);
-		
+
+		MenuItem invertMenu = new MenuItem("Invert");
+		InvertImageActionListener invertActionListener = new InvertImageActionListener();
+		invertMenu.addActionListener(invertActionListener);
+
+		editMenu.add(rOIManager);
+		editMenu.add(invertMenu);
+
+		return editMenu;
+	}
+
+	public Menu buildImageMenu(MeasurementVO bean) {
+
+		Menu imgMenu = new Menu("Image");
+
+		MenuItem rOIManager = new MenuItem("ROI Manager");
+		ROIManagerActionListener roiManagerActionListener = new ROIManagerActionListener();
+		rOIManager.addActionListener(roiManagerActionListener);
+
+		Menu rOIType = buildROITypeMenu();
+
 		MenuItem zoomInMenu = new MenuItem("Zoom In");
 		ZoomInActionListener zoomInActionListener = new ZoomInActionListener();
 		zoomInMenu.addActionListener(zoomInActionListener);
@@ -675,33 +709,91 @@ public class ImageHelper {
 
 		// imgMenu.add(duplicateMenu);
 		imgMenu.add(rOIManager);
+		imgMenu.add(rOIType);
 		imgMenu.add(zoomInMenu);
 		imgMenu.add(zoomOutMenu);
 
 		return imgMenu;
 	}
 
-	public Menu buildFXImageMenu(MeasurementBean bean) {
+//	public Menu buildFXImageMenu(MeasurementBean bean) {
+//
+//		Menu imgMenu = new Menu("Image");
+//		MenuItem duplicateMenu = new MenuItem("Duplicate");
+//		MenuItem cropMenu = new MenuItem("Crop");
+//
+//		MenuItem zoomInMenu = new MenuItem("Zoom In");
+//		MenuItem zoomOutMenu = new MenuItem("Zoom Out");
+//
+//		return imgMenu;
+//	}
 
-		Menu imgMenu = new Menu("Image");
-		MenuItem duplicateMenu = new MenuItem("Duplicate");
-		MenuItem cropMenu = new MenuItem("Crop");
+//	public Menu buildPlanarImageMeasureMenu(MeasurementVO bean, ImageTypeEnum imageTypeEnum,
+//			ImageNumberEnum imageNumberEnum) {
+//		Menu measureMenu = new Menu("Analyse");
+//
+//		Menu submenuAnt = new Menu("Anterior");
+//		Menu submenuPost = new Menu("Posterior");
+//
+//		createSubmenuItem(bean, submenuAnt, ImageTypeEnum.Anteria, imageNumberEnum);
+//		createSubmenuItem(bean, submenuPost, ImageTypeEnum.Posteria, imageNumberEnum);
+//
+//		measureMenu.add(submenuAnt);
+//		measureMenu.add(submenuPost);
+//
+//		return measureMenu;
+//	}
+//
+//	public Menu buildSpectImageMeasureMenu(MeasurementVO bean, ImageTypeEnum imageTypeEnum,
+//			ImageNumberEnum imageNumberEnum) {
+//		Menu measureMenu = new Menu("Analyse");
+//		measureMenu.add(createMenuItem("Background",
+//				new FirstImageMeasureActionListener(bean, ImageSideEnum.Background, imageTypeEnum)));
+//		measureMenu.add(
+//				createMenuItem("Left", new FirstImageMeasureActionListener(bean, ImageSideEnum.Left, imageTypeEnum)));
+//		measureMenu.add(
+//				createMenuItem("Right", new FirstImageMeasureActionListener(bean, ImageSideEnum.Right, imageTypeEnum)));
+//		measureMenu.add(createMenuItem("Tumour",
+//				new FirstImageMeasureActionListener(bean, ImageSideEnum.Tumour, imageTypeEnum)));
+//
+//		return measureMenu;
+//	}
 
-		MenuItem zoomInMenu = new MenuItem("Zoom In");
-		MenuItem zoomOutMenu = new MenuItem("Zoom Out");
+	public Menu buildSpectImageMeasureMenuNew(MeasurementVO bean) {
+		Menu measureMenu = new Menu("Analyse");
+//
+//		Menu submenuAnt = new Menu("Anterior");
+//		Menu submenuPost = new Menu("Posterior");
+//
+//		createSubmenuItemNew(bean, submenuAnt, ImageTypeEnum.Anteria);
+//		createSubmenuItemNew(bean, submenuPost, ImageTypeEnum.Posteria);
+//
+//		measureMenu.add(submenuAnt);
+//		measureMenu.add(submenuPost);
+		
+		measureMenu.add(createMenuItem("Background",
+				new SpectImageMeasureActionListener(bean, ImageSideEnum.Background, null)));
+		measureMenu
+				.add(createMenuItem("Left", new SpectImageMeasureActionListener(bean, ImageSideEnum.Left, null)));
+		measureMenu
+				.add(createMenuItem("Right", new SpectImageMeasureActionListener(bean, ImageSideEnum.Right, null)));
+		measureMenu.add(
+				createMenuItem("Tumour", new SpectImageMeasureActionListener(bean, ImageSideEnum.Tumour, null)));
+		
+		
 
-		return imgMenu;
+		return measureMenu;
 	}
 
-	public Menu buildImageMeasureMenu(MeasurementVO bean, ImageTypeEnum imageTypeEnum,
-			ImageNumberEnum imageNumberEnum) {
+	
+	public Menu buildPlannarImageMeasureMenuNew(MeasurementVO bean) {
 		Menu measureMenu = new Menu("Analyse");
 
 		Menu submenuAnt = new Menu("Anterior");
 		Menu submenuPost = new Menu("Posterior");
 
-		createSubmenuItem(bean, submenuAnt, ImageTypeEnum.Anteria, imageNumberEnum);
-		createSubmenuItem(bean, submenuPost, ImageTypeEnum.Posteria, imageNumberEnum);
+		createSubmenuItemNew(bean, submenuAnt, ImageTypeEnum.Anteria);
+		createSubmenuItemNew(bean, submenuPost, ImageTypeEnum.Posteria);
 
 		measureMenu.add(submenuAnt);
 		measureMenu.add(submenuPost);
@@ -709,6 +801,7 @@ public class ImageHelper {
 		return measureMenu;
 	}
 
+	
 	public Menu buildImageMeasureMenuNew(MeasurementVO bean) {
 		Menu measureMenu = new Menu("Analyse");
 
@@ -724,6 +817,7 @@ public class ImageHelper {
 		return measureMenu;
 	}
 
+	
 	private void createSubmenuItem(MeasurementVO bean, Menu measureMenu, ImageTypeEnum imageTypeEnum,
 			ImageNumberEnum imageNumberEnum) {
 		if (imageNumberEnum == ImageNumberEnum.FirstImage) {
@@ -778,7 +872,7 @@ public class ImageHelper {
 		Analyzer analyzer = new Analyzer(imagePlus);
 
 		analyzer.measure();
-		//analyzer.summarize();
+		// analyzer.summarize();
 		ResultsTable rt = Analyzer.getResultsTable();
 		int count = rt.getCounter() - 1;
 		if (count < 0)
@@ -841,7 +935,7 @@ public class ImageHelper {
 					tumourList.add(sortedMap.get(key));
 					storeRecord = true;
 				}
-				
+
 				if (storeRecord) {
 					csvWriter.append("Images" + key + ", ");
 					csvWriter.append("" + bean.getMap().get(key).getBackground() + ",");
@@ -850,11 +944,9 @@ public class ImageHelper {
 					csvWriter.append("" + bean.getMap().get(key).getTumourImage() + "\n");
 					storeRecord = false;
 				}
-				
+
 			}
 			FirstMeasurementVO vo = bean.getFirstMeasurementVO();
-			
-			
 
 			csvWriter.append("" + vo.getPosteriaBackground() + ",");
 			csvWriter.append("" + vo.getPosteriaLeft() + ",");
@@ -967,34 +1059,17 @@ public class ImageHelper {
 	private XYChart.Series getImageDataSetNew(MeasurementVO vo, String side) {
 		XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
 
-//        Map<Integer,String> sortedMap = new TreeMap<Integer,String>(unsortedMap);
 		Map<String, Double> map = new TreeMap<String, Double>(vo.getSquareRoot());
 
-		vo.getIntervalMap();
 		for (String key : map.keySet()) {
-			if (key.contains(side)) {
-				String imageNo = key.substring(0, key.indexOf("_"));
-				Integer interval = vo.getIntervalMap().get(imageNo);
-				series.getData().add(new XYChart.Data(interval +"", map.get(key)));
-			}
-
+				if (key.contains(side)) {
+					String imageNo = key.substring(0, key.indexOf("_"));
+					Integer interval = vo.getIntervalMap().get(imageNo);
+					series.getData().add(new XYChart.Data(interval + "", map.get(key)));
+				}
 		}
 
 		series.setName(side + " Image");
-
-		// System.out.println("Firs Interval : " +
-		// vo.getFirstMeasurementVO().getInterval() + " : " +
-		// vo.getFirstMeasurementVO().getRightImage());
-		// System.out.println("second Interval : " +
-		// vo.getSecondMeasurementVO().getInterval()+ " : " +
-		// vo.getSecondMeasurementVO().getRightImage());
-		// System.out.println("Third Interval : " +
-		// vo.getThirdMeasurementVO().getInterval()+ " : " +
-		// vo.getThirdMeasurementVO().getRightImage());
-
-		// System.out.println("Series : " + series.getNode());
-		// series.getNode().getStyleClass().add("series-right-image");
-		// data.getNode().setStyle(css);
 		return series;
 	}
 
@@ -1024,14 +1099,6 @@ public class ImageHelper {
 		series.setName("Tumour Image");
 		return series;
 	}
-
-	// public ChartPanel getChartPanel(MeasurementVO measurementBean) {
-	// JFreeChart chart = getFreeChart(measurementBean);
-	// ChartPanel cp = new ChartPanel(chart);
-	// cp.setPreferredSize(new Dimension(StyleSheetConstants.GRAPH_WIDTH,
-	// StyleSheetConstants.GRAPH_HEIGHT));
-	// return cp;
-	// }
 
 	public JFreeChart getChart(MeasurementVO measurementBean) {
 		double[][] data1 = {
@@ -1086,81 +1153,7 @@ public class ImageHelper {
 		renderer.setBaseItemLabelsVisible(true);
 		return chart;
 	}
-
-	// public JFreeChart getFreeChart(MeasurementVO measurementBean) {
-	// double[][] data1 = {
-	// {
-	// ImageMeasureTime.FIRST_MEASUREMENT_TIME
-	// .getMeasureTime(),
-	// ImageMeasureTime.SECOND_MEASUREMENT_TIME
-	// .getMeasureTime(),
-	// ImageMeasureTime.THIRD_MEASUREMENT_TIME
-	// .getMeasureTime() },
-	// {
-	// measurementBean.getFirstMeasurementVO().getRightImage(),
-	// measurementBean.getSecondMeasurementVO()
-	// .getRightImage(),
-	// measurementBean.getThirdMeasurementVO().getRightImage() } };
-	// double[][] data2 = {
-	// {
-	// ImageMeasureTime.FIRST_MEASUREMENT_TIME
-	// .getMeasureTime(),
-	// ImageMeasureTime.SECOND_MEASUREMENT_TIME
-	// .getMeasureTime(),
-	// ImageMeasureTime.THIRD_MEASUREMENT_TIME
-	// .getMeasureTime() },
-	// {
-	// measurementBean.getFirstMeasurementVO().getLeftImage(),
-	// measurementBean.getSecondMeasurementVO().getLeftImage(),
-	// measurementBean.getThirdMeasurementVO().getLeftImage() } };
-	// double[][] data3 = {
-	// {
-	// ImageMeasureTime.FIRST_MEASUREMENT_TIME
-	// .getMeasureTime(),
-	// ImageMeasureTime.SECOND_MEASUREMENT_TIME
-	// .getMeasureTime(),
-	// ImageMeasureTime.THIRD_MEASUREMENT_TIME
-	// .getMeasureTime() },
-	// {
-	// measurementBean.getFirstMeasurementVO()
-	// .getTumourImage(),
-	// measurementBean.getSecondMeasurementVO()
-	// .getTumourImage(),
-	// measurementBean.getThirdMeasurementVO()
-	// .getTumourImage() } };
-	//
-	// DefaultXYDataset ds = new DefaultXYDataset();
-	// ds.addSeries("Right Image", data1);
-	// ds.addSeries("Left Image", data2);
-	// ds.addSeries("Tumour Image", data3);
-	//
-	// calculateDosage(measurementBean);
-	//
-	// // JFreeChart chart = ChartFactory.createXYLineChart("Chart", "Time(h)",
-	// // "Y",ds);
-	// JFreeChart chart = ChartFactory.createXYLineChart("Chart", "Time(h)",
-	// "Y", ds, PlotOrientation.VERTICAL, true, true, false);
-	// //
-	// final XYPlot plot1 = chart.getXYPlot();
-	// // plot1.setBackgroundPaint(Color.lightGray);
-	// // plot1.setDomainGridlinePaint(Color.white);
-	// // plot1.setRangeGridlinePaint(Color.white);
-	// plot1.setDomainGridlinesVisible(true);
-	// XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, true);
-	// plot1.setRenderer(renderer);
-	// renderer.setBaseShapesVisible(true);
-	// renderer.setBaseShapesFilled(true);
-	//
-	// NumberFormat format = NumberFormat.getNumberInstance();
-	// format.setMaximumFractionDigits(2);
-	// XYItemLabelGenerator generator = new StandardXYItemLabelGenerator(
-	// StandardXYItemLabelGenerator.DEFAULT_ITEM_LABEL_FORMAT, format,
-	// format);
-	// renderer.setBaseItemLabelGenerator(generator);
-	// renderer.setBaseItemLabelsVisible(true);
-	// return chart;
-	// }
-
+	
 	private void calculateDosage(MeasurementVO vo) {
 
 		System.out.println("Calculate Dosage : " + vo.toString());

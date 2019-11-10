@@ -44,7 +44,7 @@ public class MainAppController implements Initializable {
 
 	@FXML
 	private TextField initialsTxt;
-
+	
 	@FXML
 	private TextField firstNameTxt;
 
