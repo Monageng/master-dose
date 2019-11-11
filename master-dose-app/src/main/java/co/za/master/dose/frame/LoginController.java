@@ -1,6 +1,8 @@
 package co.za.master.dose.frame;
 
 
+import java.util.Calendar;
+
 import javax.swing.JOptionPane;
 
 import co.za.master.dose.utils.ImageHelper;
@@ -21,12 +23,24 @@ public class LoginController {
   public void initManager(final LoginManager loginManager) {
     loginButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override public void handle(ActionEvent event) {
-        String sessionID = ImageHelper.instance.authorize(password.getText().trim(), user.getText().trim());
-        if (sessionID != null) {
-          loginManager.authenticated(sessionID);
-        } else {
-        	JOptionPane.showConfirmDialog(null, "Access denied, please check if username and password is correct", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
-        }
+    	Calendar cal = Calendar.getInstance();
+    	cal.set(Calendar.DATE, 1);
+    	cal.set(Calendar.MONTH, 11);
+    	cal.set(Calendar.YEAR, 2019);
+    	
+    	Calendar curDate = Calendar.getInstance();
+    	if (curDate.getTime().before(cal.getTime())) {
+    		String sessionID = ImageHelper.instance.authorize(password.getText().trim(), user.getText().trim());
+            if (sessionID != null) {
+              loginManager.authenticated(sessionID);
+            } else {
+            	JOptionPane.showConfirmDialog(null, "Access denied, please check if username and password is correct", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+            }
+    	} else {
+    		JOptionPane.showConfirmDialog(null, "Your trial version has expired, please contact your administrator", "", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    	}
+    	
+        
       }
     });
   }

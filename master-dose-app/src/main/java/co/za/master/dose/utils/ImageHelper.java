@@ -85,7 +85,7 @@ public class ImageHelper {
 	public void saveConfigData(ConfigData configData) {
 		BufferedReader br = null;
 		try {
-			File file = new File(MasterDoseConstants.FILE_PATH_CONFIG_DATA);
+			File file = new File(getFileName(MasterDoseConstants.FILE_PATH_CONFIG_DATA));
 			if (!file.exists()) {
 				file.createNewFile();
 			}
@@ -122,7 +122,7 @@ public class ImageHelper {
 
 		ConfigData configData = new ConfigData();
 		try {
-			File file = new File(MasterDoseConstants.FILE_PATH_CONFIG_DATA);
+			File file = new File(getFileName(MasterDoseConstants.FILE_PATH_CONFIG_DATA));
 			System.out.println("File path " + file.getAbsolutePath());
 			if (!file.exists()) {
 				file.createNewFile();
@@ -158,16 +158,33 @@ public class ImageHelper {
 		return configData;
 	}
 
+	
+	
+	private String getFileName(String file) {
+		String fileName = "";
+		String home = System.getProperty("user.home");
+    	String OS = System.getProperty("os.name").toLowerCase();
+		System.out.println("OS" + OS);
+		if (OS.contains("Linux") || OS.contains("linux")) {
+			fileName = home + "/master-dose/" + file; 
+		} else {
+			fileName = home + "\\master-dose\\" + file; 
+		}
+		return fileName;
+		
+	}
 	public Map<String, User> getAllUsers() {
 		BufferedReader br = null;
 		Map<String, User> userMap = new HashMap<String, User>();
 
 		try {
-			File file = new File(MasterDoseConstants.FILE_PATH_USERS);
+	
+			File file = new File(getFileName(MasterDoseConstants.FILE_PATH_USERS));
 			if (!file.exists()) {
 				file.createNewFile();
 			}
 
+			
 			String line = "";
 			String cvsSplitBy = ",";
 
@@ -222,7 +239,7 @@ public class ImageHelper {
 	public void saveUser(Map<String, User> userMap) {
 		BufferedReader br = null;
 		try {
-			File file = new File(MasterDoseConstants.FILE_PATH_USERS);
+			File file = new File(getFileName(MasterDoseConstants.FILE_PATH_USERS));
 			if (!file.exists()) {
 				file.createNewFile();
 			}
