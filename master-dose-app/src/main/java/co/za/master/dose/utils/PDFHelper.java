@@ -34,9 +34,9 @@ public class PDFHelper {
 //			System.out.println("createPDFDynamic");
 			com.itextpdf.text.Document document = new com.itextpdf.text.Document(PageSize.A4, 20, 20, 50, 50);
 			
-			FileUtils.instance.removeDirectory("exports");
-			File dir = FileUtils.instance.createDirectory("exports");
-			String fileName = dir.getAbsolutePath() + "/" + FILE_NAME + (new Date()).getTime() + ".pdf";
+//			FileUtils.instance.removeDirectory("exports");
+//			File dir = FileUtils.instance.createDirectory("exports");
+			String fileName =ImageHelper.instance.getFileName(FILE_NAME + (new Date()).getTime() + ".pdf");
 //			System.out.println("File name : " + fileName);
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
 			document.open();

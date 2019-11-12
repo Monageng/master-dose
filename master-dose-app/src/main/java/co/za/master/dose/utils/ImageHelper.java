@@ -160,7 +160,7 @@ public class ImageHelper {
 
 	
 	
-	private String getFileName(String file) {
+	public String getFileName(String file) {
 		String fileName = "";
 		String home = System.getProperty("user.home");
     	String OS = System.getProperty("os.name").toLowerCase();
