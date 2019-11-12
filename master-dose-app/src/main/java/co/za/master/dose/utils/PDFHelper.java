@@ -130,7 +130,7 @@ public class PDFHelper {
             document.close();
             
 //            System.out.println("About to open " + fileName);
-            MasterDoseCache.instance.getMeasurementVO().getHostServices().showDocument(fileName);
+//            MasterDoseCache.instance.getMeasurementVO().getHostServices().showDocument(fileName);
            
             
             FileUtils.instance.openFile(fileName);

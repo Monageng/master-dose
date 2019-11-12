@@ -50,9 +50,11 @@ public class LoginManager {
 			
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/Login.fxml"));
+		
 			
 //			FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
 			scene.setRoot(loader.load());
+			stage.setTitle("Master dose");
 			LoginController controller = loader.<LoginController>getController();
 			controller.initManager(this);
 		} catch (IOException ex) {

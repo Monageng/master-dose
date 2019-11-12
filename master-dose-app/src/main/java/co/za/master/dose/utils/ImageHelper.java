@@ -164,12 +164,14 @@ public class ImageHelper {
 		String fileName = "";
 		String home = System.getProperty("user.home");
     	String OS = System.getProperty("os.name").toLowerCase();
-		System.out.println("OS" + OS);
+		
 		if (OS.contains("Linux") || OS.contains("linux")) {
 			fileName = home + "/master-dose/" + file; 
 		} else {
 			fileName = home + "\\master-dose\\" + file; 
 		}
+		
+		System.out.println("OS" + OS + " fileName " + fileName);
 		return fileName;
 		
 	}
