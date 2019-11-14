@@ -24,8 +24,8 @@ public class LoginController {
     loginButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override public void handle(ActionEvent event) {
     	Calendar cal = Calendar.getInstance();
-    	cal.set(Calendar.DATE, 1);
-    	cal.set(Calendar.MONTH, 11);
+    	cal.set(Calendar.DATE, 15);
+    	cal.set(Calendar.MONTH, Calendar.DECEMBER);
     	cal.set(Calendar.YEAR, 2019);
     	
     	Calendar curDate = Calendar.getInstance();

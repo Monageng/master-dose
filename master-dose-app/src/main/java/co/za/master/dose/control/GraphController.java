@@ -35,6 +35,8 @@ package co.za.master.dose.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.utils.ImageHelper;
 import co.za.master.dose.utils.MasterDoseCache;
@@ -50,13 +52,16 @@ public class GraphController implements Initializable {
 
 	@FXML
 	protected void handleGenerateReportAction(ActionEvent event) {
-		ImageHelper imageHelper = new ImageHelper();
-		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
-
-		vo = ImageHelper.instance.calculateMeanSquareRootNew(vo);
-
-		imageHelper.drawGraphNew(vo, linechart);
-		PDFHelper.createPDFDynamic(vo, linechart);
+		JOptionPane.showConfirmDialog(null, "Comming soon...", "", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.ERROR_MESSAGE);
+		
+//		ImageHelper imageHelper = new ImageHelper();
+//		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
+//
+//		vo = ImageHelper.instance.calculateMeanSquareRootNew(vo);
+//
+//		imageHelper.drawGraphNew(vo, linechart);
+//		PDFHelper.createPDFDynamic(vo, linechart);
 //			imageHelper.generatedXsl(vo);
 	}
 
