@@ -1,8 +1,5 @@
 package co.za.master.dose.measure.listeners;
 
-import ij.ImagePlus;
-import ij.WindowManager;
-
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
@@ -13,6 +10,8 @@ import co.za.master.dose.model.ImageTypeEnum;
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.utils.ImageHelper;
 import co.za.master.dose.utils.MasterDoseCache;
+import ij.ImagePlus;
+import ij.WindowManager;
 
 public class ImageMeasureActionListener implements MeasureActionListenerInterface {
 
@@ -29,8 +28,6 @@ public class ImageMeasureActionListener implements MeasureActionListenerInterfac
 	
 	public void actionPerformed(ActionEvent e) {
 		ImagePlus imagePlus = WindowManager.getCurrentImage();
-		
-		MeasurementVO bean = MasterDoseCache.instance.getMeasurementVO();
 		
 		String key = MasterDoseCache.instance.getMeasurementVO().getImageKey() + imageTypeEnum.name();
 		System.out.println("key : " +key);
@@ -83,9 +80,7 @@ public class ImageMeasureActionListener implements MeasureActionListenerInterfac
 			imageMeasureItem.setImageType(imageTypeEnum.name());
 			imageMeasureItem.setInterval(MasterDoseCache.instance.getMeasurementVO().getInterval());
 			MasterDoseCache.instance.getMeasurementVO().getMap().put(key, imageMeasureItem);
-//			MasterDoseCache.instance.getMeasurementVO().setFirstMeasurementVO(bean.getFirstMeasurementVO());
 			System.out.println("Printing first VO : " + imageMeasureItem);
-//			tableView.getItems().setAll(this.users)
 			MasterDoseCache.instance.getMeasurementVO().getTableView().getItems().setAll(MasterDoseCache.instance.getMeasurementVO().getMap().values());
 		}
 	}

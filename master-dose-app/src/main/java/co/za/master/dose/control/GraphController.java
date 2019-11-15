@@ -40,7 +40,6 @@ import javax.swing.JOptionPane;
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.utils.ImageHelper;
 import co.za.master.dose.utils.MasterDoseCache;
-import co.za.master.dose.utils.PDFHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import co.za.master.dose.constants.MasterDoseConstants;
 import co.za.master.dose.model.User;
 import co.za.master.dose.utils.ImageHelper;
@@ -57,59 +59,78 @@ public class UserManagementController implements Initializable {
 
 	@FXML
 	private TableView<User> userTableView;
-	
-	@FXML private TableColumn<User, String> name;
-	@FXML private TableColumn<User, String> username;
-	@FXML private TableColumn<User, String> password;
-	@FXML private TableColumn<User, String> role;
-	@FXML private TableColumn<User, String> status;
-	
-	@FXML private ComboBox<String> statusCombo;
-	@FXML private ComboBox<String> roleCombo;		
-			
-//	List<User> UserList = new ArrayList<User>();
+
+	@FXML
+	private TableColumn<User, String> name;
+	@FXML
+	private TableColumn<User, String> username;
+	@FXML
+	private TableColumn<User, String> password;
+	@FXML
+	private TableColumn<User, String> role;
+	@FXML
+	private TableColumn<User, String> status;
+
+	@FXML
+	private ComboBox<String> statusCombo;
+	@FXML
+	private ComboBox<String> roleCombo;
+
 	private Map<String, User> userMap = new HashMap<String, User>();
-	
-	@FXML private TextField nameTxt;
-	@FXML private TextField usernameTxt;
-	@FXML private PasswordField pwdTxt;
+
+	@FXML
+	private TextField nameTxt;
+	@FXML
+	private TextField usernameTxt;
+	@FXML
+	private PasswordField pwdTxt;
 
 	@FXML
 	protected void onEnter(ActionEvent event) {
 		System.out.println(event.getSource());
 	}
-	
+
 	@FXML
 	protected void handleAddUserAction(ActionEvent event) {
-		User user = new User(nameTxt.getText(), usernameTxt.getText().toLowerCase(), pwdTxt.getText(), roleCombo.getValue(), statusCombo.getValue());
-		String salt =  MasterDoseCache.instance.getMeasurementVO().getPasswordSalt();
-		if (salt ==null) {
-			MasterDoseCache.instance.getMeasurementVO().setPasswordSalt(PasswordUtils.getSalt(30));
+
+		int i = JOptionPane.showConfirmDialog(null, "Do you want to save user?", "", JOptionPane.YES_NO_OPTION,
+				JOptionPane.YES_NO_OPTION);
+
+		if (i == 0) {
+			User user = new User(nameTxt.getText(), usernameTxt.getText().toLowerCase(), pwdTxt.getText(),
+					roleCombo.getValue(), statusCombo.getValue());
+			String salt = MasterDoseCache.instance.getMeasurementVO().getPasswordSalt();
+			if (salt == null) {
+				MasterDoseCache.instance.getMeasurementVO().setPasswordSalt(PasswordUtils.getSalt(30));
+			}
+			String securePassword = PasswordUtils.generateSecurePassword(pwdTxt.getText(),
+					MasterDoseCache.instance.getMeasurementVO().getPasswordSalt());
+			user.setPassword(securePassword);
+
+			userMap.put(user.getUsername(), user);
+			ImageHelper.instance.saveUser(userMap);
+			userTableView.getItems().setAll(userMap.values());
 		}
-		String securePassword = PasswordUtils.generateSecurePassword(pwdTxt.getText(), MasterDoseCache.instance.getMeasurementVO().getPasswordSalt());
-		user.setPassword(securePassword);
-		
-		userMap.put(user.getUsername(), user);
-		ImageHelper.instance.saveUser(userMap);
-		userTableView.getItems().setAll(userMap.values());
-				
 	}
+
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
 		userMap = ImageHelper.instance.getAllUsers();
-				
-		 // Set the columns width auto size
+
+		// Set the columns width auto size
 		userTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		userTableView.getItems().setAll(userMap.values());
 		userTableView.setEditable(true);
-		
+
 		name.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
 		username.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
 		password.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
 		role.setCellValueFactory(new PropertyValueFactory<User, String>("role"));
 		status.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
-		
-		statusCombo.getItems().setAll(MasterDoseConstants.ACCOUNT_STATUS_ACTIVE, MasterDoseConstants.ACCOUNT_STATUS_INACTVE, MasterDoseConstants.ACCOUNT_STATUS_LOCKED);
-		roleCombo.getItems().setAll(MasterDoseConstants.ROLE_ADMIN, MasterDoseConstants.ROLE_USERS, MasterDoseConstants.ROLE_SUPPORT);
+
+		statusCombo.getItems().setAll(MasterDoseConstants.ACCOUNT_STATUS_ACTIVE,
+				MasterDoseConstants.ACCOUNT_STATUS_INACTVE, MasterDoseConstants.ACCOUNT_STATUS_LOCKED);
+		roleCombo.getItems().setAll(MasterDoseConstants.ROLE_ADMIN, MasterDoseConstants.ROLE_USERS,
+				MasterDoseConstants.ROLE_SUPPORT);
 	}
 }

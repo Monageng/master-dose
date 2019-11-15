@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ConfigData {
+	
 	private double sensitivity;
 	private double transmissionCounts;
 	private double spectValue;

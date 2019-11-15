@@ -33,8 +33,6 @@
 package co.za.master.dose.control;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -60,8 +58,6 @@ public class ImageCaptureController implements Initializable {
 	@FXML
 	private TableView<ImageMeasureItem> tableView;
 	
-	private List<ImageMeasureItem> users = new ArrayList<>();
-	  
 	@FXML private TableColumn<ImageMeasureItem, Integer> imageNumber;
 	@FXML private TableColumn<ImageMeasureItem, String> imageType;
 	@FXML private TableColumn<ImageMeasureItem, Integer> interval;

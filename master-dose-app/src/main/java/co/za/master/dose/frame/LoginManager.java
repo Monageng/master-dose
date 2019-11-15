@@ -47,12 +47,8 @@ public class LoginManager {
 
 	public void showLoginScreen() {
 		try {
-			
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/Login.fxml"));
-		
-			
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
 			scene.setRoot(loader.load());
 			stage.setTitle("Master dose");
 			LoginController controller = loader.<LoginController>getController();
@@ -80,12 +76,19 @@ public class LoginManager {
 			Tab tab3 = new Tab("User Management", userManagementPage);
 			Tab tab4 = new Tab("Help", new Label("The page has manual how to use the application...Coming soon..."));
 
+			// Disable closable
+			tab1.setClosable(false);
+			tab2.setClosable(false);
+			tab3.setClosable(false);
+			tab4.setClosable(false);
+			
 			tabPane.getTabs().add(tab1);
-			tabPane.getTabs().add(tab2);
+			
 			User loggedOnUser = MasterDoseCache.instance.getMeasurementVO().getLoggedOnUser();
 			if (loggedOnUser != null && loggedOnUser.getRole() != null
 					&& loggedOnUser.getRole().equalsIgnoreCase("Admin")) {
 				tabPane.getTabs().add(tab3);
+				tabPane.getTabs().add(tab2);
 			}
 
 			tabPane.getTabs().add(tab4);
