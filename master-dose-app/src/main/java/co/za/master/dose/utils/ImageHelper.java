@@ -80,7 +80,7 @@ public class ImageHelper {
 				csvWriter.append(",");
 				csvWriter.append(configData.getImageType());
 				csvWriter.append(",");
-				csvWriter.append(configData.getSpectValue() + "");
+				csvWriter.append(configData.getScatterCorrection() + "");
 			}
 			csvWriter.flush();
 			csvWriter.close();
@@ -120,7 +120,7 @@ public class ImageHelper {
 				configData.setSensitivity(Double.parseDouble(configs[0]));
 				configData.setTransmissionCounts(Double.parseDouble(configs[1]));
 				configData.setImageType(configs[2]);
-				configData.setSpectValue(Double.parseDouble(configs[3]));
+				configData.setScatterCorrection(Double.parseDouble(configs[3]));
 			}
 
 		} catch (FileNotFoundException e) {
@@ -449,24 +449,31 @@ public class ImageHelper {
 	}
 
 	public double getSquareRootOfImagesWithTypes(double anteria, double posteria, double sensitivity,
-			double transmition, String imageType, double specValue) {
+			double transmition, String imageType, double scatterCorrection) {
 		System.out.println("Anteria : " + anteria + " Posteria : " + posteria);
 		double result = anteria * posteria;
 		double sqRoot = 0;
 		double absoluteCount = 0;
 
 		if (imageType.equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_SPECT)) {
-			absoluteCount = result * specValue;
+			
+			absoluteCount = result - scatterCorrection;
+			double countWithoutScatter = absoluteCount - scatterCorrection;
+			
+			
+			
 		} else {
 			if (result > 0) {
 				sqRoot = Math.sqrt(result);
-				absoluteCount = (sqRoot / sensitivity) * transmition;
+				double countWithoutScatter = sqRoot - scatterCorrection;
+				absoluteCount = (countWithoutScatter / sensitivity) * transmition;
 				// TODO (GEOMEAN / Sensitivity)*Transmission
 				System.out.println("result is a positive number *** ");
 			} else {
 				result = result * -1;
 				sqRoot = Math.sqrt(result);
-				absoluteCount = (sqRoot / sensitivity) * transmition;
+				double countWithoutScatter = sqRoot - scatterCorrection;
+				absoluteCount = (countWithoutScatter / sensitivity) * transmition;
 				System.out.println("result is a negative number  calculated on + square root *** ");
 			}
 		}
@@ -537,15 +544,15 @@ public class ImageHelper {
 					double squareLeftResults = getSquareRootOfImagesWithTypes(anteria.getLeftMeanCount(),
 							posteria.getLeftMeanCount(), bean.getConfigData().getSensitivity(),
 							bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(),
-							bean.getConfigData().getSpectValue());
+							bean.getConfigData().getScatterCorrection());
 					double squareRightResults = getSquareRootOfImagesWithTypes(anteria.getRightMeanCount(),
 							posteria.getRightMeanCount(), bean.getConfigData().getSensitivity(),
 							bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(),
-							bean.getConfigData().getSpectValue());
+							bean.getConfigData().getScatterCorrection());
 					double squareTumourResults = getSquareRootOfImagesWithTypes(anteria.getTumourMeanCount(),
 							posteria.getTumourMeanCount(), bean.getConfigData().getSensitivity(),
 							bean.getConfigData().getTransmissionCounts(), bean.getConfigData().getImageType(),
-							bean.getConfigData().getSpectValue());
+							bean.getConfigData().getScatterCorrection());
 					map.put(imageNo + "_Left", squareLeftResults);
 					map.put(imageNo + "_Right", squareRightResults);
 					map.put(imageNo + "_Tumour", squareTumourResults);
@@ -1222,7 +1229,7 @@ public class ImageHelper {
 
 	private double getSumGradient(List<Double> gradientList) {
 		double sumGradient = 0;
-		double S_VALUE = 0.0029;
+		double S_VALUE = MasterDoseConstants.S_FACTOR;//0.0029;
 		for (double d : gradientList) {
 			sumGradient += d;
 		}

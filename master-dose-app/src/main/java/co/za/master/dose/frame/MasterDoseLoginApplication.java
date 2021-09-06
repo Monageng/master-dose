@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 /** Main application class for the login demo application */
 public class MasterDoseLoginApplication extends Application {
   public static void main(String[] args) { launch(args); }
-  @Override public void start(Stage stage) throws IOException {
+  @Override public void start(Stage stage) {
     Scene scene = new Scene(new StackPane());
     
     LoginManager loginManager = new LoginManager(scene, stage);

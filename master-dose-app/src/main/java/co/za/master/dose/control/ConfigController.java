@@ -58,7 +58,7 @@ public class ConfigController implements Initializable {
 	private TextField transmissionCountsTxt = new TextField();
 	
 	@FXML
-	private TextField spectValueTxt	 = new TextField();
+	private TextField scatterCorrectionValueTxt	 = new TextField();
 	
 	
 	
@@ -94,8 +94,8 @@ public class ConfigController implements Initializable {
 			imageTypeCombo.setValue(configData.getImageType());
 		}
 		
-		if (configData.getSpectValue() != 0) {
-			spectValueTxt.setText(configData.getSpectValue() + "");
+		if (configData.getScatterCorrection() != 0) {
+			scatterCorrectionValueTxt.setText(configData.getScatterCorrection() + "");
 		}
 	}
 	
@@ -133,17 +133,17 @@ public class ConfigController implements Initializable {
 			}
 		});
 		
-		spectValueTxt.textProperty().addListener(new ChangeListener<String>() {
+		scatterCorrectionValueTxt.textProperty().addListener(new ChangeListener<String>() {
 
 			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
 				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,1})?")) {
-					spectValueTxt.setText(oldValue);
+					scatterCorrectionValueTxt.setText(oldValue);
 				} else {
 					if (!newValue.isEmpty()) {
 						MeasurementVO measurementVO = MasterDoseCache.instance
 								.getMeasurementVO();
-						measurementVO.getConfigData().setSpectValue(Double.valueOf(newValue));
-						spectValueTxt.setText(newValue);
+						measurementVO.getConfigData().setScatterCorrection(Double.valueOf(newValue));
+						scatterCorrectionValueTxt.setText(newValue);
 					}
 				}
 			}
@@ -153,11 +153,11 @@ public class ConfigController implements Initializable {
 
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
-				if (newValue.equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_SPECT)) {
-					spectValueTxt.setVisible(true);
-				} else {
-					spectValueTxt.setVisible(false);
-				}
+//				if (newValue.equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_SPECT)) {
+//					scatterCorrectionValueTxt.setVisible(true);
+//				} else {
+//					scatterCorrectionValueTxt.setVisible(false);
+//				}
 				MeasurementVO measurementVO = MasterDoseCache.instance
 						.getMeasurementVO();
 				measurementVO.getConfigData().setImageType(newValue);				

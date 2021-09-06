@@ -83,10 +83,10 @@
 		    <HBox  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
 		    <children>
 		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
-		    		<Label fx:id="spectLbl" text="SPECT Value : " prefWidth="170.0" />
+		    		<Label fx:id="spectLbl" text="Scatter Correction : " prefWidth="170.0" />
 		    	</VBox>
 		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
-		    		<TextField fx:id="spectValueTxt"  maxWidth="50.0"/>
+		    		<TextField fx:id="scatterCorrectionValueTxt"  maxWidth="50.0"/>
 		    	</VBox>
 		   	</children>
 		   </HBox>

@@ -7,7 +7,8 @@ public class ConfigData {
 	
 	private double sensitivity;
 	private double transmissionCounts;
-	private double spectValue;
+	private double scatterCorrection;
+	
 	
 	private String imageType;
 	
@@ -33,11 +34,10 @@ public class ConfigData {
 	public void setImageType(String imageType) {
 		this.imageType = imageType;
 	}
-	public double getSpectValue() {
-		return spectValue;
+	public double getScatterCorrection() {
+		return scatterCorrection;
 	}
-	public void setSpectValue(double spectValue) {
-		this.spectValue = spectValue;
+	public void setScatterCorrection(double scatterCorrection) {
+		this.scatterCorrection = scatterCorrection;
 	}
-	
 }
