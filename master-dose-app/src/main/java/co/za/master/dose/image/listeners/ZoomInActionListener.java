@@ -11,10 +11,8 @@ public class ZoomInActionListener implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		ImagePlus imagePlus = WindowManager.getCurrentImage();
-		if (imagePlus == null) {
-			System.out.println("Image is not loaded");
-		} else {
-			IJ.run("In [+]");
+		if (imagePlus != null) {
+			IJ.setTool("zoom");
 		}
 	}
 

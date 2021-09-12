@@ -35,6 +35,8 @@ package co.za.master.dose.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.utils.ImageHelper;
 import co.za.master.dose.utils.MasterDoseCache;
@@ -49,30 +51,31 @@ public class GraphController implements Initializable {
 	private LineChart<Number, Number> linechart;
 
 	@FXML
-	protected void handleGenerateReportAction (ActionEvent event) {
-		System.out.println("Starting to generate report : ");
-		ImageHelper imageHelper = new ImageHelper();
-//		MeasurementVO vo = ImageDataHelper.createVO();
-		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
-//		vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
+	protected void handleGenerateReportAction(ActionEvent event) {
+//		JOptionPane.showConfirmDialog(null, "Comming soon...", "", JOptionPane.OK_CANCEL_OPTION,
+//				JOptionPane.ERROR_MESSAGE);
 		
-		System.out.println("VO " + vo);
-		imageHelper.drawGraphNew(vo, linechart);
-		PDFHelper.createPDFDynamic(vo, linechart);
+		ImageHelper imageHelper = new ImageHelper();
+ 		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
+		if (imageHelper.validateForDosageCalculation(vo)) {
+			vo = ImageHelper.instance.calculateMeanSquareRootNew(vo);
+			imageHelper.drawGraphNew(vo, linechart);
+			PDFHelper.createPDFDynamic(vo, linechart);
+		}
+		
 	}
-	
+
 	@FXML
 	protected void handleCalculateDosageAction(ActionEvent event) {
 		ImageHelper imageHelper = new ImageHelper();
-//		MeasurementVO vo = ImageDataHelper.createVO();
-		 MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
-		vo = ImageHelper.instance.calculateMeanSquareRoot(vo);
-		
-		System.out.println("VO " + vo);
+		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
+		vo = ImageHelper.instance.calculateMeanSquareRootNew(vo);
 		imageHelper.drawGraphNew(vo, linechart);
+
 	}
 
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println("Initializing Graph Controller");
+
 	}
 }

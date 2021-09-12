@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Copyright (c) 2011, 2013 Oracle and/or its affiliates.
+ * All rights reserved. Use is subject to license terms.
+ *
+ * This file is available and licensed under the following license:
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  - Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  - Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the distribution.
+ *  - Neither the name of Oracle Corporation nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<?import java.net.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:controller="co.za.master.dose.control.UserManagementController" 
+    xmlns:fx="http://javafx.com/fxml"  hgap="5" vgap="10"  prefHeight="900.0" prefWidth="900.0"
+    styleClass="root">
+    <stylesheets>
+    	<URL value="@Login.css" />
+  	</stylesheets>
+ <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0" >
+      	<VBox>		
+         	<HBox>
+		    	<HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label  text="Name :  " prefWidth="170.0" />
+		    	</HBox>
+		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+		    		<TextField fx:id="nameTxt"  maxWidth="150.0" prefWidth="170.0"/>
+		    	</HBox>
+		  </HBox>
+		  <HBox>
+		  		<HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label text="Username :  " prefWidth="170.0"/>
+		    	</HBox>
+		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+		    		<TextField fx:id="usernameTxt"  maxWidth="150.0" prefWidth="170.0"/>
+		    	</HBox>
+		  </HBox>
+		  <HBox>
+		  		<HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label text="Password :  " prefWidth="170.0" />
+		    	</HBox>
+		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+		    		<PasswordField  fx:id="pwdTxt"  maxWidth="150.0" prefWidth="170.0"/>
+		    	</HBox>
+		  </HBox>
+		  <HBox>
+		  		<HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label text="Role :  " prefWidth="170.0" />
+		    	</HBox>
+		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+		    		<ComboBox fx:id="roleCombo" layoutX="15.0" layoutY="33.0" prefWidth="170" promptText="choose"/>
+   
+		    	</HBox>
+		  </HBox>
+		   <HBox>
+		  		<HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label text="Status :  " prefWidth="170.0" />
+		    	</HBox>
+		    	<HBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+		    		
+		    		<ComboBox fx:id="statusCombo" layoutX="15.0" layoutY="33.0" prefWidth="170" promptText="choose"/>
+   
+		    	</HBox>
+		  </HBox>
+		<Button text="Add User" GridPane.columnIndex="0" GridPane.rowIndex="2"  onAction="#handleAddUserAction" />
+		 <TableView fx:id="userTableView" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="550">
+		      <columns>
+		        <TableColumn  text="Name" fx:id="name" />
+		        <TableColumn  text="Username" fx:id="username" />
+		        <TableColumn  text="Password" fx:id="password" />  
+		        <TableColumn  text="Role" fx:id="role" />  
+		        <TableColumn  text="Status" fx:id="status" />  
+		      </columns>
+		    </TableView>
+		</VBox>			
+    </GridPane>	
+</GridPane>

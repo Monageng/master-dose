@@ -11,9 +11,7 @@ public class ZoomOutActionListener implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		ImagePlus imagePlus = WindowManager.getCurrentImage();
-		if (imagePlus == null) {
-			System.out.println("Image is not loaded");
-		} else {
+		if (imagePlus != null) {
 			IJ.run("Out [-]");
 		}
 	}

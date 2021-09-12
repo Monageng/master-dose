@@ -1,11 +1,13 @@
 package co.za.master.dose.model;
 
+
 public class PatientDetails {
 	private String firstName;
 	private String surname;
 	private String title;
 	private String initials;
 	private String patientId;
+	private String gender;
 	
 	public String getFirstName() {
 		return firstName;
@@ -38,6 +40,13 @@ public class PatientDetails {
 		this.patientId = patientId;
 	}
 	
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	public String toString() {
 		return "firstName : " + firstName + " surname : " + surname + " title : " + title + " initials : " + initials + " patientId : " + patientId;
 	}

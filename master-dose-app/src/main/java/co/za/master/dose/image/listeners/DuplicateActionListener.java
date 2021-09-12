@@ -1,21 +1,15 @@
 package co.za.master.dose.image.listeners;
 
-import ij.ImagePlus;
-import ij.WindowManager;
-import ij.gui.ImageWindow;
-import ij.io.Opener;
-import ij.process.ImageProcessor;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 
-import co.za.master.dose.model.ImageNumberEnum;
-import co.za.master.dose.model.ImageTypeEnum;
-import co.za.master.dose.model.MeasurementVO;
-import co.za.master.dose.utils.ImageHelper;
+import ij.ImagePlus;
+import ij.WindowManager;
+import ij.io.Opener;
+import ij.process.ImageProcessor;
 
 public class DuplicateActionListener implements ActionListener {
 
@@ -40,9 +34,6 @@ public class DuplicateActionListener implements ActionListener {
 
 			newImage.show();
 			
-//			ImageWindow imageWindow = WindowManager.getCurrentWindow();
-//			imageWindow.setMenuBar(ImageHelper.instance.createImageMenuBar(new MeasurementVO(), ImageTypeEnum.Anteria, ImageNumberEnum.FirstImage));
-
 		}
 	}
 

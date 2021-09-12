@@ -27,23 +27,19 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class PDFHelper {
 	
-	public static String FILE_NAME = "Report.pdf";
+	public static String FILE_NAME = "Report";
 	public static String IMAGE_NAME = "Image.png";
 	public static void createPDFDynamic(MeasurementVO measurementVO, LineChart<Number, Number> linechart) {
 		try {
-			System.out.println("createPDFDynamic");
+
 			com.itextpdf.text.Document document = new com.itextpdf.text.Document(PageSize.A4, 20, 20, 50, 50);
 			
-			FileUtils.instance.removeDirectory("exports");
-			File dir = FileUtils.instance.createDirectory("exports");
-			String fileName = dir.getAbsolutePath() + "/" + FILE_NAME + (new Date()).getTime();
-			System.out.println("File name : " + fileName);
+			String fileName =ImageHelper.instance.getFileName(FILE_NAME + (new Date()).getTime() + ".pdf");
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
 			document.open();
 
 			// ADD Title
 			Paragraph title1 = new Paragraph("Medical Scan Report",FontFactory.getFont(FontFactory.TIMES_ROMAN,16, Font.BOLD,  new CMYKColor(0, 50, 255,17)));
-//			Chapter chapter1 = new Chapter(title1, 1);
 			title1.setAlignment(Paragraph.ALIGN_CENTER);
 			document.add(title1);
 			
@@ -76,64 +72,23 @@ public class PDFHelper {
 			t.addCell(PDFUtils.instance.addFieldCell("Patient ID"));
 			t.addCell(PDFUtils.instance.addValueCell(measurementVO.getPatientDetails().getPatientId()));
 			report.add(t);
-			document.add(report);
-			
-//			Image image2 = Image.getInstance("heart.jpg");
-//			image2.scaleAbsolute(150f, 200f);
-////			image2.setAbsolutePosition(10f, 400f);
-////			report.add(image2);
-//			
-//			MeasurementBean bean = new MeasurementBean();
-//			bean.setFirstRightImage(172.476);
-//			bean.setFirstLeftImage(131.314);
-////			bean.setFirstTumourImage(1);
-//			
-//			bean.setSecondRightImage(131.903);
-//			bean.setSecondleftImage(115.124);
-////			bean.setSecondTumourImage(1);
-//			
-//			bean.setThirdRightImage(97.757);
-//			bean.setThirdLeftImage(82.81);
-////			bean.setThirdTumourImage(1);
-////			=((I6+I5)/2)*(H6-H5)
-//			double l1 = ((bean.getSecondleftImage() + bean.getFirstLeftImage() ) / 2) * (bean.getSecondleftImage() - bean.getFirstLeftImage());
-//			double l2 = ((bean.getThirdLeftImage() + bean.getSecondleftImage() ) / 2 )* (bean.getThirdLeftImage() - bean.getSecondleftImage());
-//			System.out.println(" l1 : " + l1);
-//			System.out.println(" l1 : " + l1);
-//
-//			double r1 = (bean.getSecondRightImage() + bean.getFirstRightImage() ) / 2 * (bean.getSecondRightImage() - bean.getFirstRightImage());
-//			double r2 = (bean.getThirdRightImage() + bean.getSecondRightImage() ) / 2 * (bean.getThirdRightImage() - bean.getSecondRightImage());
-//			
-//			System.out.println(" r1 : " + r1);
-//			System.out.println(" r2 : " + r2);
-//			
-//			@SuppressWarnings("unchecked")
-			
+			document.add(report);	
 			
 			CategoryAxis xAxis = new CategoryAxis();
 			NumberAxis yAxis = new NumberAxis();
 			LineChart<Number, Number> lChat = new LineChart(xAxis, yAxis);
 			ImageHelper.instance.drawGraphNew(measurementVO, lChat);
-//			report.add((Element) cp);
 			
 			lChat.setPrefSize(500, 400);
 			Scene scene = new Scene(lChat);
 			WritableImage writableImage = scene.snapshot(null);
 			ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", new File(IMAGE_NAME));
 			
-//			File graph = new File("test.png");
 			Image image = Image.getInstance(IMAGE_NAME);
-//			image.setWidthPercentage(30f);
-//			BufferedImage bufferedImage = linechart.  createBufferedImage(300, 300);
-//            Image image = Image.getInstance(writer, bufferedImage, 1.0f);
             document.add(image);
-//           
-            
-            System.out.println("About to open " + fileName);
-            MasterDoseCache.instance.getMeasurementVO().getHostServices().showDocument(fileName);
             document.close();
             
-//            FileUtils.instance.openFile(fileName);
+            FileUtils.instance.openFile(fileName);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
