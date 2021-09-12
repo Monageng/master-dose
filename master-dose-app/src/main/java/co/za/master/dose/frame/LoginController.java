@@ -45,13 +45,4 @@ public class LoginController {
     });
   }
 
-  /**
-   * Check authorization credentials.
-   * 
-   * If accepted, return a sessionID for the authorized session
-   * otherwise, return null.
-   */   
-
-  
-
 }

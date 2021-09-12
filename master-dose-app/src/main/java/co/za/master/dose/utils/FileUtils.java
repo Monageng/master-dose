@@ -12,15 +12,11 @@ public class FileUtils {
 	public void openFile(String fileName) {
 
 		try {
-//			System.out.println("openFile");
 			Desktop desktop = Desktop.getDesktop();
-			// check if java.awt.Desktop is available on the current platform
 			if (Desktop.isDesktopSupported() ) {
 				File file = new File(fileName);
 				desktop.open(file);
 			}
-			// check the current platform and security policy will let you
-			// browse to a url
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,25 +63,6 @@ public class FileUtils {
 		}
 		return file;
 	}
-
-	// public void openFile(String fileName) {
-	//
-	// try {
-	// // Desktop desktop = Desktop.getDesktop();
-	// // check if java.awt.Desktop is available on the current platform
-	// System.out.println(java.awt.Desktop.isDesktopSupported());
-	//
-	// if (java.awt.Desktop.isDesktopSupported()) {
-	// desktop.open(new File(fileName));
-	// }
-	// // check the current platform and security policy will let you browse to
-	// a url
-	//
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	//
-	// }
 
 	public void removeDirectory(String dirName) {
 		try {

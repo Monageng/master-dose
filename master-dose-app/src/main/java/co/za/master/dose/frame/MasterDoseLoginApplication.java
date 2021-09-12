@@ -1,11 +1,9 @@
 package co.za.master.dose.frame;
 
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.*;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /** Main application class for the login demo application */

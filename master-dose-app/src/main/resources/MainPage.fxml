@@ -59,9 +59,10 @@
 		    <children>	
 		        <Label text="Name :" prefWidth="120.0" />
 		        <TextField fx:id="patientNameTxt" maxWidth="250.0" />
-		        <Label text=" ID No :" prefWidth="100.0" />
+		    	<Label text=" ID No :" prefWidth="100.0" />
 		        <TextField fx:id="patientIdTxt" maxWidth="150.0" />
-		      </children>
+		      	<ComboBox fx:id="genderCombo" layoutX="15.0" layoutY="33.0" prefWidth="170" promptText="Select Gender"  />
+		    </children>
 		   </HBox>
 		 </children>
 	  </VBox>

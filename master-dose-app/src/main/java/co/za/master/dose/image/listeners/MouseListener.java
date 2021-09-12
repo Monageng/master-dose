@@ -50,9 +50,6 @@ public class MouseListener implements java.awt.event.MouseListener {
 
 		Polygon poly = new Polygon();
 		for (PointBean b : list) {
-//					if (list.size() > 1 && b.getX() == e.getX() && b.getY() == e.getY()) {
-//						isDone = true;
-//					}
 			poly.addPoint(b.getX(), b.getY());
 		}
 		if (!isDone) {

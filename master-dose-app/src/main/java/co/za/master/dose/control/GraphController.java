@@ -40,6 +40,7 @@ import javax.swing.JOptionPane;
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.utils.ImageHelper;
 import co.za.master.dose.utils.MasterDoseCache;
+import co.za.master.dose.utils.PDFHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -51,17 +52,17 @@ public class GraphController implements Initializable {
 
 	@FXML
 	protected void handleGenerateReportAction(ActionEvent event) {
-		JOptionPane.showConfirmDialog(null, "Comming soon...", "", JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.ERROR_MESSAGE);
+//		JOptionPane.showConfirmDialog(null, "Comming soon...", "", JOptionPane.OK_CANCEL_OPTION,
+//				JOptionPane.ERROR_MESSAGE);
 		
-//		ImageHelper imageHelper = new ImageHelper();
-//		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
-//
-//		vo = ImageHelper.instance.calculateMeanSquareRootNew(vo);
-//
-//		imageHelper.drawGraphNew(vo, linechart);
-//		PDFHelper.createPDFDynamic(vo, linechart);
-//			imageHelper.generatedXsl(vo);
+		ImageHelper imageHelper = new ImageHelper();
+ 		MeasurementVO vo = MasterDoseCache.instance.getMeasurementVO();
+		if (imageHelper.validateForDosageCalculation(vo)) {
+			vo = ImageHelper.instance.calculateMeanSquareRootNew(vo);
+			imageHelper.drawGraphNew(vo, linechart);
+			PDFHelper.createPDFDynamic(vo, linechart);
+		}
+		
 	}
 
 	@FXML
@@ -73,6 +74,7 @@ public class GraphController implements Initializable {
 
 	}
 
+	
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 	}

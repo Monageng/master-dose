@@ -33,7 +33,6 @@ public class ImageMeasureActionListener implements MeasureActionListenerInterfac
 		System.out.println("key : " +key);
 		ImageMeasureItem imageMeasureItem = MasterDoseCache.instance.getMeasurementVO().getMap().get(key);
 		if (imagePlus == null) {
-//			System.out.println("Image is not loaded");
 		} else {
 			
 //			 Check image side

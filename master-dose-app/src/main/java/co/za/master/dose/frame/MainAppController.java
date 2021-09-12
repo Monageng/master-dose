@@ -35,6 +35,10 @@ package co.za.master.dose.frame;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import co.za.master.dose.model.MeasurementVO;
+import co.za.master.dose.utils.MasterDoseCache;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -55,10 +59,61 @@ public class MainAppController implements Initializable {
 	private TextField patientTxt;		
 
 	@FXML
+	private TextField patientNameTxt = new TextField();	
+	
+	@FXML
+	private TextField patientIdTxt = new TextField();	
+	
+	@FXML
 	private ComboBox<String> titleComboBox;
+	
+	@FXML
+	private ComboBox<String> genderCombo = new ComboBox<>();;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		System.out.println("Initialize master dose application");
 		
+		genderCombo.getItems().setAll("Male", "Female");
+		
+		patientNameTxt.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+				
+				if (!newValue.isEmpty()) {
+					MeasurementVO measurementVO = MasterDoseCache.instance
+							.getMeasurementVO();
+					measurementVO.getPatientDetails().setFirstName(newValue);;
+					patientNameTxt.setText(newValue);
+				}
+				
+			}
+		});
+		
+		
+		patientIdTxt.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+				
+				if (!newValue.isEmpty()) {
+					MeasurementVO measurementVO = MasterDoseCache.instance
+							.getMeasurementVO();
+					measurementVO.getPatientDetails().setPatientId(newValue);;
+					patientIdTxt.setText(newValue);
+				}
+				
+			}
+		});
+		
+		genderCombo.valueProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+				MeasurementVO measurementVO = MasterDoseCache.instance
+						.getMeasurementVO();
+				measurementVO.getPatientDetails().setGender(newValue);				
+			}
+		});
 	}
 }

@@ -90,6 +90,26 @@
 		    	</VBox>
 		   	</children>
 		   </HBox>
+		   <HBox  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
+		    <children>
+		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label fx:id="spectLbl" text="S-Value for male : " prefWidth="170.0" />
+		    	</VBox>
+		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
+		    		<TextField fx:id="maleSValueTxt"  maxWidth="50.0"/>
+		    	</VBox>
+		   	</children>
+		   </HBox>
+		   <HBox  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
+		    <children>
+		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+		    		<Label fx:id="spectLbl" text="S-Value for female : " prefWidth="170.0" />
+		    	</VBox>
+		    	<VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
+		    		<TextField fx:id="femaleSValueTxt"  maxWidth="50.0"/>
+		    	</VBox>
+		   	</children>
+		   </HBox>
 		    <HBox>
 	  		<children>
 	 			<Button text="Save" onAction="#handleSaveConfigAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />

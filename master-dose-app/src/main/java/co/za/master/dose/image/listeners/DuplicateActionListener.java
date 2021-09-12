@@ -34,9 +34,6 @@ public class DuplicateActionListener implements ActionListener {
 
 			newImage.show();
 			
-//			ImageWindow imageWindow = WindowManager.getCurrentWindow();
-//			imageWindow.setMenuBar(ImageHelper.instance.createImageMenuBar(new MeasurementVO(), ImageTypeEnum.Anteria, ImageNumberEnum.FirstImage));
-
 		}
 	}
 

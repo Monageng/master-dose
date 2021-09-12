@@ -1,14 +1,12 @@
 package co.za.master.dose.model;
 
-import lombok.Data;
-
-@Data
 public class ConfigData {
 	
 	private double sensitivity;
 	private double transmissionCounts;
 	private double scatterCorrection;
-	
+	private double maleSValue;
+	private double femaleSValue;
 	
 	private String imageType;
 	
@@ -40,4 +38,17 @@ public class ConfigData {
 	public void setScatterCorrection(double scatterCorrection) {
 		this.scatterCorrection = scatterCorrection;
 	}
+	public double getMaleSValue() {
+		return maleSValue;
+	}
+	public void setMaleSValue(double maleSValue) {
+		this.maleSValue = maleSValue;
+	}
+	public double getFemaleSValue() {
+		return femaleSValue;
+	}
+	public void setFemaleSValue(double femaleSValue) {
+		this.femaleSValue = femaleSValue;
+	}
+
 }

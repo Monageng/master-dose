@@ -37,7 +37,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import co.za.master.dose.constants.MasterDoseConstants;
 import co.za.master.dose.model.ConfigData;
 import co.za.master.dose.model.MeasurementVO;
 import co.za.master.dose.utils.ImageHelper;
@@ -61,10 +60,16 @@ public class ConfigController implements Initializable {
 	private TextField scatterCorrectionValueTxt	 = new TextField();
 	
 	
+	@FXML
+	private TextField femaleSValueTxt	 = new TextField();
+	
+	
+	@FXML
+	private TextField maleSValueTxt	 = new TextField();
+	
 	
 	@FXML
 	private ComboBox<String> imageTypeCombo = new ComboBox<>();
-	
 	
 	@FXML
 	protected void handleSaveConfigAction(ActionEvent event) {
@@ -96,6 +101,12 @@ public class ConfigController implements Initializable {
 		
 		if (configData.getScatterCorrection() != 0) {
 			scatterCorrectionValueTxt.setText(configData.getScatterCorrection() + "");
+		}
+		if (configData.getFemaleSValue() != 0) {
+			femaleSValueTxt.setText(configData.getFemaleSValue() + "");
+		}
+		if (configData.getMaleSValue() != 0) {
+			maleSValueTxt.setText(configData.getMaleSValue() + "");
 		}
 	}
 	
@@ -149,15 +160,42 @@ public class ConfigController implements Initializable {
 			}
 		});
 		
+
+		maleSValueTxt.textProperty().addListener(new ChangeListener<String>() {
+
+			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,4})?")) {
+					maleSValueTxt.setText(oldValue);
+				} else {
+					if (!newValue.isEmpty()) {
+						MeasurementVO measurementVO = MasterDoseCache.instance
+								.getMeasurementVO();
+						measurementVO.getConfigData().setMaleSValue(Double.valueOf(newValue));
+						maleSValueTxt.setText(newValue);
+					}
+				}
+			}
+		});
+
+		femaleSValueTxt.textProperty().addListener(new ChangeListener<String>() {
+
+			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,4})?")) {
+					femaleSValueTxt.setText(oldValue);
+				} else {
+					if (!newValue.isEmpty()) {
+						MeasurementVO measurementVO = MasterDoseCache.instance
+								.getMeasurementVO();
+						measurementVO.getConfigData().setFemaleSValue(Double.valueOf(newValue));
+						femaleSValueTxt.setText(newValue);
+					}
+				}
+			}
+		});
 		imageTypeCombo.valueProperty().addListener(new ChangeListener<String>() {
 
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
-//				if (newValue.equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_SPECT)) {
-//					scatterCorrectionValueTxt.setVisible(true);
-//				} else {
-//					scatterCorrectionValueTxt.setVisible(false);
-//				}
 				MeasurementVO measurementVO = MasterDoseCache.instance
 						.getMeasurementVO();
 				measurementVO.getConfigData().setImageType(newValue);				

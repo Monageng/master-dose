@@ -101,7 +101,6 @@ public class ImageCaptureController implements Initializable {
 	}
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-//		System.out.println("Initialize first image");
 
 		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 			

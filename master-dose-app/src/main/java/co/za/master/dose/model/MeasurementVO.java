@@ -27,10 +27,6 @@ public class MeasurementVO {
 	
 	private String passwordSalt = "aHFoLxRa4K6uxhz2BnX4DqvkMeOSpQ";
 	
-	
-//	private FirstMeasurementVO firstMeasurementVO = new FirstMeasurementVO();
-//	private SecondMeasurementVO secondMeasurementVO = new SecondMeasurementVO();
-//	private ThirdMeasurementVO thirdMeasurementVO = new ThirdMeasurementVO();
 	private PatientDetails patientDetails = new PatientDetails();
 	private ConfigData configData = new ConfigData();
 	private User loggedOnUser = new User();
@@ -40,24 +36,6 @@ public class MeasurementVO {
 	public HostServices getHostServices() {
 		return hostServices;
 	}
-//	public FirstMeasurementVO getFirstMeasurementVO() {
-//		return firstMeasurementVO;
-//	}
-//	public void setFirstMeasurementVO(FirstMeasurementVO firstMeasurementVO) {
-//		this.firstMeasurementVO = firstMeasurementVO;
-//	}
-//	public SecondMeasurementVO getSecondMeasurementVO() {
-//		return secondMeasurementVO;
-//	}
-//	public void setSecondMeasurementVO(SecondMeasurementVO secondMeasurementVO) {
-//		this.secondMeasurementVO = secondMeasurementVO;
-//	}
-//	public ThirdMeasurementVO getThirdMeasurementVO() {
-//		return thirdMeasurementVO;
-//	}
-//	public void setThirdMeasurementVO(ThirdMeasurementVO thirdMeasurementVO) {
-//		this.thirdMeasurementVO = thirdMeasurementVO;
-//	}
 	public TextField getTextField() {
 		return textField;
 	}
