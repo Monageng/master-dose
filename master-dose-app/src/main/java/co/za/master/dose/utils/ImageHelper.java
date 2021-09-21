@@ -376,6 +376,17 @@ public class ImageHelper {
 		return absoluteCount;
 	}
 
+	
+	public double getAbsoluteCountForSpect(double count , MeasurementVO bean) {
+		System.out.println("count : " + count );
+		
+		double countWithoutScatter = count - bean.getConfigData().getScatterCorrection();
+		double absoluteCount = (countWithoutScatter /  bean.getConfigData().getSensitivity()) * bean.getConfigData().getTransmissionCounts();
+		
+		System.out.println("Result  : " + absoluteCount );
+		return absoluteCount;
+	}
+	
 	public MeasurementVO calculateMeanSquareRootNew(MeasurementVO bean) {
 		ImageMeasureItem posteria = null;
 		ImageMeasureItem anteria = null;
@@ -414,9 +425,10 @@ public class ImageHelper {
 				}
 			} else {
 				ImageMeasureItem imageMeasureItem = bean.getMap().get(key);
-				map.put(imageNo + "_Left", imageMeasureItem.getLeftMeanCount());
-				map.put(imageNo + "_Right", imageMeasureItem.getRightMeanCount());
-				map.put(imageNo + "_Tumour", imageMeasureItem.getTumourMeanCount());
+				
+				map.put(imageNo + "_Left", getAbsoluteCountForSpect(imageMeasureItem.getLeftMeanCount(), bean));
+				map.put(imageNo + "_Right", getAbsoluteCountForSpect(imageMeasureItem.getRightMeanCount(), bean));
+				map.put(imageNo + "_Tumour", getAbsoluteCountForSpect(imageMeasureItem.getTumourMeanCount(),bean));
 				intervalMap.put(imageNo, imageMeasureItem.getInterval());
 			}
 		}
@@ -710,7 +722,7 @@ public class ImageHelper {
 	private double getSumGradient(List<Double> gradientList, MeasurementVO vo) {
 		double sumGradient = 0;
 		
-		double S_VALUE = MasterDoseConstants.S_FACTOR;// 0.0029;
+		double S_VALUE = 0;// 0.0029;
 		
 		if("Male".equalsIgnoreCase(vo.getPatientDetails().getGender())) {
 			S_VALUE = vo.getConfigData().getMaleSValue();
