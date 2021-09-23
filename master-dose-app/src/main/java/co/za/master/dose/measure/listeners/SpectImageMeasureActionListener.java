@@ -63,6 +63,7 @@ public class SpectImageMeasureActionListener implements MeasureActionListenerInt
 
 			imageMeasureItem.setImageNumber(MasterDoseCache.instance.getMeasurementVO().getImageNumber());
 			imageMeasureItem.setInterval(MasterDoseCache.instance.getMeasurementVO().getInterval());
+			imageMeasureItem.setImageType(MasterDoseCache.instance.getMeasurementVO().getConfigData().getImageType());
 			MasterDoseCache.instance.getMeasurementVO().getMap().put(key, imageMeasureItem);
 			System.out.println("Printing first VO : " + imageMeasureItem);
 			MasterDoseCache.instance.getMeasurementVO().getTableView().getItems()

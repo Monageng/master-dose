@@ -57,22 +57,29 @@ public class ImageCaptureController implements Initializable {
 
 	@FXML
 	private TableView<ImageMeasureItem> tableView;
-	
-	@FXML private TableColumn<ImageMeasureItem, Integer> imageNumber;
-	@FXML private TableColumn<ImageMeasureItem, String> imageType;
-	@FXML private TableColumn<ImageMeasureItem, Integer> interval;
-	@FXML private TableColumn<ImageMeasureItem, Double> leftMeanCount;
-	@FXML private TableColumn<ImageMeasureItem, Double> rightMeanCount;
-	@FXML private TableColumn<ImageMeasureItem, Double> tumourMeanCount;
-	
-	@FXML private  TextField intervalTxt;
-	@FXML private  TextField imageNumberTxt;
+
+	@FXML
+	private TableColumn<ImageMeasureItem, Integer> imageNumber;
+	@FXML
+	private TableColumn<ImageMeasureItem, String> imageType;
+	@FXML
+	private TableColumn<ImageMeasureItem, Integer> interval;
+	@FXML
+	private TableColumn<ImageMeasureItem, Double> leftMeanCount;
+	@FXML
+	private TableColumn<ImageMeasureItem, Double> rightMeanCount;
+	@FXML
+	private TableColumn<ImageMeasureItem, Double> tumourMeanCount;
+
+	@FXML
+	private TextField intervalTxt;
+	@FXML
+	private TextField imageNumberTxt;
 
 	@FXML
 	protected void onEnter(ActionEvent event) {
 		System.out.println(event.getSource());
 	}
-
 
 	@FXML
 	protected void handleLoadFirstImagePosteriaAction(ActionEvent event) {
@@ -83,16 +90,43 @@ public class ImageCaptureController implements Initializable {
 	protected void handleLoadFirstImageAnteriaAction(ActionEvent event) {
 
 	}
+
+	@FXML
+	protected void handleClearImageAction(ActionEvent event) {
+		MasterDoseCache.instance.getMeasurementVO().getMap().clear();
+				
+		MasterDoseCache.instance.getMeasurementVO().getTableView().getItems()
+				.setAll(MasterDoseCache.instance.getMeasurementVO().getMap().values());
+
+		imageNumberTxt.clear();
+		intervalTxt.clear();
+		
+		MasterDoseCache.instance.getMeasurementVO().getLinechart().getData().clear();
+		MasterDoseCache.instance.getMeasurementVO().getLinechart().setTitle("Dosage is 0");;
 	
+	}
+
 	@FXML
 	protected void handleLoadImageAction(ActionEvent event) {
-		
-		if (imageNumberTxt.getText().isEmpty() || intervalTxt.getText().isEmpty() ) {
-			JOptionPane.showConfirmDialog(null, "Please capture image number or interval ", "",
+
+		if (imageNumberTxt.getText().isEmpty()) {
+			JOptionPane.showConfirmDialog(null, "Please capture image number ", "", JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.ERROR_MESSAGE);
+		} else if (intervalTxt.getText().isEmpty()) {
+			JOptionPane.showConfirmDialog(null, "Please capture interval ", "", JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.ERROR_MESSAGE);
+		} else if (MasterDoseCache.instance.getMeasurementVO().getPatientDetails().getGender() == null) {
+			JOptionPane.showConfirmDialog(null, "Please capture patient's gender ", "", JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.ERROR_MESSAGE);
+		} else if (MasterDoseCache.instance.getMeasurementVO().getPatientDetails().getFirstName() == null) {
+			JOptionPane.showConfirmDialog(null, "Please capture patient's first name ", "",
 					JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+		} else if (MasterDoseCache.instance.getMeasurementVO().getPatientDetails().getSurname() == null) {
+			JOptionPane.showConfirmDialog(null, "Please capture patient's surname ", "", JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.ERROR_MESSAGE);
 		} else {
 			MeasurementVO measurementVO = MasterDoseCache.instance.getMeasurementVO();
-			measurementVO.setImageKey(imageNumberTxt.getText()+ "_"+intervalTxt.getText());
+			measurementVO.setImageKey(imageNumberTxt.getText() + "_" + intervalTxt.getText());
 			measurementVO.setImageNumber(Integer.parseInt(imageNumberTxt.getText()));
 			measurementVO.setInterval(Integer.parseInt(intervalTxt.getText()));
 			measurementVO.setTableView(tableView);
@@ -103,27 +137,38 @@ public class ImageCaptureController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-			
+
 		imageNumber.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Integer>("imageNumber"));
 		imageType.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, String>("imageType"));
 		interval.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Integer>("interval"));
 		leftMeanCount.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Double>("leftMeanCount"));
 		rightMeanCount.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Double>("rightMeanCount"));
 		tumourMeanCount.setCellValueFactory(new PropertyValueFactory<ImageMeasureItem, Double>("tumourMeanCount"));
-		
-		tableView.getColumns().get(0).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));    // 33% for id column size
-		tableView.getColumns().get(1).prefWidthProperty().bind(tableView.widthProperty().multiply(0.20));   // 33% for dt column size
-		tableView.getColumns().get(2).prefWidthProperty().bind(tableView.widthProperty().multiply(0.20));    // 33% for cv column size
-		tableView.getColumns().get(3).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));    // 33% for cv column size
-		tableView.getColumns().get(4).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));    // 33% for cv column size
-		tableView.getColumns().get(5).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15)); 
-		
-		tableView.setFixedCellSize(25);
-	    tableView.prefHeightProperty().bind(tableView.fixedCellSizeProperty().multiply(Bindings.size(tableView.getItems()).add(2.01)));
-	    tableView.minHeightProperty().bind(tableView.prefHeightProperty());
-	    tableView.maxHeightProperty().bind(tableView.prefHeightProperty());
 
-	    intervalTxt.textProperty().addListener(new ChangeListener<String>() {
+		tableView.getColumns().get(0).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15)); // 33% for id
+																											// column
+																											// size
+		tableView.getColumns().get(1).prefWidthProperty().bind(tableView.widthProperty().multiply(0.20)); // 33% for dt
+																											// column
+																											// size
+		tableView.getColumns().get(2).prefWidthProperty().bind(tableView.widthProperty().multiply(0.20)); // 33% for cv
+																											// column
+																											// size
+		tableView.getColumns().get(3).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15)); // 33% for cv
+																											// column
+																											// size
+		tableView.getColumns().get(4).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15)); // 33% for cv
+																											// column
+																											// size
+		tableView.getColumns().get(5).prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));
+
+		tableView.setFixedCellSize(25);
+		tableView.prefHeightProperty()
+				.bind(tableView.fixedCellSizeProperty().multiply(Bindings.size(tableView.getItems()).add(2.01)));
+		tableView.minHeightProperty().bind(tableView.prefHeightProperty());
+		tableView.maxHeightProperty().bind(tableView.prefHeightProperty());
+
+		intervalTxt.textProperty().addListener(new ChangeListener<String>() {
 
 			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
 				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,1})?")) {
@@ -135,8 +180,8 @@ public class ImageCaptureController implements Initializable {
 				}
 			}
 		});
-	    
-	    imageNumberTxt.textProperty().addListener(new ChangeListener<String>() {
+
+		imageNumberTxt.textProperty().addListener(new ChangeListener<String>() {
 
 			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
 				if (!newValue.matches("\\d{0,2}([\\.]\\d{0,1})?")) {
@@ -148,6 +193,6 @@ public class ImageCaptureController implements Initializable {
 				}
 			}
 		});
-        
+
 	}
 }

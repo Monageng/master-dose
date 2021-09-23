@@ -55,15 +55,24 @@
 		   </padding>
 		   
 		   </HBox>
-		   <HBox   GridPane.columnIndex="0" GridPane.rowIndex="2" >
-		    <children>	
-		        <Label text="Name :" prefWidth="100" />
-		        <TextField fx:id="patientNameTxt" maxWidth="150" />
-		        <Label text=" ID No :" prefWidth="100.0" />
-		        <TextField fx:id="patientIdTxt" maxWidth="150.0" />
-		        <ComboBox fx:id="genderCombo"  prefWidth="170" promptText="Select Gender"  />
-		    </children>
-		   </HBox>
+		   <VBox>
+			   <HBox   GridPane.columnIndex="0" GridPane.rowIndex="2" >
+			    <children>	
+			        <Label text="FirstName :" prefWidth="90.0" />
+			        <TextField fx:id="patientNameTxt" maxWidth="120.0" />
+			        <Label text="Surname :" prefWidth="100" />
+			        <TextField fx:id="surnameTxt" maxWidth="150" />
+			    </children>
+			   </HBox>
+			   <HBox   GridPane.columnIndex="0" GridPane.rowIndex="2" >
+			    <children>	
+			        <Label text="Patient ID :" prefWidth="90.0" />
+			        <TextField fx:id="patientIdTxt" maxWidth="120.0" />
+			        <Label text="Gender :" prefWidth="100" />
+			        <ComboBox fx:id="genderCombo"  prefWidth="150" promptText="Select Gender"  />
+			    </children>
+			   </HBox>
+			 </VBox>  
 		 </children>
 	  </VBox>
       <VBox GridPane.columnIndex="0" GridPane.rowIndex="2">

@@ -53,7 +53,7 @@ public class MainAppController implements Initializable {
 	private TextField firstNameTxt;
 
 	@FXML
-	private TextField surnameTxt;
+	private TextField surnameTxt = new TextField();
 
 	@FXML
 	private TextField patientTxt;		
@@ -101,6 +101,21 @@ public class MainAppController implements Initializable {
 							.getMeasurementVO();
 					measurementVO.getPatientDetails().setPatientId(newValue);;
 					patientIdTxt.setText(newValue);
+				}
+				
+			}
+		});
+		
+		surnameTxt.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+
+				if (!newValue.isEmpty()) {
+					MeasurementVO measurementVO = MasterDoseCache.instance
+							.getMeasurementVO();
+					measurementVO.getPatientDetails().setSurname(newValue);;
+					surnameTxt.setText(newValue);
 				}
 				
 			}

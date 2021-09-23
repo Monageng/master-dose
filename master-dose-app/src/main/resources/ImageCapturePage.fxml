@@ -50,7 +50,7 @@
       	<VBox>		
         <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" >
          <children GridPane.columnSpan="0">
-         	<Text  text="Interval : " GridPane.columnIndex="0" GridPane.rowIndex="0"   />
+         	<Text  text="Time interval : " GridPane.columnIndex="0" GridPane.rowIndex="0"   />
             <TextField fx:id="intervalTxt" GridPane.columnIndex="1" GridPane.rowIndex="0"  prefWidth="50.0" onAction="#onEnter"/>
         
         </children>
@@ -59,7 +59,13 @@
             <TextField fx:id="imageNumberTxt" GridPane.columnIndex="1" GridPane.rowIndex="0"  prefWidth="50.0" onAction="#onEnter"/>
         </children>
       	</HBox>
-		<Button text="Load" onAction="#handleLoadImageAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
+      	<HBox>
+      		<children GridPane.columnSpan="0">
+      			<Button text="Load" onAction="#handleLoadImageAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
+      			<Button text="Clear" onAction="#handleClearImageAction" GridPane.columnIndex="0" GridPane.rowIndex="2"  />
+      		 </children>
+      	</HBox>
+		
 		 <TableView fx:id="tableView" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="550">
 		      <columns>
 		        <TableColumn  text="Image No" fx:id="imageNumber" />

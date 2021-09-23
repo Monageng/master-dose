@@ -688,6 +688,9 @@ public class ImageHelper {
 			File f = new File("src/main/java/co/za/master/dose/frame/Login.css");
 			linechart.getStylesheets().add(f.getAbsolutePath());
 		}
+		
+		measurementBean.setLinechart(linechart);
+		MasterDoseCache.instance.getMeasurementVO().setLinechart(linechart);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
