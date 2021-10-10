@@ -44,7 +44,7 @@ public class ImageMeasureActionListener implements MeasureActionListenerInterfac
 				}
 				imageMeasureItem.setBackground(mean);
 			} else {
-				if (imageTypeEnum == ImageTypeEnum.Anteria) {
+				if (imageTypeEnum == ImageTypeEnum.Anterior) {
 					if (imageMeasureItem == null || imageMeasureItem.getBackground() == 0.0 ) {
 						JOptionPane.showConfirmDialog(null, "Background measurement not taken, please take background measurements first", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 					}else {

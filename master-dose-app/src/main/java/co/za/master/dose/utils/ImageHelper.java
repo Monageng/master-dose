@@ -397,9 +397,9 @@ public class ImageHelper {
 		for (String key : bean.getMap().keySet()) {
 			String imageNo = key.substring(0, key.indexOf("_"));
 			if (imageType.equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_PLAINER)) {
-				if (key.contains(ImageTypeEnum.Anteria.name())) {
+				if (key.contains(ImageTypeEnum.Anterior.name())) {
 					anteria = bean.getMap().get(key);
-				} else if (key.contains(ImageTypeEnum.Posteria.name())) {
+				} else if (key.contains(ImageTypeEnum.Anterior.name())) {
 					posteria = bean.getMap().get(key);
 				}
 
@@ -603,8 +603,8 @@ public class ImageHelper {
 		Menu submenuAnt = new Menu("Anterior");
 		Menu submenuPost = new Menu("Posterior");
 
-		createSubmenuItemNew(bean, submenuAnt, ImageTypeEnum.Anteria);
-		createSubmenuItemNew(bean, submenuPost, ImageTypeEnum.Posteria);
+		createSubmenuItemNew(bean, submenuAnt, ImageTypeEnum.Anterior);
+		createSubmenuItemNew(bean, submenuPost, ImageTypeEnum.Posterior);
 
 		measureMenu.add(submenuAnt);
 		measureMenu.add(submenuPost);
@@ -618,8 +618,8 @@ public class ImageHelper {
 		Menu submenuAnt = new Menu("Anterior");
 		Menu submenuPost = new Menu("Posterior");
 
-		createSubmenuItemNew(bean, submenuAnt, ImageTypeEnum.Anteria);
-		createSubmenuItemNew(bean, submenuPost, ImageTypeEnum.Posteria);
+		createSubmenuItemNew(bean, submenuAnt, ImageTypeEnum.Anterior);
+		createSubmenuItemNew(bean, submenuPost, ImageTypeEnum.Posterior);
 
 		measureMenu.add(submenuAnt);
 		measureMenu.add(submenuPost);
