@@ -399,7 +399,7 @@ public class ImageHelper {
 			if (imageType.equalsIgnoreCase(MasterDoseConstants.IMAGE_TYPE_PLAINER)) {
 				if (key.contains(ImageTypeEnum.Anterior.name())) {
 					anteria = bean.getMap().get(key);
-				} else if (key.contains(ImageTypeEnum.Anterior.name())) {
+				} else if (key.contains(ImageTypeEnum.Posterior.name())) {
 					posteria = bean.getMap().get(key);
 				}
 
