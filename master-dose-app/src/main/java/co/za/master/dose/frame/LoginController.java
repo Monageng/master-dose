@@ -26,7 +26,7 @@ public class LoginController {
     	Calendar cal = Calendar.getInstance();
     	cal.set(Calendar.DATE, 15);
     	cal.set(Calendar.MONTH, Calendar.DECEMBER);
-    	cal.set(Calendar.YEAR, 2021);
+    	cal.set(Calendar.YEAR, 2022);
     	
     	Calendar curDate = Calendar.getInstance();
     	if (curDate.getTime().before(cal.getTime())) {
